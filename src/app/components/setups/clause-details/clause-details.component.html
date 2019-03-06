@@ -1,0 +1,60 @@
+<div id="content-area">
+    <div id="container">
+    <h1 class="page-title"> {{ clause?.name }} DETAILS </h1>
+    <div id="main-content">
+      
+        <div class="panel panel-default"><!-- Pn1  -->
+          <div class="panel-heading panel-grey-head">
+            <h3 class="panel-title panel-grey-title" style="color:#333; font-size:15px; margin:0px !important;">CLAUSE INFO</h3>
+          </div>
+          <div class="panel-body"><!-- Pn1 Bdy -->
+             <div class="table-responsive"><!-- Table responsive -->
+            <table class="table table-striped table-condensed ">
+             <tr>
+                <td><strong>Clause Code</strong></td>
+                <td>{{ clause?.code }}</td>
+              </tr>
+              <tr>
+                <td><strong>Clause Name</strong></td>
+                <td>{{ clause?.name }}</td>
+              </tr>
+              <tr>
+                <td><strong>Clause Description</strong></td>
+                <td>{{ clause?.description }}</td>
+              <!-- </tr>
+                        <tr>
+                <td><strong>Clause Short Description</strong></td>
+                <td>{{ clause?.shortDescription }}</td>
+              </tr> -->
+              <tr>
+                <td><strong>Clause Heading</strong></td>
+                <td>{{ clause?.heading }}</td>
+              </tr>  
+              <tr>
+                <td><strong>Clause Type</strong></td>
+                <td>{{ clause?.type }}</td>
+              </tr> 
+              <tr>
+                  <td><strong>Class-Subclass Code</strong></td>
+                  <td>{{ clause?.subclassCode }}</td>
+                </tr> 			    
+            </table>
+          </div><!-- Table responsive -->
+          </div><!-- Pn1 Bdy -->
+        </div><!-- Pn1  -->
+    
+        <div id="buttons">
+            <a routerLink="/clause-edit/{{ id }}" class="btn btn-success">
+              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+              Edit Clause
+            </a>
+      
+            <button (click)="onDeleteClick()" class="btn btn-danger">
+              <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+              Delete Clause
+            </button>
+        </div>
+    
+    </div> <!---- end of <div id="main-content">---->
+  </div> <!----end of <div id="container">---->
+  </div>  <!----end of <div id="content-area">---->

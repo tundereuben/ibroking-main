@@ -1,0 +1,74 @@
+<div id="content-area">
+  <div id="container">
+  <h1 class="page-title"> CREATE NEW COVERTYPE</h1>
+  <div id="main-content">
+   
+    <form #covertypeForm="ngForm" (ngSubmit)="onSubmit(covertypeForm)">
+        
+      <div class="form-group col-sm-6">
+          <label for="name" class=" control-label">Covertype Name</label>
+          <div >
+            <input 
+              type="text" 
+              class="form-control" 
+              name="name" 
+              #covertypeName="ngModel"
+              [ngClass]="{'is-invalid': covertypeName.errors && covertypeName.touched }"
+              [(ngModel)]="name"
+              required
+            >
+            <div [hidden]="!covertypeName.errors?.required" class="invalid-feedback">
+              Class Name required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-6">
+          <label for="code" class=" control-label">Covertype Code</label>
+          <div >
+            <input 
+            type="text" 
+            class="form-control" 
+            name="code" 
+            #covertypeCode="ngModel"
+            [ngClass]="{'is-invalid': covertypeCode.errors && covertypeCode.touched}"
+            [(ngModel)]="code"
+            required
+          >
+          <div [hidden]="!covertypeCode.errors?.required" class="invalid-feedback">
+            Class Code required
+          </div>
+          </div>
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="description" class=" control-label">Covertype Description</label>
+          <div >
+            <input 
+            type="text" 
+            class="form-control" 
+            name="description" 
+            #covertypeDescription="ngModel"
+            [ngClass]="{'is-invalid': covertypeDescription.errors && covertypeDescription.touched}"
+            [(ngModel)]="description"
+          >
+          </div>
+        </div>
+        <div class="form-group col-sm-6">
+          <label for="subclassCode" class=" control-label">Subclass Code</label>
+          <select 
+            class="form-control"
+            name="subclassCode"
+            [(ngModel)]="subclassCode"
+            required
+          >
+            <option [ngValue]="null">Select</option>
+            <option *ngFor="let s of subclassCodes" [ngValue]="s">{{ s }}</option>
+          </select>
+      </div>
+        <button class="btn btn-block btn-success">CREATE COVERTYPE</button>
+    </form>
+  
+  
+  </div> <!---- end of <div id="main-content">---->
+  </div> <!----end of <div id="container">---->
+  </div>  <!----end of <div id="content-area">---->

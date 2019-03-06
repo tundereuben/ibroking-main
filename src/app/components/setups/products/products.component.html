@@ -1,0 +1,62 @@
+<div id="content-area">
+    <div id="container">
+    <h1 class="page-title"> PRODUCTS SETUPS</h1>
+    <div id="main-content">
+     <form class="form-inline">
+      <div class="form-group">
+        <label class="sr-only" for="code">Product Code</label>
+        <input type="email" class="form-control" id="code" placeholder="Product Code">
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="name">Product Name</label>
+        <input type="password" class="form-control" id="name" placeholder="Product Name">
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="description">Product Description</label>
+        <input type="password" class="form-control" id="description" placeholder="Product Description">
+      </div>
+      <!-- <div class="form-group">
+        <label class="sr-only" for="exampleInputPassword3">Proposal Status</label>
+        <select class="form-control">
+          <option>Proposal Status</option>
+          <option>Draft</option>
+          <option>Incomplete</option>
+          <option>Complete</option>
+          <option>Confirmed</option>
+        </select>
+      </div> -->
+     
+      
+      <button type="submit" class="btn btn-primary">Search</button>
+      <a class="btn btn-success" id="new-class" href="/product-add">New Product</a>
+      
+      <div class="table-responsive" style="margin-top:30px;">
+      <table *ngIf="products?.length > 0; else noProducts" class="table table-hover">
+        <tr>
+        <th> Code</th>
+        <th> Product Name</th>
+        <th>Description</th>
+        <!-- <th>Short Description</th> -->
+        <th>Details</th>
+        </tr>
+        <tr *ngFor="let product of products">
+        <td>{{ product.code }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <!-- <td>{{ product.shortDescription }}</td> -->
+        <td><a routerLink="/product-details/{{ product.id }}" class="btn btn-link"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>View</a></td>
+        </tr>
+      </table>
+
+      <ng-template #noProducts>
+          <h5>There are no Producst in the system</h5>
+          
+        </ng-template>
+    </div>
+    </form>
+    
+    
+    
+    </div> <!---- end of <div id="main-content">---->
+    </div> <!----end of <div id="container">---->
+    </div>  <!----end of <div id="content-area">---->

@@ -1,0 +1,104 @@
+<div id="content-area">
+    <div id="container">
+    <h1 class="page-title"> CREATE NEW CLAUSE</h1>
+    <div id="main-content">
+     
+      <form #clauseForm="ngForm" (ngSubmit)="onSubmit(clauseForm)">
+          <div class="form-group col-sm-6">
+            <label for="name" class=" control-label">Clause Name</label>
+            <div >
+              <input 
+                type="text" 
+                class="form-control" 
+                name="name" 
+                [(ngModel)]="clause.name"
+                #clauseName="ngModel"
+                [ngClass]="{'is-invalid': clauseName.errors && clauseName.touched}"
+                required
+              >
+              <div [hidden]="!clauseName.errors?.required" class="invalid-feedback">
+                  Clause Name required
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="code" class=" control-label">Clause Code</label>
+            <div >
+              <input 
+                type="text" 
+                class="form-control" 
+                name="code" 
+                [(ngModel)]="clause.code"
+                #clauseCode="ngModel"
+                [ngClass]="{'is-invalid': clauseCode.errors && clauseCode.touched}"
+                required
+              >
+              <div [hidden]="!clauseCode.errors?.required" class="invalid-feedback">
+                  Clause Code required
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="description" class=" control-label">Clause Description</label>
+            <div >
+              <input 
+                type="text" 
+                class="form-control" 
+                name="description" 
+                [(ngModel)]="clause.description"
+              >
+            </div>
+          </div>
+          <!-- <div class="form-group col-sm-6">
+            <label for="shortDescription" class=" control-label">Clause Short Description</label>
+            <div >
+              <input 
+                type="text" 
+                class="form-control"
+                name="shortDescription" 
+                [(ngModel)]="clause.shortDescription"
+              >
+            </div>
+          </div> -->
+          <div class="form-group col-sm-6">
+            <label for="heading" class=" control-label">Clause Heading</label>
+            <div >
+              <input 
+                type="text" 
+                class="form-control" 
+                name="heading" 
+                [(ngModel)]="clause.heading"
+                >
+            </div>
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="type" class=" control-label">Clause Type</label>
+            <div >
+              <input 
+                type="text" 
+                class="form-control" 
+                name="type" 
+                [(ngModel)]="clause.type"
+              >
+            </div>
+          </div>
+          
+          <div class="form-group col-sm-6">
+              <label for="subclassCode" class=" control-label">Clause-Subclass Code</label>
+            <select 
+              class="form-control"
+              name="subclassCode"
+              [(ngModel)]="subclassCode"
+              required
+            >
+              <option [ngValue]="subclassCode">Select</option>
+              <option *ngFor="let s of subclassCodes" [ngValue]="s">{{ s }}s</option>
+            </select>
+          </div>
+          <button class="btn btn-block btn-success"> CREATE CLAUSE</button>
+      </form>
+    
+    
+    </div> <!---- end of <div id="main-content">---->
+    </div> <!----end of <div id="container">---->
+    </div>  <!----end of <div id="content-area">---->

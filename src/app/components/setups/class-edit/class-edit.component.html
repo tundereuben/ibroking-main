@@ -1,0 +1,83 @@
+<div id="content-area">
+    <div id="container">
+    <h1 class="page-title"> EDIT CLASS</h1>
+    <div id="main-content">
+     
+      <form #classForm="ngForm" (ngSubmit)="onSubmit(classForm)">
+          
+        <div class="form-group col-sm-6">
+            <label for="name" class=" control-label">Class Name</label>
+            <div >
+              <input 
+                type="text" 
+                class="form-control" 
+                name="name" 
+                #setupClassName="ngModel"
+                [ngClass]="{'is-invalid': setupClassName.errors && setupClassName.touched }"
+                [(ngModel)]="class.name"
+                required
+              >
+              <div [hidden]="!setupClassName.errors?.required" class="invalid-feedback">
+                Class Name required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-sm-6">
+            <label for="code" class=" control-label">Class Code</label>
+            <div >
+              <input 
+              type="text" 
+              class="form-control" 
+              name="code" 
+              #setupClassCode="ngModel"
+              [ngClass]="{'is-invalid': setupClassCode.errors && setupClassCode.touched}"
+              [(ngModel)]="class.code"
+              required
+            >
+            <div [hidden]="!setupClassCode.errors?.required" class="invalid-feedback">
+              Class Code required
+            </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-12">
+            <label for="description" class=" control-label">Class Description</label>
+            <div >
+              <input 
+              type="text" 
+              class="form-control" 
+              name="description" 
+              #setupClassDescription="ngModel"
+              [ngClass]="{'is-invalid': setupClassDescription.errors && setupClassDescription.touched}"
+              [(ngModel)]="class.description"
+            >
+            </div>
+          </div>
+          <!-- <div class="form-group col-sm-6">
+            <label for="shortDescription" class=" control-label">Class Short Description</label>
+            <div >
+              <input 
+              type="text" 
+              class="form-control" 
+              name="shortDescription" 
+              #setupClassShortDescription="ngModel"
+              [ngClass]="{'is-invalid': setupClassShortDescription.errors && setupClassShortDescription.touched}"
+              [(ngModel)]="class.shortDescription"
+              minlength="2"
+              required
+            >
+            </div>
+            <div [hidden]="!setupClassShortDescription.errors?.required" class="invalid-feedback">
+              Class Short Description required
+            </div>
+            <div [hidden]="!setupClassShortDescription.errors?.minlength" class="invalid-feedback">
+              Must be at least 2 characters
+            </div>
+          </div> -->
+          <button class="btn btn-block btn-success">UPDATE CLASS</button>
+      </form>
+    
+    
+    </div> <!---- end of <div id="main-content">---->
+    </div> <!----end of <div id="container">---->
+    </div>  <!----end of <div id="content-area">---->

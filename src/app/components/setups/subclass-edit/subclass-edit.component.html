@@ -1,0 +1,97 @@
+<div id="content-area">
+    <div id="container">
+    <h1 class="page-title"> EDIT SUBCLASS</h1>
+    <div id="main-content">
+     
+      <form #subclassForm="ngForm" (ngSubmit)="onSubmit(subclassForm)">
+          <div class="form-group col-sm-6">
+            <label for="name" class=" control-label">Subclass Name</label>
+            <div >
+              <input 
+              type="text" 
+              class="form-control" 
+              name="name"
+              #subclassName="ngModel"
+              [ngClass]="{'is-invalid': subclassName.errors && subclassName.touched}"
+              [(ngModel)]="subclass.name"
+              required 
+            >
+            <div [hidden]="!subclassName.errors?.required" class="invalid-feedback">
+                Subclass name required
+              </div>
+            </div>
+          </div>
+  
+          <div class="form-group col-sm-6">
+            <label for="code" class=" control-label">Subclass Code</label>
+            <div >
+              <input 
+              type="text" 
+              class="form-control" 
+              name="code" 
+              #subclassCode="ngModel"
+              [ngClass]="{'is-invalid': subclassCode.errors && subclassCode.touched}"
+              [(ngModel)]="subclass.code"
+              required 
+            >
+            <div [hidden]="!subclassCode.errors?.required" class="invalid-feedback">
+                Subclass Code required
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="description" class=" control-label">Subclass Description</label>
+            <div >
+              <input 
+                type="text" 
+                class="form-control" 
+                name="description"
+                #subclassDescription="ngModel"
+                [(ngModel)]="subclass.description" 
+              >
+            </div>
+          </div>
+          <!-- <div class="form-group col-sm-6">
+            <label for="shortDescription" class=" control-label">Subclass Short Description</label>
+            <div >
+              <input 
+                type="text" 
+                class="form-control" 
+                name="shortDescription" 
+                #subclassShortDescription="ngModel"
+                [(ngModel)]="subclass.shortDescription"
+              >
+            </div>
+          </div> -->
+          
+          <div class="form-group col-sm-6">
+              <label for="classCode" class=" control-label">Class Code</label>
+            <select 
+              class="form-control"
+              name="classCode"
+              [(ngModel)]="subclass.classCode"
+              required
+            >
+              <option [ngValue]="subclass.classCode">{{ subclass.classCode }}</option>
+              <option *ngFor="let c of classCodes" [ngValue]="c">{{ c }}</option>
+            </select>
+          </div>
+  
+          <!-- <div class="form-group col-sm-6">
+              <label for="productCode" class=" control-label">Product Code</label>
+            <select 
+              class="form-control"
+              name="productCode"
+              [(ngModel)]="subclass.productCode"
+            >
+              <option  [ngValue]="subclass.productCode">{{ subclass.productCode}} </option>
+              <option *ngFor="let p of productCodes" [ngValue]="p">{{ p }}</option>
+            </select>
+          </div> -->
+          <button class="btn btn-block btn-success">UPDATE SUBCLASS</button>
+      </form>
+    
+    
+    </div> <!---- end of <div id="main-content">---->
+    </div> <!----end of <div id="container">---->
+    </div>  <!----end of <div id="content-area">---->

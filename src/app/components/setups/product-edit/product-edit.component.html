@@ -1,0 +1,72 @@
+<div id="content-area">
+    <div id="container">
+    <h1 class="page-title"> UPDATE PRODUCT</h1>
+    <div id="main-content">
+     
+      <form #productForm="ngForm" (ngSubmit)="onSubmit(productForm)" >
+          <div class="form-group col-sm-6">
+            <label for="name" class=" control-label">Product Name</label>
+            <div >
+              <input 
+                type="text" 
+                class="form-control" 
+                name="name"
+                #productName="ngModel"
+                [ngClass]="{'is-invalid': productName.errors && productName.touched}"
+                [(ngModel)]="product.name"
+                required 
+              >
+              <div [hidden]="!productName.errors?.required" class="invalid-feedback">
+                Product Name required
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="code" class=" control-label">Product Code</label>
+            <div>
+              <input 
+                type="text" 
+                class="form-control" 
+                name="code"
+                #productCode="ngModel"
+                [ngClass]="{'is-invalid': productCode.errors && productCode.touched}"
+                [(ngModel)]="product.code"
+                required  
+              >
+              <div [hidden]="!productCode.errors?.required" class="invalid-feedback">
+                  Product Code required
+                </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-12">
+            <label for="description" class=" control-label">Product Description</label>
+            <div >
+              <input 
+                type="text" 
+                class="form-control" 
+                name="description"
+                #productDescription="ngModel"
+                [(ngModel)]="product.description"
+              >
+            </div>
+          </div>
+          <!-- <div class="form-group col-sm-6">
+            <label for="shortDescription" class=" control-label">Product Short Description</label>
+            <div >
+              <input 
+                type="text" 
+                class="form-control" 
+                name="shortDescription"
+                #productShortDescription="ngModel"
+                [ngClass]="{'is-invalid': productShortDescription.errors && productShortDescription.touched}"
+                [(ngModel)]="product.shortDescription"
+              >
+            </div>
+          </div> -->
+          <button class="btn btn-block btn-success">UPDATE PRODUCT</button>
+      </form>
+    
+    
+    </div> <!---- end of <div id="main-content">---->
+    </div> <!----end of <div id="container">---->
+    </div>  <!----end of <div id="content-area">---->

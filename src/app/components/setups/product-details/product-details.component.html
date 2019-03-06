@@ -1,0 +1,56 @@
+<div id="content-area">
+    <div id="container">
+    <h1 class="page-title"> {{ product?.name }} DETAILS </h1>
+    <div id="main-content">
+      
+        <div class="panel panel-default"><!-- Pn1  -->
+          <div class="panel-heading panel-grey-head">
+            <h3 class="panel-title panel-grey-title" style="color:#333; font-size:15px; margin:0px !important;">PRODUCT INFO</h3>
+          </div>
+          <div class="panel-body"><!-- Pn1 Bdy -->
+             <div class="table-responsive"><!-- Table responsive -->
+            <table class="table table-striped table-condensed ">
+             <tr>
+                <td><strong>product Code</strong></td>
+                <td>{{ product?.code }}</td>
+              </tr>
+              <tr>
+                <td><strong>Product Name</strong></td>
+                <td>{{ product?.name }}</td>
+              </tr>
+              <tr>
+                <td><strong>Product Description</strong></td>
+                <td>{{ product?.description }}</td>
+              <!-- </tr>
+                        <tr>
+                <td><strong>Product Short Description</strong></td>
+                <td>{{ product?.shortDescription }}</td>
+              </tr> -->
+                <!-- <tr>
+                <td><strong>Frequency of Payment</strong></td>
+                <td></td>
+              </tr>  
+                        <tr>
+                <td><strong>Proposal Sign Date</strong></td>
+                <td></td>
+              </tr> 			     -->
+            </table>
+          </div><!-- Table responsive -->
+          </div><!-- Pn1 Bdy -->
+        </div><!-- Pn1  -->
+    
+        <div id="buttons">
+            <a routerLink="/product-edit/{{ id }}" class="btn btn-success">
+              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+              Edit Product
+            </a>
+      
+            <button (click)="onDeleteClick()" class="btn btn-danger">
+              <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+              Delete Product
+            </button>
+        </div>
+    
+    </div> <!---- end of <div id="main-content">---->
+  </div> <!----end of <div id="container">---->
+  </div>  <!----end of <div id="content-area">---->
