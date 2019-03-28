@@ -1,0 +1,121 @@
+
+<div id="content-area">
+  <div id="container">
+  <h1 class="page-title"> QUOTE DETAILS <small>(xxx-xxxx-{{ quotation.code }})</small></h1>
+  <div id="main-content">
+   <div class="row">
+  
+   <form #quotationForm="ngForm" (ngSubmit)="onSubmit(quotationForm)"> 
+    <div class="col-md-6">
+    <div class="form-group">
+      <label for="client">Client</label>
+      <select 
+        class="form-control"
+        name="client"
+        [(ngModel)]="quotation.client" 
+        required
+      >
+      <option [ngValue]="quotation.client">{{ quotation.client.code }} | {{ quotation.client.name }} ({{ quotation.client.email }})</option>
+      <option *ngFor="let client of clients" [ngValue]="client">{{ client.code }} | {{ client.name }} ({{ client.email }}) </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="agentCode">Agent</label>
+      <select 
+        class="form-control"
+        name="agentCode"
+        [(ngModel)]="quotation.agentCode" 
+        required
+      >
+      <option [ngValue]="quotation.agentCode">{{ quotation.agentCode }}</option>
+      <option *ngFor="let c of clients" [ngValue]="c.code">{{ c.name }} </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="source">Source</label>
+      <select 
+        class="form-control"
+        name="sourceCode"
+        [(ngModel)]="sourceCode" 
+        required
+      >
+        <option [ngValue]="sourceCode">{{ sourceCode }}</option>
+        <option *ngFor="let s of sources" [ngValue]="s.code">{{ s.name }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="branchCode">Branch</label>
+      <select 
+        class="form-control"
+        name="branchCode"
+        [(ngModel)]="branchCode" 
+        required
+      >
+      <option [ngValue]="branchCode">{{ branchCode }}</option>
+      <option *ngFor="let b of branches" [ngValue]="b.code">{{ b.name }}</option>
+      </select>
+    </div>  
+    </div>
+  
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="currency">Currency</label>
+        <select 
+          class="form-control"
+          name="currency"
+          [(ngModel)]="currency" 
+          required
+        >
+          <option [ngValue]="currency"> {{ quotation.currency.symbol + ' | ' + quotation.currency.name }} </option>
+          <option *ngFor="let c of currencies" [ngValue]="c">{{ c.symbol + ' | ' + c.name  }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="coverFrom">Cover From</label>
+        <input 
+          type="date" 
+          class="form-control"
+          name="coverFrom"
+          #quotationCoverFrom="ngModel"
+          [(ngModel)]="quotation.coverFrom" 
+          required
+        >
+      </div>
+      <div class="form-group">
+          <label for="coverTo">Cover To</label>
+          <input 
+            type="date" 
+            class="form-control"
+            name="coverTo"
+            #quotationCoverTo="ngModel"
+            [(ngModel)]="quotation.coverTo" 
+            required
+          >
+        </div>
+      <div class="form-group">
+        <label for="paymentFrequency">Payment Frequency</label>
+        <select 
+          class="form-control"
+          name="paymentFrequency"
+          [(ngModel)]="quotation.paymentFrequency" 
+          required
+        >
+          <option [ngValue]="quotation.paymentFrequency"> {{ quotation.paymentFrequency }} </option>
+          <option *ngFor="let p of paymentFrequencies" [ngValue]="p">{{ p }}</option>
+        </select>
+      </div>
+      </div> 
+    
+    <div id="rule"></div>      
+   <!-- <a routerLink="/quote-products-add" type="button" class="btn btn-info pull-right">Next&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a> -->
+   <button  class="btn btn-info pull-right">Update&nbsp;
+     <!-- <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> -->
+    </button>
+    </form>
+  </div>
+  
+    
+  </div> <!---- end of <div id="main-content">---->
+  </div> <!----end of <div id="container">---->
+  </div>  <!----end of <div id="content-area">---->
+  

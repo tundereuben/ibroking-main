@@ -1,0 +1,95 @@
+
+<div id="content-area">
+    <div id="container">
+    <h1 class="page-title"> RISK LIMIT DETAILS </h1>
+    <div id="main-content">
+     <div class="row">
+     <form #quoteRiskLimitForm="ngForm" (ngSubmit)="onSubmit(quoteRiskLimitForm)">
+      <div class="col-md-6">       
+        <div class="form-group">
+          <label for="agent">Section </label>
+          <select 
+          class="form-control"
+          name="riskSectionCode"
+          [(ngModel)]="riskSectionCode" 
+          required
+          >
+            <option [ngValue]="null">Select</option>
+            <option *ngFor="let s of sections" [ngValue]="s.code">{{ s.name }} </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="limitAmount">Limit Amount</label>
+          <input 
+            type="number" 
+            class="form-control" 
+            placeholder="e.g. 1000000"
+            name="limitAmount"
+            #quoteLimitAmount="ngModel"
+            [(ngModel)]="limitAmount" 
+            (keyup)="getLimitAmount($event.target.value)"
+            required
+          >
+        </div>
+        <div class="form-group">
+            <label for="premiumRate">Premium Rate</label>
+            <input 
+              type="number" 
+              class="form-control" 
+              placeholder="e.g. 10"
+              name="premiumRate"
+              #quotePremiumRate="ngModel"
+              [(ngModel)]="premiumRate" 
+              (keyup)="getPremiumRate($event.target.value)"
+              required
+            >
+          </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="rateDivisionFactor">Rate Division Factor</label>
+          <input 
+            type="number" 
+            class="form-control" 
+            placeholder="e.g. 100"
+            name="rateDivisionFactor"
+            #quoteRateDivisionFactor="ngModel"
+            [(ngModel)]="rateDivisionFactor" 
+            (keyup)="getRateDivisionFactor($event.target.value)"
+            required
+          >
+        </div>
+        <div class="form-group">
+          <label for="premiumAmount">Premium Amount</label>
+          <input 
+            type="number" 
+            class="form-control" 
+            placeholder="0" 
+            name="premiumAmount"
+            #quotePremiumAmount="ngModel"
+            [(ngModel)]="premiumAmount" 
+            disabled
+          >
+        </div>
+      </div>
+
+      
+      
+      <div id="rule"></div> 
+      <div *ngIf="isAddToRisk; else default">
+          <button class="btn btn-info pull-right">Add New Risk Limit&nbsp;<span class="glyphicon" aria-hidden="true"></span></button>
+      </div>  
+      <ng-template #default>
+          <a routerLink="/quote-products-add" class="btn btn-info pull-left"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back&nbsp;</a> 
+          <button class="btn btn-info pull-right">Save&nbsp;<span class="glyphicon glyphicon-save" aria-hidden="true"></span></button>
+      </ng-template>
+      
+      </form>
+    </div>
+    
+      
+    </div> <!---- end of <div id="main-content">---->
+    </div> <!----end of <div id="container">---->
+    </div>  <!----end of <div id="content-area">---->
+    

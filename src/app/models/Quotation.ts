@@ -1,0 +1,28 @@
+export interface Quotation {
+    id?: string,
+    code?: number,
+    quoteNo?: number,
+    client?: any,
+    clientCode?: number, // remove client code and client name
+    clientName?: string,
+    clientEmail?: string,
+    clientPhone?: string,
+    agent?: any, 
+    agentCode?: number, // remove agentCode and agentName
+    // agentName?: string,
+    sourceCode?: number,
+    branchCode?: number,
+    currency: any,
+    // currencyCode?: number,
+    // currecnySymbol?: string,
+    coverFrom?: string,
+    coverTo?: string,
+    paymentFrequency?: string,
+    totalPropertyValue?: number,
+    status?: string,
+    expiryDate?: string,
+    ok?: string,
+    premium?: number,
+    commissionAmount?: number,
+    // clientType?: string,
+}

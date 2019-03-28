@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SetupService} from '../../../services/setup.service';
+import { SetupService} from '../../../services/setup.service'; 
 
 import { Class } from '../../../models/Class';
 
@@ -17,9 +17,7 @@ export class ClassComponent implements OnInit {
     this.setupService.getClasses().subscribe(classes => {
       this.classes = classes;
       // console.log(this.classes)
-    }
-
-    );
+    });
     
   }
 

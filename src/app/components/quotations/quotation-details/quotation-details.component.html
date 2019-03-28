@@ -1,0 +1,206 @@
+<div id="content-area">
+  <div id="container">
+      
+    <!-- <p><a routerLink="/quotations"> Back to Quotations</a></p> -->
+
+  <h1 class="page-title"> QUOTE SUMMARY </h1>
+  <div id="main-content">
+    
+       <div class="col-md-12"><!-- Quote Head 2 -->
+        <div class="panel panel-default"><!-- Pn3 Content  -->
+        <div class="panel-heading panel-grey-head">
+            <h3 class="panel-title panel-grey-title text-bold"><strong>QUOTATION DETAILS</strong></h3>
+        </div>
+         <div class="panel-body"><!-- Pn3 Bdy -->
+            <div class="table-responsive"><!-- Tbl Respons -->
+              <table class="table table-bordered" >
+              <tr>
+                <th>Quote Code</th>
+                <th>Client </th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Currency</th>
+                <th>Payment Frequency</th>
+              </tr> 
+              <tr>
+                <td>{{quotation?.code}}</td>
+                <td>{{ quotation?.client.name }}</td>
+                <td>{{ quotation?.coverFrom}}</td>
+                <td>{{ quotation?.coverTo}}</td>
+                <td>{{ quotation?.currency.name}} ({{ quotation?.currency.symbol }})</td>
+                <td>{{ quotation?.paymentFrequency }}</td>
+              </tr>
+                                                                     
+            </table>
+          </div><!-- Tbl Respons -->					
+                        
+         </div><!-- Pn3 Bdy -->
+      </div><!-- Pn3 Content  -->
+    </div><!-- Quote Head 2 -->
+
+    <div class="col-md-12"><!-- Quote Head 2 -->
+      <div class="panel panel-default"><!-- Pn3 Content  -->
+      <div class="panel-heading panel-grey-head">
+          <h3 class="panel-title panel-grey-title"><strong>PRODUCT DETAILS</strong></h3>
+      </div>
+       <div class="panel-body"><!-- Pn3 Bdy -->
+          <div class="table-responsive"><!-- Tbl Respons -->
+            <table class="table table-bordered" >
+            <tr>
+              <th>Product Code</th>
+              <th>Product</th>
+              <th>From Date</th>
+              <th>To Date</th>
+              <th> 
+                  <a routerLink="/quote-products-add" class="btn "> 
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Product
+                  </a>
+              </th>
+            </tr> 
+            <tr *ngFor="let product of quoteProducts">
+              <td>{{ product?.productCode }}</td>
+              <td>{{ product?.code }} </td> 
+              <td>{{ product?.fromDate }}</td>
+              <td>{{ product?.toDate }}</td>
+              <td>
+                <div id="buttons">
+                  <a routerLink="/quote-products-edit/{{ product.id }}" class="btn "> 
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                  </a>
+                  
+                  <a (click)="onDeleteClick()" class="btn ">
+                    <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                  </a>
+                  <button (click)="showRisks($event)" class="btn btn-primary" id="{{ product.code }}"> <!-- upon click, refresh risk details -->	
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Risks
+                  </button>
+                </div>
+              </td>
+            </tr>                                                   
+          </table>
+        </div><!-- Tbl Respons -->					
+                      
+       </div><!-- Pn3 Bdy -->
+    </div><!-- Pn3 Content  -->
+  </div><!-- Quote Head 2 -->
+
+  <div class="col-md-12" *ngIf="quoteRisks"><!-- Risk Head 2 -->
+    <div class="panel panel-default"><!-- Pn3 Content  -->
+    <div class="panel-heading panel-grey-head">
+        <h3 class="panel-title panel-grey-title"><strong>RISK DETAILS</strong></h3>
+    </div>
+     <div class="panel-body" ><!-- Pn3 Bdy -->
+        <div class="table-responsive"><!-- Tbl Respons -->
+          <table class="table table-bordered" >
+          <tr>
+            <th>Risk Code</th>
+            <th>Risk ID</th>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th>Cover Type</th>
+            <th>Description</th>
+            <th>Subclass</th>
+            <td>
+                <a routerLink="/quote-risks-add"> 
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Risk
+                </a>
+            </td>
+          </tr> 
+          <tr *ngFor="let risk of quoteRisks">
+            <td>{{ risk?.code }}</td>
+            <td>{{ risk?.riskId }}</td>
+            <td>{{ risk?.fromDate }}</td>
+            <td>{{ risk?.toDate }}</td>
+            <td>{{ risk?.riskCovertype }}</td>
+            <td>{{ risk?.riskDescription }}</td>
+            <td>{{ risk?.riskSubclass }}</td>
+            <td>
+              <div id="buttons">
+                <a routerLink="/quote-risks-edit/{{ risk.id }}" class="btn "> 
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                </a>
+                
+                <a (click)="onDeleteClick()" class="btn ">
+                  <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                </a>
+                <button (click)="showRiskLimits($event)" class="btn btn-primary" id="{{ risk.code }}"> <!-- upon click, refresh risk details -->	
+                  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Risk Limits
+                </button>
+              </div>
+            </td>
+          </tr>                                                   
+        </table>
+      </div><!-- Tbl Respons -->					
+                    
+     </div><!-- Pn3 Bdy -->
+  </div><!-- Pn3 Content  -->
+</div><!-- Quote Head 2 -->
+
+<div class="col-md-12" *ngIf="quoteRiskLimits"><!-- Quote Head 2 -->
+    <div class="panel panel-default"><!-- Pn3 Content  -->
+    <div class="panel-heading panel-grey-head">
+        <h3 class="panel-title panel-grey-title"><strong>RISK LIMIT DETAILS</strong></h3>
+    </div>
+     <div class="panel-body"><!-- Pn3 Bdy -->
+        <div class="table-responsive"><!-- Tbl Respons -->
+          <table class="table table-bordered" >
+          <tr>
+            <th>Risk Limit Code</th>
+            <th>Risk Section Code</th>
+            <th>Limit Amount</th>
+            <th>Premium Rate</th>
+            <th>Rate Division Factor</th>
+            <th>Premium Amount</th>
+            <th>
+                <a (click)="addRiskLimit($event)" routerLink="/quote-risk-limits-add"> 
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Risk Limit
+                </a>
+            </th>
+          </tr> 
+          <tr *ngFor="let riskLimit of quoteRiskLimits">
+            <td>{{ riskLimit?.code }}</td>
+            <td>{{ riskLimit?.riskSectionCode }}</td>
+            <td>{{ riskLimit?.limitAmount }}</td>
+            <td>{{ riskLimit?.premiumRate }}</td>
+            <td>{{ riskLimit?.rateDivisionFactor }}</td>
+            <td>{{ riskLimit?.premiumAmount }}</td>
+            <td>
+                <div id="buttons" >
+                    <a routerLink="/quote-risk-limits-edit/{{ riskLimit.id }}" class="btn "> 
+                      <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                    
+                    <a (click)="deleteRiskLimit($event)" class="btn">
+                      <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="{{ riskLimit.id }}"></span>
+                    </a>
+                  </div>
+            </td>
+          </tr>                                                   
+        </table>
+      </div><!-- Tbl Respons -->					
+                    
+     </div><!-- Pn3 Bdy -->
+  </div><!-- Pn3 Content  -->
+</div><!-- Quote Head 2 -->
+  
+
+      <div id="buttons">
+        <a routerLink="/quotation-edit/{{ id }}" class="btn btn-success">
+          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+          Edit Quotation
+        </a>
+  
+        <button (click)="onDeleteClick()" class="btn btn-danger">
+          <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+          Delete Quotation
+        </button>
+
+        <button (click)="onAuthorize()" class="btn btn-warning">
+          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+          Authorize Quotation
+        </button>
+    </div>
+  
+  </div> <!---- end of <div id="main-content">---->
+</div> <!----end of <div id="container">---->
+</div>  <!----end of <div id="content-area">---->

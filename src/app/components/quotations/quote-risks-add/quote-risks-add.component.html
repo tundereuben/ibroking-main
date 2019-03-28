@@ -1,0 +1,94 @@
+
+<div id="content-area">
+    <div id="container">
+    <h1 class="page-title"> RISK DETAILS </h1>
+    <div id="main-content">
+     <div class="row">
+     <form #quoteRiskForm="ngForm" (ngSubmit)="onSubmit(quoteRiskForm)">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="riskId">Risk ID</label>
+          <input 
+            type="text" 
+            class="form-control"
+            name="riskId"
+            #quoteRiskId="ngModel"
+            [(ngModel)]="quoteRisk.riskId" 
+            required
+          >
+        </div>
+        <div class="form-group">
+          <label for="riskDescription">Risk Description</label>
+          <input 
+            type="text" 
+            class="form-control"
+            name="riskDescription"
+            #quoteRiskDescription="ngModel"
+            [(ngModel)]="quoteRisk.riskDescription" 
+            required
+          >
+        </div>
+      
+        <div class="form-group">
+          <label for="riskSubclass">Risk Subclass</label>
+          <select 
+            class="form-control"
+            name="riskSubclass"
+            [(ngModel)]="riskSubclass" 
+            required
+          >
+            <option [ngValue]="null">Select</option>
+            <option *ngFor="let s of subclasses" [ngValue]="s.code">{{ s.name }} </option>
+          </select>
+        </div>
+       
+      </div>
+    
+      <div class="col-md-6">
+          <div class="form-group">
+            <label for="riskCovertype">Risk Covertype</label>
+            <select 
+              class="form-control"
+              name="riskCovertype"
+              [(ngModel)]="riskCovertype" 
+              required
+            >
+              <option [ngValue]="null">Select</option>
+              <option *ngFor="let c of covertypes" [ngValue]="c.code">{{ c.name }} </option>
+            </select>
+          </div> 
+          <div class="form-group">
+          <label for="fromDate">From Date</label>
+          <input 
+            type="date" 
+            class="form-control"
+            name="fromDate"
+            #quoteRiskFrom="ngModel"
+            [(ngModel)]="quoteRisk.fromDate" 
+            required
+          >
+        </div>
+        <div class="form-group">
+          <label for="toDate">To Date</label>
+          <input 
+            type="date" 
+            class="form-control"
+            name="toDate"
+            #quoteRiskTo="ngModel"
+            [(ngModel)]="quoteRisk.toDate" 
+            required
+          >
+        </div>
+      </div>
+      
+      <div id="rule"></div>      
+      <a routerLink="/quote-products-add" class="btn btn-info pull-left"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back&nbsp;</a>
+      <button  class="btn btn-info pull-right">Next&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></button>
+      </form>
+    </div>
+    
+      
+    </div> <!---- end of <div id="main-content">---->
+    </div> <!----end of <div id="container">---->
+    </div>  <!----end of <div id="content-area">---->
+    

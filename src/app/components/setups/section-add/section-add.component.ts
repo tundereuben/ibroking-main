@@ -23,7 +23,10 @@ export class SectionAddComponent implements OnInit {
     code: '',
     name: '',
     description: '',
-    type: ''
+    type: '',
+    premiumRate: 0,
+    rateDivisionFactor: 0
+
   }
 
   @ViewChild('sectionForm') form: any;
@@ -44,8 +47,7 @@ export class SectionAddComponent implements OnInit {
       for (var i=0; i < this.covertypes.length; i++) {
         this.covertypeCodes.push(this.covertypes[i].code);
       }
-      console.log(this.covertypeCodes)
-      
+      // console.log(this.covertypeCodes)
     });
 
   }

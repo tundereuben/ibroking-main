@@ -38,4 +38,4 @@ export class ClauseDetailsComponent implements OnInit {
     }
   }
 
-}
+} 

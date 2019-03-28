@@ -23,6 +23,7 @@
     "angular2-flash-messages": "^3.0.1",
     "angularfire2": "^5.1.1",
     "bootstrap": "^3.4.1",
+    "coinify": "^2.0.2",
     "core-js": "^2.5.4",
     "firebase": "^5.8.4",
     "font-awesome": "^4.7.0",

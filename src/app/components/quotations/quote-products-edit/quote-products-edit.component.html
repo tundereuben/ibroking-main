@@ -1,0 +1,60 @@
+
+<div id="content-area">
+    <div id="container">
+    <h1 class="page-title"> PRODUCTS DETAILS </h1>
+    <div id="main-content">
+     <div class="row">
+     <form #quoteProductForm="ngForm" (ngSubmit)="onSubmit(quoteProductForm)">
+      <div class="col-md-6">
+      <div class="form-group">
+        <label for="product">Product</label>
+        <select 
+          class="form-control"
+          name="productCode"
+          [(ngModel)]="quoteProduct.productCode" 
+          required
+        >
+          <option [ngValue]="null">Select</option>
+          <option *ngFor="let p of products" [ngValue]="p.code">{{ p.name }} </option>
+        </select>
+      </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="fromDate">From Date</label>
+          <input 
+            type="date" 
+            class="form-control"
+            name="fromDate"
+            #quotationCoverFrom="ngModel"
+            [(ngModel)]="quoteProduct.fromDate" 
+            required
+          >
+        </div>
+        <div class="form-group">
+          <label for="toDate">To Date</label>
+          <input 
+            type="date" 
+            class="form-control"
+            name="toDate"
+            #quotationCoverTo="ngModel"
+            [(ngModel)]="quoteProduct.toDate" 
+            required
+          >
+        </div>
+      </div>
+      
+      <div id="rule"></div>      
+     <!-- <a routerLink="/quotation-add" class="btn btn-info pull-left"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back&nbsp;</a> -->
+     <button  class="btn btn-info pull-right">Update&nbsp;
+       <!-- <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> -->
+      </button>
+      </form>
+    </div>
+    
+      
+    </div> <!---- end of <div id="main-content">---->
+    </div> <!----end of <div id="container">---->
+    </div>  <!----end of <div id="content-area">---->
+    

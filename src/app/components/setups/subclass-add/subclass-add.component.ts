@@ -31,7 +31,7 @@ export class SubclassAddComponent implements OnInit {
 
   constructor(
     private flashMessage: FlashMessagesService,
-    private setupService: SetupService,
+    private setupService: SetupService,  
     private router: Router
   ) { }
 

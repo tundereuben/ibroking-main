@@ -5,5 +5,6 @@ export interface Section {
     description?: string,
     type?: string,
     covertypeCode?: string   
-
+    premiumRate?: number,
+    rateDivisionFactor?: number
 }

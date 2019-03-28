@@ -22,6 +22,8 @@ export class SectionEditComponent implements OnInit {
     code: '',
     description: '',
     type: '',
+    premiumRate: 0,
+    rateDivisionFactor: 0
   }
 
    // Initialize ARRAYS & VARIABLES for classCode & productCode => For Dropdowns

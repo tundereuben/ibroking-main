@@ -27,6 +27,8 @@
         <th>Description</th>
         <th>Section Type</th>
         <th>Section Cover Type</th>
+        <th>Premium Rate</th>
+        <th>Division Factor</th>
         <th>Details</th>
         </tr>
         <tr *ngFor="let section of sections">
@@ -35,6 +37,8 @@
         <td>{{ section.description}}</td>
         <td>{{ section.type }}</td>
         <td>{{ section.covertypeCode }}</td>
+        <td>{{ section.premiumRate }}</td>
+        <td>{{ section.rateDivisionFactor }}</td>
         <td><a routerLink="/section-details/{{ section.id }}" class="btn btn-link"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>View</a></td>
       </table>
       <ng-template>

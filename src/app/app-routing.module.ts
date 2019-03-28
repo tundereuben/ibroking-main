@@ -31,7 +31,27 @@ import { SectionEditComponent } from './components/setups/section-edit/section-e
 import { CovertypesComponent } from './components/setups/covertypes/covertypes.component';
 import { CovertypeAddComponent } from './components/setups/covertype-add/covertype-add.component';
 import { CovertypeDetailsComponent } from './components/setups/covertype-details/covertype-details.component';
-import {CovertypeEditComponent } from './components/setups/covertype-edit/covertype-edit.component';
+import { CovertypeEditComponent } from './components/setups/covertype-edit/covertype-edit.component';
+
+import { QuotationsComponent } from './components/quotations/quotations/quotations.component';
+import { QuotationAddComponent } from './components/quotations/quotation-add/quotation-add.component';
+import { QuotationDetailsComponent } from './components/quotations/quotation-details/quotation-details.component';
+import { QuotationEditComponent } from './components/quotations/quotation-edit/quotation-edit.component';
+
+import { QuoteProductsComponent } from './components/quotations/quote-products/quote-products.component';
+import { QuoteProductsAddComponent } from './components/quotations/quote-products-add/quote-products-add.component';
+import { QuoteProductsDetailsComponent } from './components/quotations/quote-products-details/quote-products-details.component';
+import { QuoteProductsEditComponent } from './components/quotations/quote-products-edit/quote-products-edit.component';
+
+import { QuoteRisksComponent } from './components/quotations/quote-risks/quote-risks.component';
+import { QuoteRisksAddComponent } from './components/quotations/quote-risks-add/quote-risks-add.component';
+import { QuoteRisksDetailsComponent } from './components/quotations/quote-risks-details/quote-risks-details.component';
+import { QuoteRisksEditComponent } from './components/quotations/quote-risks-edit/quote-risks-edit.component';
+
+import { QuoteRiskLimitsComponent } from './components/quotations/quote-risk-limits/quote-risk-limits.component';
+import { QuoteRiskLimitsAddComponent } from './components/quotations/quote-risk-limits-add/quote-risk-limits-add.component';
+import { QuoteRiskLimitsDetailsComponent } from './components/quotations/quote-risk-limits-details/quote-risk-limits-details.component';
+import { QuoteRiskLimitsEditComponent } from './components/quotations/quote-risk-limits-edit/quote-risk-limits-edit.component';
 
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
@@ -68,6 +88,26 @@ const routes: Routes = [
   {path: 'covertype-add', component: CovertypeAddComponent},
   {path: 'covertype-details/:id', component: CovertypeDetailsComponent},
   {path: 'covertype-edit/:id', component: CovertypeEditComponent},
+
+  {path: 'quotations', component: QuotationsComponent},
+  {path: 'quotation-add', component: QuotationAddComponent},
+  {path: 'quotation-details/:id', component: QuotationDetailsComponent},
+  {path: 'quotation-edit/:id', component: QuotationEditComponent},
+
+  {path: 'quote-products', component: QuoteProductsComponent},
+  {path: 'quote-products-add', component: QuoteProductsAddComponent},
+  {path: 'quote-products-details/:id', component: QuoteProductsDetailsComponent},
+  {path: 'quote-products-edit/:id', component: QuoteProductsEditComponent},
+
+  {path: 'quote-risks', component: QuoteRisksComponent},
+  {path: 'quote-risks-add', component: QuoteRisksAddComponent},
+  {path: 'quote-risks-details/:id', component: QuoteRisksDetailsComponent},
+  {path: 'quote-risks-edit/:id', component: QuoteRisksEditComponent},
+
+  {path: 'quote-risk-limits', component: QuoteRiskLimitsComponent},
+  {path: 'quote-risk-limits-add', component: QuoteRiskLimitsAddComponent},
+  {path: 'quote-risk-limits-details/:id', component: QuoteRiskLimitsDetailsComponent},
+  {path: 'quote-risk-limits-edit/:id', component: QuoteRiskLimitsEditComponent},
 
   {path: '**', component: NotFoundComponent},
 ];

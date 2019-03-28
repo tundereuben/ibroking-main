@@ -1,0 +1,119 @@
+
+<div id="content-area">
+<div id="container">
+<h1 class="page-title"> QUOTE DETAILS <small>(xxx-xxxx-{{ code }})</small></h1>
+<div id="main-content">
+ <div class="row">
+
+ <form #quotationForm="ngForm" (ngSubmit)="onSubmit(quotationForm)"> 
+  <div class="col-md-6">
+  <div class="form-group">
+    <label for="clientCode">Client</label>
+    <select 
+      class="form-control"
+      name="client"
+      [(ngModel)]="client" 
+      required
+    >
+    <option [ngValue]="null">Select</option>
+    <option *ngFor="let c of clients" [ngValue]="c">{{ c.code }} | {{ c.name }} ({{ c.email }}) </option>
+    </select>
+  </div>
+  <div 
+    class="form-group">
+    <label for="agentCode">Agent</label>
+    <select 
+      class="form-control"
+      name="agentCode"
+      [(ngModel)]="agentCode" 
+      required
+    >
+    <option [ngValue]="null">Select</option>
+    <option *ngFor="let c of clients" [ngValue]="c.code">{{ c.name }} </option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="source">Source</label>
+    <select 
+      class="form-control"
+      name="sourceCode"
+      [(ngModel)]="sourceCode" 
+      required
+    >
+      <option [ngValue]="null">Select</option>
+      <option *ngFor="let s of sources" [ngValue]="s.code">{{ s.name }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="branchCode">Branch</label>
+    <select 
+      class="form-control"
+      name="branchCode"
+      [(ngModel)]="branchCode" 
+      required
+    >
+    <option [ngValue]="null">Select</option>
+    <option *ngFor="let b of branches" [ngValue]="b.code">{{ b.name }}</option>
+    </select>
+  </div>  
+  </div>
+
+  <div class="col-md-6">
+      <div class="form-group">
+        <label for="currency">Currency</label>
+        <select 
+          class="form-control"
+          name="currency"
+          [(ngModel)]="currency" 
+          required
+        >
+          <option [ngValue]="null"> Select </option>
+          <option *ngFor="let c of currencies" [ngValue]="c">{{ c.symbol + ' | ' + c.name  }}</option>
+        </select>
+      </div>
+  <div class="form-group">
+    <label for="coverFrom">Cover From</label>
+    <input 
+      type="date" 
+      class="form-control"
+      name="coverFrom"
+      #quotationCoverFrom="ngModel"
+      [(ngModel)]="quotation.coverFrom" 
+      required
+    >
+  </div>
+  <div class="form-group">
+      <label for="coverTo">Cover To</label>
+      <input 
+        type="date" 
+        class="form-control"
+        name="coverTo"
+        #quotationCoverTo="ngModel"
+        [(ngModel)]="quotation.coverTo" 
+        required
+      >
+    </div>
+  <div class="form-group">
+    <label for="paymentFrequency">Payment Frequency</label>
+    <select 
+      class="form-control"
+      name="paymentFrequency"
+      [(ngModel)]="paymentFrequency" 
+      required
+    >
+      <option [ngValue]="null"> Select </option>
+      <option *ngFor="let p of paymentFrequencies" [ngValue]="p">{{ p }}</option>
+    </select>
+  </div>
+  </div>
+  
+  <div id="rule"></div>      
+ <!-- <a routerLink="/quote-products-add" type="button" class="btn btn-info pull-right">Next&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a> -->
+ <button  class="btn btn-info pull-right">Next&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></button>
+  </form>
+</div>
+
+  
+</div> <!---- end of <div id="main-content">---->
+</div> <!----end of <div id="container">---->
+</div>  <!----end of <div id="content-area">---->

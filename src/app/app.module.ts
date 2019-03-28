@@ -39,6 +39,22 @@ import { CovertypesComponent } from './components/setups/covertypes/covertypes.c
 import { CovertypeAddComponent } from './components/setups/covertype-add/covertype-add.component';
 import { CovertypeEditComponent } from './components/setups/covertype-edit/covertype-edit.component';
 import { CovertypeDetailsComponent } from './components/setups/covertype-details/covertype-details.component';
+import { QuotationsComponent } from './components/quotations/quotations/quotations.component';
+import { QuotationAddComponent } from './components/quotations/quotation-add/quotation-add.component';
+import { QuotationDetailsComponent } from './components/quotations/quotation-details/quotation-details.component';
+import { QuotationEditComponent } from './components/quotations/quotation-edit/quotation-edit.component';
+import { QuoteProductsComponent } from './components/quotations/quote-products/quote-products.component';
+import { QuoteProductsAddComponent } from './components/quotations/quote-products-add/quote-products-add.component';
+import { QuoteProductsEditComponent } from './components/quotations/quote-products-edit/quote-products-edit.component';
+import { QuoteProductsDetailsComponent } from './components/quotations/quote-products-details/quote-products-details.component';
+import { QuoteRisksComponent } from './components/quotations/quote-risks/quote-risks.component';
+import { QuoteRisksAddComponent } from './components/quotations/quote-risks-add/quote-risks-add.component';
+import { QuoteRisksDetailsComponent } from './components/quotations/quote-risks-details/quote-risks-details.component';
+import { QuoteRisksEditComponent } from './components/quotations/quote-risks-edit/quote-risks-edit.component';
+import { QuoteRiskLimitsComponent } from './components/quotations/quote-risk-limits/quote-risk-limits.component';
+import { QuoteRiskLimitsAddComponent } from './components/quotations/quote-risk-limits-add/quote-risk-limits-add.component';
+import { QuoteRiskLimitsEditComponent } from './components/quotations/quote-risk-limits-edit/quote-risk-limits-edit.component';
+import { QuoteRiskLimitsDetailsComponent } from './components/quotations/quote-risk-limits-details/quote-risk-limits-details.component';
 
 
 @NgModule({
@@ -72,6 +88,22 @@ import { CovertypeDetailsComponent } from './components/setups/covertype-details
     CovertypeAddComponent,
     CovertypeEditComponent,
     CovertypeDetailsComponent,
+    QuotationsComponent,
+    QuotationAddComponent,
+    QuotationDetailsComponent,
+    QuotationEditComponent,
+    QuoteProductsComponent,
+    QuoteProductsAddComponent,
+    QuoteProductsEditComponent,
+    QuoteProductsDetailsComponent,
+    QuoteRisksComponent,
+    QuoteRisksAddComponent,
+    QuoteRisksDetailsComponent,
+    QuoteRisksEditComponent,
+    QuoteRiskLimitsComponent,
+    QuoteRiskLimitsAddComponent,
+    QuoteRiskLimitsEditComponent,
+    QuoteRiskLimitsDetailsComponent,
   ],
   imports: [
     BrowserModule,

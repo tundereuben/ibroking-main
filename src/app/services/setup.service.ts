@@ -17,7 +17,7 @@ export class SetupService {
   classesCollection: AngularFirestoreCollection<Class>;
   classDoc: AngularFirestoreDocument<Class>;
   classes: Observable<Class[]>;
-  class: Observable<Class>;
+  class: Observable<Class>; 
 
   subclassesCollection: AngularFirestoreCollection<Subclass>;
   subclassDoc: AngularFirestoreDocument<Subclass>;
@@ -45,12 +45,12 @@ export class SetupService {
   covertype: Observable<Covertype>;
 
   constructor(private afs: AngularFirestore) { 
-    this.classesCollection = this.afs.collection('classes');
-    this.subclassesCollection = this.afs.collection('subclass');
-    this.productsCollection = this.afs.collection('product');
-    this.clausesCollection = this.afs.collection('clause');
-    this.sectionsCollection = this.afs.collection('section');
-    this.covertypesCollection = this.afs.collection('covertype');
+    this.classesCollection = this.afs.collection('classes', ref => ref.orderBy('code','asc'));
+    this.subclassesCollection = this.afs.collection('subclass', ref => ref.orderBy('code','asc'));
+    this.productsCollection = this.afs.collection('product',  ref => ref.orderBy('code','asc'));
+    this.clausesCollection = this.afs.collection('clause',  ref => ref.orderBy('code','asc'));
+    this.sectionsCollection = this.afs.collection('section',  ref => ref.orderBy('code','asc'));
+    this.covertypesCollection = this.afs.collection('covertype',  ref => ref.orderBy('code','asc'));
   }
 
   // =========================== //
@@ -174,7 +174,7 @@ export class SetupService {
   }
 
   getProduct(id: string): Observable<Product> {
-    this.productDoc = this.afs.doc<Class>(`product/${id}`);
+    this.productDoc = this.afs.doc<Product>(`product/${id}`);
     this.product = this.productDoc.snapshotChanges().pipe(
       map(action => {
         if (action.payload.exists === false ) {
@@ -210,7 +210,7 @@ export class SetupService {
     // Get products with the id
    this.clauses = this.clausesCollection.snapshotChanges().pipe(
      map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as Product;
+       const data = a.payload.doc.data() as Clause;
        data.id = a.payload.doc.id; 
        return data; 
      }))
@@ -256,10 +256,10 @@ export class SetupService {
   // =========================== //
 
   getSections(): Observable<Section[]> {
-    // Get products with the id
+    // Get section with the id
    this.sections = this.sectionsCollection.snapshotChanges().pipe(
      map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as Product;
+       const data = a.payload.doc.data() as Section;
        data.id = a.payload.doc.id; 
        return data; 
      }))
@@ -306,10 +306,10 @@ export class SetupService {
   // =========================== //
 
   getCovertypes(): Observable<Covertype[]> {
-    // Get products with the id
+    // Get Covertype with the id
    this.covertypes = this.covertypesCollection.snapshotChanges().pipe(
      map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as Product;
+       const data = a.payload.doc.data() as Covertype;
        data.id = a.payload.doc.id; 
        return data; 
      }))

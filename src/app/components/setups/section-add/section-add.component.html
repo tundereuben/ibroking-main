@@ -46,7 +46,7 @@
               required 
             >
           </div>
-          <div class="form-group col-sm-6">
+          <div class="form-group col-sm-3">
             <label for="type" class=" control-label">Section Type</label>
             <input 
               type="text" 
@@ -58,7 +58,7 @@
               required 
             >
           </div>
-          <div class="form-group col-sm-6">
+          <div class="form-group col-sm-3">
             <label for="covertypeCode" class=" control-label">Section-Covertype Code</label>
           <select 
             class="form-control"
@@ -69,6 +69,30 @@
             <option [ngValue]="null">Select</option>
             <option *ngFor="let c of covertypeCodes" [ngValue]="c">{{ c }}</option>
           </select>
+        </div>
+        <div class="form-group col-sm-3">
+          <label for="premiumRate" class=" control-label">Premium Rate</label>
+          <input 
+            type="number" 
+            class="form-control" 
+            name="premiumRate" 
+            #sectionPremiumRate="ngModel"
+            [ngClass]="{'is-invalid': sectionPremiumRate.errors && sectionPremiumRate.touched}"
+            [(ngModel)]="section.premiumRate"
+            required 
+          >
+        </div>
+        <div class="form-group col-sm-3">
+          <label for="rateDivisionFactor" class=" control-label">Rate Division Factor</label>
+          <input 
+            type="number" 
+            class="form-control" 
+            name="rateDivisionFactor" 
+            #sectionRateDivisionFactor="ngModel"
+            [ngClass]="{'is-invalid': sectionRateDivisionFactor.errors && sectionRateDivisionFactor.touched}"
+            [(ngModel)]="section.rateDivisionFactor"
+            required 
+          >
         </div>
           <button class="btn btn-block btn-success">CREATE SECTION</button>
       </form>
