@@ -63,10 +63,10 @@
         <select 
           class="form-control"
           name="currency"
-          [(ngModel)]="currency" 
+          [(ngModel)]="quotation.currency" 
           required
         >
-          <option [ngValue]="currency"> {{ quotation.currency.symbol + ' | ' + quotation.currency.name }} </option>
+          <option [ngValue]="quotation.currency"> {{ quotation.currency.symbol + ' | ' + quotation.currency.name }} </option>
           <option *ngFor="let c of currencies" [ngValue]="c">{{ c.symbol + ' | ' + c.name  }}</option>
         </select>
       </div>

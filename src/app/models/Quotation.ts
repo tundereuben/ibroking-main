@@ -12,7 +12,7 @@ export interface Quotation {
     // agentName?: string,
     sourceCode?: number,
     branchCode?: number,
-    currency: any,
+    currency?: any,
     // currencyCode?: number,
     // currecnySymbol?: string,
     coverFrom?: string,

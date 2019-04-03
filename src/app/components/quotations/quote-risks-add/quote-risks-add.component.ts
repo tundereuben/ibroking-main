@@ -15,7 +15,9 @@ import { Covertype } from '../../../models/Covertype';
 })
 export class QuoteRisksAddComponent implements OnInit {
 // quoteCode: string;
-quoteProductCode: string;
+isAdd: boolean;
+quoteId: string;
+quoteProductCode: number;
 subclasses: Subclass[] = []; riskSubclass = null;
 covertypes: Covertype[] = []; riskCovertype = null;
 quoteRisks: QuoteRisk[] = [];
@@ -51,9 +53,11 @@ quoteRisk: QuoteRisk = {
 
   ngOnInit() {
     // get quoteCode from session variable
-    // this.quoteProductCode = JSON.parse(sessionStorage.getItem("quoteCode"));
-    this.quoteProductCode = JSON.parse(sessionStorage.getItem("quoteProductCode"));
-    
+    this.isAdd = JSON.parse(sessionStorage.getItem("isAdd"));
+    this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
+    this.quoteProductCode = parseInt(sessionStorage.getItem("quoteProductCode"));
+    // console.log(sessionStorage.getItem("quoteProductCode"))
+        
     this.setupService.getSubclasses().subscribe(subclasses => {
       this.subclasses = subclasses;
     });
@@ -62,7 +66,7 @@ quoteRisk: QuoteRisk = {
       this.covertypes = covertypes;
     });
 
-    // Fetch existing risk, get last risk number, then generate new risk number
+    // Fetch existing risks, get last risk number, then generate new risk number
     this.quotationService.getQuoteRisks().subscribe(quoteRisks => {
       this.quoteRisks = quoteRisks; 
       for(var i=0; i < quoteRisks.length; i++){
@@ -81,7 +85,7 @@ quoteRisk: QuoteRisk = {
     } else {
       // Add New Risk
       // value.quoteCode = parseInt(this.quoteCode);
-      value.quoteProductCode = parseInt(this.quoteProductCode);
+      value.quoteProductCode = this.quoteProductCode; 
       value.code = this.quoteRisk.code;
       this.quotationService.newQuoteRisk(value);
       // save quoteRisk in session variable

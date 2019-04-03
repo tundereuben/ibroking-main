@@ -52,7 +52,7 @@
               <th>From Date</th>
               <th>To Date</th>
               <th> 
-                  <a routerLink="/quote-products-add" class="btn "> 
+                  <a (click)="addProduct()" routerLink="/quote-products-add" class="btn "> 
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Product
                   </a>
               </th>
@@ -101,7 +101,7 @@
             <th>Description</th>
             <th>Subclass</th>
             <td>
-                <a routerLink="/quote-risks-add"> 
+                <a (click)="addRisk()" routerLink="/quote-risks-add"> 
                   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Risk
                 </a>
             </td>
@@ -166,7 +166,7 @@
             <td>{{ riskLimit?.premiumAmount }}</td>
             <td>
                 <div id="buttons" >
-                    <a routerLink="/quote-risk-limits-edit/{{ riskLimit.id }}" class="btn "> 
+                    <a (click)="editRiskLimit()" routerLink="/quote-risk-limits-edit/{{ riskLimit.id }}" class="btn "> 
                       <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     </a>
                     

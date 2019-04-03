@@ -15,7 +15,7 @@ import { Section } from '../../../models/Section';
 export class QuoteRiskLimitsAddComponent implements OnInit {
   // quoteRiskSectionValue: any;
   // quoteCode: number;
-  isAddToRisk: boolean;
+  isAdd: boolean;
   quoteRiskCode: number;
   quoteId: string;
   sections: Section[] = []; riskSectionCode = null;
@@ -25,6 +25,7 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
   premiumRate: number;
   rateDivisionFactor: number;
   premiumAmount: number;
+  commissionAmount: number;
 
   quoteRiskLimits: QuoteRiskLimit[] = [];
   quoteRiskLimit: QuoteRiskLimit = {
@@ -50,7 +51,7 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
 
   ngOnInit() {
     this.quoteRiskCode = parseInt(JSON.parse(sessionStorage.getItem("quoteRiskCode")));
-    this.isAddToRisk = JSON.parse(sessionStorage.getItem("isAddToRisk"));
+    this.isAdd = JSON.parse(sessionStorage.getItem("isAdd"));
     this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
 
     this.setupService.getSections().subscribe(sections => {
@@ -67,7 +68,7 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
     });
   };
 
-  //****PREMIUM COMPUTATION ****/
+  //****COMPUTATIONS: premium, commission ****/
   getLimitAmount(event) {
     this.limitAmount = parseFloat(event);
     this.computePremium()
@@ -86,9 +87,14 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
   computePremium() {
     if(this.limitAmount != null && this.premiumRate != null && this.rateDivisionFactor != null){
       this.premiumAmount = this.limitAmount * this.premiumRate / this.rateDivisionFactor
-      // console.log(this.premiumAmount)
+      this.computeCommission();
     } 
-  }   //****PREMIUM COMPUTATION ENDS ****/
+  }
+  
+  computeCommission(){
+    this.commissionAmount = this.premiumAmount * 0.25;
+  }
+  //****PREMIUM COMPUTATION ENDS ****/
   
 
   onSubmit({value, valid}: {value: QuoteRiskLimit, valid: boolean}) {
@@ -100,11 +106,23 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
       // value.quoteCode = this.quoteCode;
       value.quoteRiskCode = this.quoteRiskCode;
       value.premiumAmount = this.premiumAmount;
+      value.commissionAmount = this.commissionAmount;
       value.code = this.quoteRiskLimit.code;
       this.quotationService.newQuoteRiskLimit(value);
+
+      // update quotation information 
+      var postData = {
+        id: this.quoteId,
+        premiumAmount: this.premiumAmount,
+        totalPropertyValue: this.limitAmount,
+        commissionAmount: this.commissionAmount
+      };
+      // console.log(postData)
+      this.quotationService.updateQuotation(postData);
+
       // save quoteRisk in session variable & route
       sessionStorage.setItem("quoteRiskLimitValue", JSON.stringify(value));
-      if(this.isAddToRisk){
+      if(this.isAdd){
         this.router.navigate([`/quotation-details/${this.quoteId}`])
       } else {
         this.router.navigate(['/quotations']);
@@ -114,4 +132,4 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
     }
   }
 
-}
+} 

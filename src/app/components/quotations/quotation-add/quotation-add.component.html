@@ -78,8 +78,9 @@
       class="form-control"
       name="coverFrom"
       #quotationCoverFrom="ngModel"
-      [(ngModel)]="quotation.coverFrom" 
+      [(ngModel)]="coverFrom" 
       required
+      (change)="computeCoverTo($event)"
     >
   </div>
   <div class="form-group">
@@ -89,7 +90,7 @@
         class="form-control"
         name="coverTo"
         #quotationCoverTo="ngModel"
-        [(ngModel)]="quotation.coverTo" 
+        [(ngModel)]="coverTo" 
         required
       >
     </div>

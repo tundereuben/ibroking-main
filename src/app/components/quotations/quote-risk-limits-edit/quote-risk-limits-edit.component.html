@@ -31,17 +31,17 @@
           >
         </div>
         <div class="form-group">
-            <label for="premiumRate">Premium Rate</label>
-            <input 
-              type="number" 
-              class="form-control" 
-              name="premiumRate"
-              #quotePremiumRate="ngModel"
-              [(ngModel)]="quoteRiskLimit.premiumRate" 
-              (keyup)="getPremiumRate($event.target.value)"
-              required
-            >
-          </div>
+          <label for="premiumRate">Premium Rate</label>
+          <input 
+            type="number" 
+            class="form-control" 
+            name="premiumRate"
+            #quotePremiumRate="ngModel"
+            [(ngModel)]="quoteRiskLimit.premiumRate" 
+            (keyup)="getPremiumRate($event.target.value)"
+            required
+          >
+        </div>
       </div>
 
       <div class="col-md-6">
@@ -64,22 +64,27 @@
             class="form-control" 
             name="premiumAmount"
             #quotePremiumAmount="ngModel"
-            [(ngModel)]="quoteRiskLimit.premiumAmount" 
+            [(ngModel)]="premiumAmount" 
+            required
+            disabled
+          >
+        </div>
+        <div class="form-group">
+          <label for="commissionAmount">commission Amount</label>
+          <input 
+            type="number" 
+            class="form-control" 
+            name="commissionAmount"
+            #quoteCommissionAmount="ngModel"
+            [(ngModel)]="commissionAmount" 
+            required
             disabled
           >
         </div>
       </div>
-
-      
       
       <div id="rule"></div> 
-      <div *ngIf="isAddToRisk; else default">
-          <button class="btn btn-info pull-right">Add New Risk Limit&nbsp;<span class="glyphicon" aria-hidden="true"></span></button>
-      </div>  
-      <ng-template #default>
-          <a routerLink="/quote-products-add" class="btn btn-info pull-left"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back&nbsp;</a> 
-          <button class="btn btn-info pull-right">Save&nbsp;<span class="glyphicon glyphicon-save" aria-hidden="true"></span></button>
-      </ng-template>
+      <button  class="btn btn-info pull-right">Update&nbsp; </button>
       
       </form>
     </div>

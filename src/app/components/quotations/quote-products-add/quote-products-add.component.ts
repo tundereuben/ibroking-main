@@ -40,7 +40,6 @@ export class QuoteProductsAddComponent implements OnInit {
   ngOnInit() {
     // get quoteCode from session variable
     this.quoteCode = JSON.parse(sessionStorage.getItem("quoteCode"));
-
     this.quotationService.getProducts().subscribe(products => {
       this.products = products;
     });
@@ -70,5 +69,4 @@ export class QuoteProductsAddComponent implements OnInit {
       this.router.navigate(['/quote-risks-add']); 
     }
   }
-
 }

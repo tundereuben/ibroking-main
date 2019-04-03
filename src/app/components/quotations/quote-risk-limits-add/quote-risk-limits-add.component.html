@@ -72,6 +72,18 @@
             disabled
           >
         </div>
+        <div class="form-group">
+          <label for="commissionAmount">Commission Amount</label>
+          <input 
+            type="number" 
+            class="form-control" 
+            placeholder="0" 
+            name="commissionAmount"
+            #quoteCommissionAmmount="ngModel"
+            [(ngModel)]="commissionAmount" 
+            disabled
+          >
+        </div>
       </div>
 
       

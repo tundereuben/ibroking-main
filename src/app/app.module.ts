@@ -55,6 +55,7 @@ import { QuoteRiskLimitsComponent } from './components/quotations/quote-risk-lim
 import { QuoteRiskLimitsAddComponent } from './components/quotations/quote-risk-limits-add/quote-risk-limits-add.component';
 import { QuoteRiskLimitsEditComponent } from './components/quotations/quote-risk-limits-edit/quote-risk-limits-edit.component';
 import { QuoteRiskLimitsDetailsComponent } from './components/quotations/quote-risk-limits-details/quote-risk-limits-details.component';
+import { MomentModule } from 'angular2-moment';
 
 
 @NgModule({
@@ -112,7 +113,8 @@ import { QuoteRiskLimitsDetailsComponent } from './components/quotations/quote-r
     FlashMessagesModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase, 'ibroking-main'),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    MomentModule
   ],
   providers: [SetupService],
   bootstrap: [AppComponent]

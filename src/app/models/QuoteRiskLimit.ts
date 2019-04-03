@@ -7,6 +7,7 @@ export interface QuoteRiskLimit {
     limitAmount?: number,
     premiumRate?: number,
     premiumAmount?: number,
+    commissionAmount?: number,
     rateDivisionFactor?: number,
     riskSectionCode?: number,
 }

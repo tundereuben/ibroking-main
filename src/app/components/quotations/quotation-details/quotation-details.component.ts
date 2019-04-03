@@ -17,6 +17,7 @@ export class QuotationDetailsComponent implements OnInit {
   id: string;
   quotation: Quotation;
   quoteProducts: Product[] = [];
+  quoteCode: number;
   quoteProductCode: number;
   quoteRiskCode: number;
   quoteRisks: QuoteRisk[];
@@ -35,7 +36,10 @@ export class QuotationDetailsComponent implements OnInit {
     this.quotationService.getQuotation(this.id).subscribe(quotation => {
       this.quotation = quotation; 
       quoteCode = quotation.code;
+      this.quoteCode = quoteCode;
     });
+
+    
 
     this.quotationService.getQuoteProducts().subscribe(quoteProducts => {
       quoteProducts.forEach(function(doc){
@@ -52,7 +56,7 @@ export class QuotationDetailsComponent implements OnInit {
     this.quoteRisks = null; 
     this.quoteRiskLimits = null;
     var quoteProductCode, quoteRiskCode, riskArray = [];
-    quoteProductCode = parseInt(event.target.id);
+    quoteProductCode = parseInt(event.target.id); 
     this.quotationService.getQuoteRisks().subscribe(risks => {
       risks.forEach(function(doc){
         if(doc.quoteProductCode == quoteProductCode) {
@@ -62,7 +66,7 @@ export class QuotationDetailsComponent implements OnInit {
       });
       this.quoteRisks = riskArray;
     });
-    
+    this.quoteProductCode = quoteProductCode;  
   };
 
   showRiskLimits(event){
@@ -81,17 +85,31 @@ export class QuotationDetailsComponent implements OnInit {
 
   addRiskLimit(event){
     var isAddToRisk = true;
-    sessionStorage.setItem("quoteRiskCode", JSON.stringify(this.quoteRiskCode));
     sessionStorage.setItem("isAddToRisk", JSON.stringify(isAddToRisk));
-    sessionStorage.setItem("quoteId", JSON.stringify(this.id));
-    console.log(isAddToRisk);
+    this.addingNew();
+  }
+
+  editRiskLimit(){
+    sessionStorage.setItem("quoteId", JSON.stringify(this.id)); // store quoteId for re-routing
   }
 
   deleteRiskLimit(event) {
     var id = event.target.id;
     this.quotationService.deleteQuoteRiskLimit(id);
-    console.log(id);
+    window.location.reload();
   }
+
+  addRisk(){
+    var isAdd = true;
+    sessionStorage.setItem("isAdd", JSON.stringify(isAdd));
+    this.addingNew();
+  }
+
+  addProduct(){
+    var isAdd = true;
+    this.addingNew();
+  }
+  
 
   onDeleteClick() {
     if(confirm('Are you sure?')) {
@@ -103,4 +121,12 @@ export class QuotationDetailsComponent implements OnInit {
     }
   }
 
-}
+  addingNew(){
+    sessionStorage.setItem("quoteRiskCode", JSON.stringify(this.quoteRiskCode));
+    sessionStorage.setItem("quoteProductCode", JSON.stringify(this.quoteProductCode)); 
+    sessionStorage.setItem("quoteId", JSON.stringify(this.id));
+    sessionStorage.setItem("quoteCode", JSON.stringify(this.quoteCode));
+    // console.log(this.quoteCode);
+  }
+
+} 

@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { QuotationService } from '../../../services/quotation.service';
 import { Router, RouterStateSnapshot } from '@angular/router';
+// import { MomentModule } from 'angular2-moment';
 
 import { Quotation } from '../../../models/Quotation'; 
-// import { stringify } from 'querystring'; 
+import { stringify } from '@angular/core/src/render3/util';
 
 @Component({
   selector: 'app-quotation-add',
@@ -14,6 +15,7 @@ import { Quotation } from '../../../models/Quotation';
 export class QuotationAddComponent implements OnInit {
   quotations: Quotation[] = [];
   code = 0;
+  coverTo: any;
   quotation: Quotation = {
     id: '',
     code: 0,
@@ -105,10 +107,26 @@ export class QuotationAddComponent implements OnInit {
         if(quotations[i].code > this.code ) this.code = quotations[i].code;
       }
       this.code += 1;
-    });
+    });  
+  }
 
-    
-  } 
+  computeCoverTo(event){
+    var coverFrom = new Date(event.target.value); coverFrom.setFullYear(coverFrom.getFullYear() + 1);
+    let yy = coverFrom.getFullYear();
+    let mm = padNumber(coverFrom.getMonth() + 1);
+    let dd = padNumber(coverFrom.getDate());
+
+    function padNumber(n) {
+      return (n < 10 ) ? ("0" + n) : n;
+    }
+
+   console.log(yy, mm, dd);
+
+
+    this.coverTo = yy + "-" + mm + "-" + dd;
+    console.log(this.coverTo);
+  }
+
 
   onSubmit({value, valid}: {value: Quotation, valid: boolean}) {
     if(!valid) {

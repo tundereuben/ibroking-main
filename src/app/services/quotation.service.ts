@@ -27,12 +27,12 @@ export class QuotationService {
   products: Observable<QuoteProduct[]>;
   product: Observable<QuoteProduct>;
 
-  quoteRisksCollection: AngularFirestoreCollection<QuoteRisk> // Fetch already setup risks
+  quoteRisksCollection: AngularFirestoreCollection<QuoteRisk> 
   quoteRiskDoc: AngularFirestoreDocument<QuoteRisk>;
   quoteRisks: Observable<QuoteRisk[]>;
   quoteRisk: Observable<QuoteRisk>;
 
-  quoteRiskLimitsCollection: AngularFirestoreCollection<QuoteRiskLimit> // Fetch already setup risks
+  quoteRiskLimitsCollection: AngularFirestoreCollection<QuoteRiskLimit> 
   quoteRiskLimitDoc: AngularFirestoreDocument<QuoteRiskLimit>;
   quoteRiskLimits: Observable<QuoteRiskLimit[]>;
   quoteRiskLimit: Observable<QuoteRiskLimit>;
@@ -183,7 +183,7 @@ export class QuotationService {
   }
   
   updateQuoteRisk(updateQuoteRisk: QuoteRisk){
-    this.quoteRiskDoc = this.afs.doc(`quotes_risks/${updateQuoteRisk.id}`);
+    this.quoteRiskDoc = this.afs.doc(`quote_risks/${updateQuoteRisk.id}`);
     this.quoteRiskDoc.update(updateQuoteRisk);
   }
 
@@ -230,7 +230,7 @@ export class QuotationService {
   }
   
   updateQuoteRiskLimit(updateQuoteRiskLimit: QuoteRiskLimit){
-    this.quoteRiskLimitDoc = this.afs.doc(`quotes_risk_limits/${updateQuoteRiskLimit.id}`);
+    this.quoteRiskLimitDoc = this.afs.doc(`quote_risk_limits/${updateQuoteRiskLimit.id}`);
     this.quoteRiskLimitDoc.update(updateQuoteRiskLimit);
   }
 

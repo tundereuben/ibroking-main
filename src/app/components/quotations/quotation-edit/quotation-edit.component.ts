@@ -79,7 +79,7 @@ export class QuotationEditComponent implements OnInit {
     this.quotationService.getQuotation(this.id).subscribe(quotation => {
       this.quotation = quotation;
       this.client = this.quotation.client;
-      console.log(quotation);
+      // console.log(quotation);
     });
 
     // fetch clients from API, assign clientCode
@@ -100,6 +100,7 @@ export class QuotationEditComponent implements OnInit {
 
     // fetch currencies from API
     var currencies = this.quotationService.currencies;
+    // console.log(currencies)
     var size = 0, key; var code = 0;
     for (key in currencies) {
       this.currencies.push({
@@ -108,7 +109,7 @@ export class QuotationEditComponent implements OnInit {
         "symbol": currencies[key].symbol
       });
     }
-    
+    console.log(this.currencies);
   } 
 
   onSubmit({value, valid}: {value: Quotation, valid: boolean}) {
@@ -125,5 +126,4 @@ export class QuotationEditComponent implements OnInit {
       this.router.navigate([`/quotation-details/${this.id}`]);
     }
   }
-
 }
