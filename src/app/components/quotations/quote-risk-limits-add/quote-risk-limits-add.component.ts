@@ -17,6 +17,7 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
   // quoteCode: number;
   isAdd: boolean;
   quoteRiskCode: number;
+  quoteRisk: any;
   quoteId: string;
   sections: Section[] = []; riskSectionCode = null;
 
@@ -50,7 +51,10 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.quoteRiskCode = parseInt(JSON.parse(sessionStorage.getItem("quoteRiskCode")));
+    // this.quoteRiskCode = parseInt(JSON.parse(sessionStorage.getItem("quoteRiskCode")));
+    this.quoteRisk = JSON.parse(sessionStorage.getItem("quoteRisk"));
+    this.quoteRiskCode = this.quoteRisk.code;
+    // console.log(this.quoteRisk);
     this.isAdd = JSON.parse(sessionStorage.getItem("isAdd"));
     this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
 
@@ -102,6 +106,14 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
       // Show Error Message
       this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
     } else {
+      
+      // fetch session variables
+      var quoteInfo = JSON.parse(sessionStorage.getItem("quoteInfo"));
+      var quoteProduct = JSON.parse(sessionStorage.getItem("quoteProduct"));
+      var quoteRisk = JSON.parse(sessionStorage.getItem("quoteRisk"));
+      console.log(quoteInfo, quoteProduct, quoteRisk);
+
+
       // Add New Quote
       // value.quoteCode = this.quoteCode;
       value.quoteRiskCode = this.quoteRiskCode;

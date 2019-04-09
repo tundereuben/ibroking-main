@@ -18,6 +18,7 @@ export class QuoteRisksAddComponent implements OnInit {
 isAdd: boolean;
 quoteId: string;
 quoteProductCode: number;
+quoteProduct: any; // Fetch from session storage
 subclasses: Subclass[] = []; riskSubclass = null;
 covertypes: Covertype[] = []; riskCovertype = null;
 quoteRisks: QuoteRisk[] = [];
@@ -54,9 +55,10 @@ quoteRisk: QuoteRisk = {
   ngOnInit() {
     // get quoteCode from session variable
     this.isAdd = JSON.parse(sessionStorage.getItem("isAdd"));
+    this.quoteProduct = JSON.parse(sessionStorage.getItem("quoteProduct"));
     this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
-    this.quoteProductCode = parseInt(sessionStorage.getItem("quoteProductCode"));
-    // console.log(sessionStorage.getItem("quoteProductCode"))
+    this.quoteProductCode =this.quoteProduct.code;
+    // console.log(this.quoteProduct);
         
     this.setupService.getSubclasses().subscribe(subclasses => {
       this.subclasses = subclasses;
@@ -89,7 +91,8 @@ quoteRisk: QuoteRisk = {
       value.code = this.quoteRisk.code;
       this.quotationService.newQuoteRisk(value);
       // save quoteRisk in session variable
-      sessionStorage.setItem("quoteRiskCode", JSON.stringify(value.code));
+      // sessionStorage.setItem("quoteRiskCode", JSON.stringify(value.code));
+      sessionStorage.setItem("quoteRisk", JSON.stringify(value));
       this.router.navigate(['/quote-risk-limits-add']);
     }
   }

@@ -18,7 +18,8 @@ export class QuoteProductsAddComponent implements OnInit {
   quotations: Quotation[] = []; quotation = null
   quoteProducts: QuoteProduct[] = [];
   productCode = null;
-  quoteCode: string; // Get quoteCode from session
+  quoteCode: number; // Get quoteCode from session
+  quoteInfo: any; // get quotation from session
 
   quoteProduct: QuoteProduct = {
     id: '',
@@ -39,7 +40,8 @@ export class QuoteProductsAddComponent implements OnInit {
 
   ngOnInit() {
     // get quoteCode from session variable
-    this.quoteCode = JSON.parse(sessionStorage.getItem("quoteCode"));
+    this.quoteInfo = JSON.parse(sessionStorage.getItem("quoteInfo"));
+    this.quoteCode = this.quoteInfo.code;
     this.quotationService.getProducts().subscribe(products => {
       this.products = products;
     });
@@ -61,11 +63,12 @@ export class QuoteProductsAddComponent implements OnInit {
       this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
     } else {
       // Add New Quote
-      value.quoteCode = parseInt(this.quoteCode);
+      value.quoteCode = this.quoteCode;
       value.code = this.quoteProduct.code;
       this.quotationService.newQuoteProduct(value);
       // save quoteProductValue in session variable
-      sessionStorage.setItem("quoteProductCode", JSON.stringify(value.code));
+      // sessionStorage.setItem("quoteProductCode", JSON.stringify(value.code));
+      sessionStorage.setItem("quoteProduct", JSON.stringify(value));
       this.router.navigate(['/quote-risks-add']); 
     }
   }

@@ -120,11 +120,11 @@ export class QuotationAddComponent implements OnInit {
       return (n < 10 ) ? ("0" + n) : n;
     }
 
-   console.log(yy, mm, dd);
+  //  console.log(yy, mm, dd);
 
 
     this.coverTo = yy + "-" + mm + "-" + dd;
-    console.log(this.coverTo);
+    // console.log(this.coverTo);
   }
 
 
@@ -139,8 +139,19 @@ export class QuotationAddComponent implements OnInit {
       this.quotationService.newQuotation(value);
 
       // save values in a session variable, then re-route to quote-products
-      sessionStorage.setItem("quoteCode", JSON.stringify(value.code));
+      // sessionStorage.setItem("quoteCode", JSON.stringify(value.code));
+      sessionStorage.setItem("quoteInfo", JSON.stringify(value));
       this.router.navigate(['/quote-products-add']);
+
+      //  Get id of quotation
+      this.quotationService.getQuotations().subscribe(quotations => {
+        this.quotations = quotations;
+        this.quotations.forEach((quotation) => {
+          if(quotation.code == value.code) {
+            sessionStorage.setItem("quoteId", JSON.stringify(quotation.id));
+          }
+        })
+      });
     }
   }
 
