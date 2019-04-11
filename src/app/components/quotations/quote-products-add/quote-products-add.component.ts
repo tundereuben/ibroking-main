@@ -20,6 +20,8 @@ export class QuoteProductsAddComponent implements OnInit {
   productCode = null;
   quoteCode: number; // Get quoteCode from session
   quoteInfo: any; // get quotation from session
+  coverFrom: string;
+  coverTo: string; 
 
   quoteProduct: QuoteProduct = {
     id: '',
@@ -27,9 +29,11 @@ export class QuoteProductsAddComponent implements OnInit {
     code: 0,
     description: '',
     quoteCode: 0,
-    productCode: 0
+    productCode: 0, 
+    coverFrom: '',
+    coverTo: ''
   }
-
+ 
   @ViewChild('quoteProductForm') form: any;
 
   constructor(
@@ -42,6 +46,11 @@ export class QuoteProductsAddComponent implements OnInit {
     // get quoteCode from session variable
     this.quoteInfo = JSON.parse(sessionStorage.getItem("quoteInfo"));
     this.quoteCode = this.quoteInfo.code;
+    this.quoteProduct.coverFrom = this.quoteInfo.coverFrom;
+    this.quoteProduct.coverTo = this.quoteInfo.coverTo;
+    // console.log(this.quoteProduct.coverFrom, this.quoteProduct.coverTo);
+
+    
     this.quotationService.getProducts().subscribe(products => {
       this.products = products;
     });
@@ -55,6 +64,12 @@ export class QuoteProductsAddComponent implements OnInit {
       this.quoteProduct.code += 1;
       // console.log(this.quoteProduct.code)
     });
+  }
+
+  // When the back button is clicked.
+  onBack(){
+    let back = true;
+    sessionStorage.setItem("back", JSON.stringify(back));
   }
 
   onSubmit({value, valid}: {value: QuoteProduct, valid: boolean}) {

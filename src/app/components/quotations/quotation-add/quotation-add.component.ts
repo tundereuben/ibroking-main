@@ -15,18 +15,18 @@ import { stringify } from '@angular/core/src/render3/util';
 export class QuotationAddComponent implements OnInit {
   quotations: Quotation[] = [];
   code = 0;
+  coverFrom: any;
   coverTo: any;
+  back: boolean  // Check when back button is clicked.
+
   quotation: Quotation = {
     id: '',
     code: 0,
     quoteNo: 0,
     client: {},
-    // clientCode: 0,
-    // clientName: '',
     agent: {},
-    // agentCode: 0,
-    sourceCode: 0,
-    branchCode: 0,
+    source: '',
+    branch: '',
     currency: {},
     coverFrom: '',
     coverTo: '',
@@ -37,28 +37,18 @@ export class QuotationAddComponent implements OnInit {
     ok: '',
     premium: 0,
     commissionAmount: 0,
-    // clientType: '',
   };
 
   clients: any[]  = [];  client = null
-  agentCode = null; 
+  agent = null; 
 
-  sourceCode = null; 
-  sources: any[] = [
-    {'code': 0, 'name': 'Direct'},
-    {'code': 1, 'name': 'Walk-In'},
-    {'code': 2, 'name': 'Referred'}
-  ]; 
+  source = null; 
+  sources: any[] = ['Direct', 'Walk-In', 'Referred']; 
 
-  branchCode = null;
-  branches: any[] = [
-    {'code': 0, 'name': 'Lagos'},
-    {'code': 1, 'name': 'Abuja'},
-    {'code': 2, 'name': 'Kano'},
-    {'code': 3, 'name': 'Kaduna'}
-  ]; 
+  branch = null;
+  branches: any[] = ['Lagos', 'Abuja', 'Kaduna', 'Kano' ]; 
 
-  currencies: any[] = [];      currencyCode = null; currencySymbol = null; currency = null;
+  currencies: any[] = [];      currency = null;
   paymentFrequencies: string[] = ['Anually', 'Semi-anually', 'Quarterly'];   paymentFrequency = null;
 
   usersUrl = 'https://jsonplaceholder.typicode.com/users';
@@ -107,7 +97,23 @@ export class QuotationAddComponent implements OnInit {
         if(quotations[i].code > this.code ) this.code = quotations[i].code;
       }
       this.code += 1;
-    });  
+    });   
+
+    //  If the back button was clicked.
+    this.back = JSON.parse(sessionStorage.getItem("back"));
+    if(this.back) {
+      this.quotation = JSON.parse(sessionStorage.getItem("quoteInfo"));
+      this.client = this.quotation.client;
+      this.agent = this.quotation.agent;
+      this.source = this.quotation.source;
+      this.branch = this.quotation.branch;
+      this.currency = this.quotation.currency;
+      this.coverFrom = this.quotation.coverFrom;
+      this.coverTo = this.quotation.coverTo;
+      this.paymentFrequency = this.quotation.paymentFrequency;
+      console.log(this.quotation, this.quotation.id);
+    }
+    
   }
 
   computeCoverTo(event){
@@ -119,14 +125,8 @@ export class QuotationAddComponent implements OnInit {
     function padNumber(n) {
       return (n < 10 ) ? ("0" + n) : n;
     }
-
-  //  console.log(yy, mm, dd);
-
-
     this.coverTo = yy + "-" + mm + "-" + dd;
-    // console.log(this.coverTo);
   }
-
 
   onSubmit({value, valid}: {value: Quotation, valid: boolean}) {
     if(!valid) {
@@ -135,11 +135,9 @@ export class QuotationAddComponent implements OnInit {
     } else {
       // Add New Quote
       value.code = this.code;
-      // value.currencyCode = this.currency.code; value.currecnySymbol = this.currency.symbol;
       this.quotationService.newQuotation(value);
 
       // save values in a session variable, then re-route to quote-products
-      // sessionStorage.setItem("quoteCode", JSON.stringify(value.code));
       sessionStorage.setItem("quoteInfo", JSON.stringify(value));
       this.router.navigate(['/quote-products-add']);
 

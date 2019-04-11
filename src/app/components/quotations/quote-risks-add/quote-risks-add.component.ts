@@ -56,9 +56,12 @@ quoteRisk: QuoteRisk = {
     // get quoteCode from session variable
     this.isAdd = JSON.parse(sessionStorage.getItem("isAdd"));
     this.quoteProduct = JSON.parse(sessionStorage.getItem("quoteProduct"));
+    this.quoteRisk.coverFrom = this.quoteProduct.coverFrom;
+    this.quoteRisk.coverTo = this.quoteProduct.coverTo;
+    console.log(this.quoteProduct.coverFrom, this.quoteProduct.coverTo);
     this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
     this.quoteProductCode =this.quoteProduct.code;
-    // console.log(this.quoteProduct);
+    console.log(this.quoteProduct);
         
     this.setupService.getSubclasses().subscribe(subclasses => {
       this.subclasses = subclasses;
@@ -75,9 +78,7 @@ quoteRisk: QuoteRisk = {
         if(quoteRisks[i].code > this.quoteRisk.code ) this.quoteRisk.code = quoteRisks[i].code;
       }
       this.quoteRisk.code += 1;
-      // console.log(this.quoteRisk.code)
     });
-
   }
 
   onSubmit({value, valid}: {value: QuoteRisk, valid: boolean}) {

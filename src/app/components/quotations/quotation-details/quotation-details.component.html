@@ -60,8 +60,8 @@
             <tr *ngFor="let product of quoteProducts">
               <td>{{ product?.productCode }}</td>
               <td>{{ product?.code }} </td> 
-              <td>{{ product?.fromDate }}</td>
-              <td>{{ product?.toDate }}</td>
+              <td>{{ product?.coverFrom }}</td>
+              <td>{{ product?.coverTo }}</td>
               <td>
                 <div id="buttons">
                   <a routerLink="/quote-products-edit/{{ product.id }}" class="btn "> 

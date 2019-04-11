@@ -10,8 +10,10 @@ export interface Quotation {
     agent?: any, 
     agentCode?: number, // remove agentCode and agentName
     // agentName?: string,
-    sourceCode?: number,
-    branchCode?: number,
+    // sourceCode?: number,
+    // branchCode?: number,
+    source?: string,
+    branch?: string,
     currency?: any,
     // currencyCode?: number,
     // currecnySymbol?: string,

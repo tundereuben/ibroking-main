@@ -22,8 +22,8 @@ export class QuotationEditComponent implements OnInit {
     clientCode: 0,
     clientName: '',
     agentCode: 0,
-    sourceCode: 0,
-    branchCode: 0,
+    source: '',
+    branch: '',
     currency: {},
     coverFrom: '',
     coverTo: '',
@@ -41,20 +41,11 @@ export class QuotationEditComponent implements OnInit {
   agentCode = this.quotation.agentCode; 
   // code = this.quotation.code;
 
-  sourceCode = this.quotation.sourceCode; 
-  sources: any[] = [
-    {'code': 0, 'name': 'Direct'},
-    {'code': 1, 'name': 'Walk-In'},
-    {'code': 2, 'name': 'Referred'}
-  ]; 
+  source = this.quotation.source; 
+  sources: any[] = ['Direct', 'Walk-In', 'Referred']; 
 
-  branchCode = this.quotation.branchCode;
-  branches: any[] = [
-    {'code': 0, 'name': 'Lagos'},
-    {'code': 1, 'name': 'Abuja'},
-    {'code': 2, 'name': 'Kano'},
-    {'code': 3, 'name': 'Kaduna'}
-  ]; 
+  branch = this.quotation.branch;
+  branches: any[] = ['Lagos', 'Abuja', 'Kaduna', 'Kano' ]; 
 
   currencies: any[] = [];      
   // currencyCode = this.quotation.currency.code; 
@@ -79,7 +70,6 @@ export class QuotationEditComponent implements OnInit {
     this.quotationService.getQuotation(this.id).subscribe(quotation => {
       this.quotation = quotation;
       this.client = this.quotation.client;
-      // console.log(quotation);
     });
 
     // fetch clients from API, assign clientCode
@@ -109,7 +99,6 @@ export class QuotationEditComponent implements OnInit {
         "symbol": currencies[key].symbol
       });
     }
-    console.log(this.currencies);
   } 
 
   onSubmit({value, valid}: {value: Quotation, valid: boolean}) {

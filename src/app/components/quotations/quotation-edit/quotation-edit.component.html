@@ -20,11 +20,11 @@
       </select>
     </div>
     <div class="form-group">
-      <label for="agentCode">Agent</label>
+      <label for="agent">Agent</label>
       <select 
         class="form-control"
-        name="agentCode"
-        [(ngModel)]="quotation.agentCode" 
+        name="agent"
+        [(ngModel)]="quotation.agent" 
         required
       >
       <option [ngValue]="quotation.agentCode">{{ quotation.agentCode }}</option>
@@ -35,24 +35,24 @@
       <label for="source">Source</label>
       <select 
         class="form-control"
-        name="sourceCode"
-        [(ngModel)]="sourceCode" 
+        name="source"
+        [(ngModel)]="quotation.source" 
         required
       >
-        <option [ngValue]="sourceCode">{{ sourceCode }}</option>
-        <option *ngFor="let s of sources" [ngValue]="s.code">{{ s.name }}</option>
+        <option [ngValue]="quotation.source">{{ quotation.source }}</option>
+        <option *ngFor="let s of sources" [ngValue]="s">{{ s }}</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="branchCode">Branch</label>
+      <label for="branch">Branch</label>
       <select 
         class="form-control"
-        name="branchCode"
-        [(ngModel)]="branchCode" 
+        name="branch"
+        [(ngModel)]="quotation.branch" 
         required
       >
-      <option [ngValue]="branchCode">{{ branchCode }}</option>
-      <option *ngFor="let b of branches" [ngValue]="b.code">{{ b.name }}</option>
+      <option [ngValue]="quotation.branch">{{ quotation.branch }}</option>
+      <option *ngFor="let b of branches" [ngValue]="b">{{ b }}</option>
       </select>
     </div>  
     </div>

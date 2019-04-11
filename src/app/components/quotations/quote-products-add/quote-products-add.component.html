@@ -22,31 +22,31 @@
 
       <div class="col-md-6">
         <div class="form-group">
-          <label for="fromDate">From Date</label>
+          <label for="coverFrom">From Date</label>
           <input 
             type="date" 
             class="form-control"
-            name="fromDate"
+            name="coverFrom"
             #quotationCoverFrom="ngModel"
-            [(ngModel)]="quoteProduct.fromDate" 
+            [(ngModel)]="quoteProduct.coverFrom" 
             required
           >
         </div>
         <div class="form-group">
-          <label for="toDate">To Date</label>
+          <label for="coverTo">To Date</label>
           <input 
             type="date" 
             class="form-control"
-            name="toDate"
+            name="coverTo"
             #quotationCoverTo="ngModel"
-            [(ngModel)]="quoteProduct.toDate" 
+            [(ngModel)]="quoteProduct.coverTo" 
             required
           >
         </div>
       </div>
       
       <div id="rule"></div>      
-     <a routerLink="/quotation-add" class="btn btn-info pull-left"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back&nbsp;</a>
+     <a (click)="onBack()" routerLink="/quotation-add" class="btn btn-info pull-left"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back&nbsp;</a>
      <button  class="btn btn-info pull-right">Next&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></button>
       </form>
     </div>
