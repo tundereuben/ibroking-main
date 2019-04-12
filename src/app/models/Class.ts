@@ -1,7 +1,5 @@
 export interface Class {
-    id?: string,
-    name?: string,
-    code?: string,
-    description?: string,
-    // shortDescription?: string    
+    cla_code?: string,
+    cla_sht_desc?: string,
+    cla_desc?: string,
 }
