@@ -44,3 +44,5 @@ testem.log
 Thumbs.db
 
 ibroking_setups.sql
+/src
+apikey.ts
