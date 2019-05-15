@@ -1,23 +1,26 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
-import { Class } from '../models/Class';
+import { HttpClient, HttpHeaders } from '@angular/common/http'; 
+
+import { setupClass } from '../models/Class';
 import { Subclass } from '../models/Subclass';
 import { Product } from '../models/Product';
 import { Clause } from '../models/Clause';
 import { Section } from '../models/Section';
 import { Covertype } from '../models/Covertype';
+import { DEFAULT_HEADERS } from '../models/authorization';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SetupService {
-  classesCollection: AngularFirestoreCollection<Class>;
-  classDoc: AngularFirestoreDocument<Class>;
-  classes: Observable<Class[]>;
-  class: Observable<Class>; 
+  classesCollection: AngularFirestoreCollection<setupClass>;
+  classDoc: AngularFirestoreDocument<setupClass>;
+  classes: Observable<setupClass[]>;
+  class: Observable<setupClass>; 
 
   subclassesCollection: AngularFirestoreCollection<Subclass>;
   subclassDoc: AngularFirestoreDocument<Subclass>;
@@ -44,62 +47,128 @@ export class SetupService {
   covertypes: Observable<Covertype[]>;
   covertype: Observable<Covertype>;
 
-  constructor(private afs: AngularFirestore) { 
-    this.classesCollection = this.afs.collection('classes', ref => ref.orderBy('code','asc'));
+  constructor(
+    private afs: AngularFirestore,
+    private http: HttpClient ) { 
+    // this.classesCollection = this.afs.collection('classes', ref => ref.orderBy('code','asc'));
     this.subclassesCollection = this.afs.collection('subclass', ref => ref.orderBy('code','asc'));
     this.productsCollection = this.afs.collection('product',  ref => ref.orderBy('code','asc'));
     this.clausesCollection = this.afs.collection('clause',  ref => ref.orderBy('code','asc'));
     this.sectionsCollection = this.afs.collection('section',  ref => ref.orderBy('code','asc'));
     this.covertypesCollection = this.afs.collection('covertype',  ref => ref.orderBy('code','asc'));
+  };
+
+  // API CALLS
+  classesUrl = 'api/classes';
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
+  };
+ 
+
+  // Error handler
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> =>  {
+      console.error(error);
+      console.log(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    }
   }
+
 
   // =========================== //
   // ==== CLASS FUNCTIONS ====== //
   // =========================== //
 
-  getClasses(): Observable<Class[]> {
-    // Get classes with the id
-   this.classes = this.classesCollection.snapshotChanges().pipe(
-     map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as Class;
-       data.id = a.payload.doc.id; 
-       return data; 
-      //  console.log(data);
-     }))
-   )
-    return this.classes;
+  // getClasses(): Observable<Class[]> {
+  //   // Get classes with the id
+  //  this.classes = this.classesCollection.snapshotChanges().pipe(
+  //    map(actions => actions.map(a => {
+  //      const data = a.payload.doc.data() as Class;
+  //      data.id = a.payload.doc.id; 
+  //      return data; 
+  //     //  console.log(data);
+  //    }))
+  //  )
+  //   return this.classes;
+  // }
+
+  /** GET classes. Will 404 if id not found */
+  getClasses(): Observable<setupClass[]> {
+    return this.http.get<setupClass[]>(this.classesUrl);
   }
 
-  newClass(newClass: Class) {
-    this.classesCollection.add(newClass);
+  /** GET class by id. Will 404 if id not found */
+  getClass(id: number): Observable<setupClass> {
+    const url = `${this.classesUrl}/${id}`;
+    return this.http.get<setupClass>(url);
   }
 
-  getClass(id: string): Observable<Class> {
-    this.classDoc = this.afs.doc<Class>(`classes/${id}`);
-    this.class = this.classDoc.snapshotChanges().pipe(
-      map(action => {
-        if (action.payload.exists === false ) {
-          return null;
-        } else {
-          const data = action.payload.data() as Class;
-          data.id = action.payload.id;
-          // console.log(data);
-          return data;
-        }
-      })
-    )
-    return this.class;
+  /** POST: add a new class to the server */
+  addClass(newClass: setupClass): Observable<setupClass> {
+    return this.http.post<setupClass>('/api/classes', JSON.stringify(newClass), {headers: DEFAULT_HEADERS});
   }
+
+  /** PUT:  */
+  updateClass(updatedClass: setupClass): Observable<setupClass> {
+    const url = `${this.classesUrl}/${updatedClass.claCode}`;
+    return this.http.put(url, updatedClass, this.httpOptions).pipe(
+      tap(_ => console.log(`updated class code = ${updatedClass.claCode}`)),
+      catchError(this.handleError<any>('updateClass'))
+    );
+  }
+
+  /** DELETE:  */
+  deleteClass(_class: setupClass) {
+    return this.http.delete(this.classesUrl + "/" + _class.claCode);
+}
+
   
-  updateClass(updateClass: Class){
-    this.classDoc = this.afs.doc(`classes/${updateClass.id}`);
-    this.classDoc.update(updateClass);
-  }
 
-  deleteClass(deleteClass: Class) {
-      this.classDoc = this.afs.doc(`classes/${deleteClass.id}`);
-      this.classDoc.delete();
-  }
+  // newClass(newClass) {
+  //   // this.classesCollection.add(newClass);
+    
+  //   var xmlhttp = new XMLHttpRequest();
+  //   xmlhttp.open("POST", this.addClassUrl, true);
+  //   // xmlhttp.setRequestHeader("Content-type"," application/json");
+  //   xmlhttp.onreadystatechange = () => {
+  //     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) alert (xmlhttp.responseText);
+  //   }
+  //   xmlhttp.send(JSON.parse(newClass));
+  //   // console.log(newClass.cla_code);
+  // }
+
+  // getClass(id: string): Observable<Class> {
+  //   this.classDoc = this.afs.doc<Class>(`classes/${id}`);
+  //   this.class = this.classDoc.snapshotChanges().pipe(
+  //     map(action => {
+  //       if (action.payload.exists === false ) {
+  //         return null;
+  //       } else {
+  //         const data = action.payload.data() as Class;
+  //         data.id = action.payload.id;
+  //         // console.log(data);
+  //         return data;
+  //       }
+  //     })
+  //   )
+  //   return this.class;
+  // }
+  
+  /** UPDATE: */
+  // updateClass(updateClass: setupClass){
+  //   this.classDoc = this.afs.doc(`classes/${updateClass.claCode}`);
+  //   this.classDoc.update(updateClass);
+  // }
+
+  // deleteClass(deleteClass: Class) {
+  //     this.classDoc = this.afs.doc(`classes/${deleteClass.claCode}`);
+  //     this.classDoc.delete();
+  // }
+
+  
   // ++++++++++ CLASS FUNCTIONS ENDS ++++++++++ //
  
 
@@ -125,7 +194,7 @@ export class SetupService {
   }
 
   getSubclass(id: string): Observable<Subclass> {
-    this.subclassDoc = this.afs.doc<Class>(`subclass/${id}`);
+    this.subclassDoc = this.afs.doc<Subclass>(`subclass/${id}`);
     this.subclass = this.subclassDoc.snapshotChanges().pipe(
       map(action => {
         if (action.payload.exists === false ) {

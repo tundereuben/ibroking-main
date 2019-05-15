@@ -3,7 +3,8 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { SetupService } from '../../../services/setup.service';
 import { Router, RouterStateSnapshot } from '@angular/router';
 
-import { Class } from '../../../models/Class';
+import { setupClass } from '../../../models/Class';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-class-add',
@@ -11,14 +12,9 @@ import { Class } from '../../../models/Class';
   styleUrls: ['./class-add.component.css']
 })
 export class ClassAddComponent implements OnInit {
-  classes: Class[];
-
-  class: Class = {
-    code: '',
-    description: '',
-    name: '',
-    // shortDescription: ''
-  }
+  classes: setupClass[];
+  class: setupClass = new setupClass();
+  private sub = Subscription;
 
   @ViewChild('classForm') form: any;
 
@@ -29,20 +25,31 @@ export class ClassAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.setupService.getClasses().subscribe(classes => {
-    })
   }
 
-  onSubmit({value, valid}: {value: Class, valid: boolean}) {
-    if(!valid) {
-      // Show error
+  // onSubmit({value, valid}: {value: any, valid: boolean}) {
+  //   if(!valid) {
+  //     // Show error
+  //     this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 4000});
+  //   } else {
+  //     this.setupService.createClass({value} as setupClass)
+  //     // this.flashMessage.show('New class added', {cssClass: 'alert-success', timeout: 4000});
+  //     // Redirect to class
+  //     // this.router.navigate(['/class']);
+  //   }
+  // }
+
+  onSubmit({value, valid}: {value: any, valid: boolean}){
+    if(!valid)  {
       this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 4000});
     } else {
-      this.setupService.newClass(value);
-      this.flashMessage.show('New class added', {cssClass: 'alert-success', timeout: 4000});
-      // Redirect to class
-      this.router.navigate(['/class']);
-    }
+      const sub = this.setupService.addClass(this.class)
+      .subscribe(data => {
+        this.class = data;
+        this.flashMessage.show('New class added', {cssClass: 'alert-success', timeout: 4000});
+        this.router.navigate(['/class']);
+        console.log(this.class);
+    })
+    }  
   }
-
 }

@@ -3,7 +3,7 @@
     <h1 class="page-title"> EDIT CLASS</h1>
     <div id="main-content">
      
-      <form #classForm="ngForm" (ngSubmit)="onSubmit(classForm)">
+      <form #classForm="ngForm" (ngSubmit)="onSubmit(class)">
           
         <div class="form-group col-sm-6">
             <label for="name" class=" control-label">Class Name</label>
@@ -14,7 +14,7 @@
                 name="name" 
                 #setupClassName="ngModel"
                 [ngClass]="{'is-invalid': setupClassName.errors && setupClassName.touched }"
-                [(ngModel)]="class.name"
+                [(ngModel)]="class.claShtDesc"
                 required
               >
               <div [hidden]="!setupClassName.errors?.required" class="invalid-feedback">
@@ -32,7 +32,7 @@
               name="code" 
               #setupClassCode="ngModel"
               [ngClass]="{'is-invalid': setupClassCode.errors && setupClassCode.touched}"
-              [(ngModel)]="class.code"
+              [(ngModel)]="class.claCode"
               required
             >
             <div [hidden]="!setupClassCode.errors?.required" class="invalid-feedback">
@@ -49,32 +49,11 @@
               name="description" 
               #setupClassDescription="ngModel"
               [ngClass]="{'is-invalid': setupClassDescription.errors && setupClassDescription.touched}"
-              [(ngModel)]="class.description"
+              [(ngModel)]="class.claDesc"
             >
             </div>
           </div>
-          <!-- <div class="form-group col-sm-6">
-            <label for="shortDescription" class=" control-label">Class Short Description</label>
-            <div >
-              <input 
-              type="text" 
-              class="form-control" 
-              name="shortDescription" 
-              #setupClassShortDescription="ngModel"
-              [ngClass]="{'is-invalid': setupClassShortDescription.errors && setupClassShortDescription.touched}"
-              [(ngModel)]="class.shortDescription"
-              minlength="2"
-              required
-            >
-            </div>
-            <div [hidden]="!setupClassShortDescription.errors?.required" class="invalid-feedback">
-              Class Short Description required
-            </div>
-            <div [hidden]="!setupClassShortDescription.errors?.minlength" class="invalid-feedback">
-              Must be at least 2 characters
-            </div>
-          </div> -->
-          <button class="btn btn-block btn-success">UPDATE CLASS</button>
+          <button class="btn btn-block btn-success" >UPDATE CLASS</button>
       </form>
     
     

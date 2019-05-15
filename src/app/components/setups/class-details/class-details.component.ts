@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SetupService } from '../../../services/setup.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
-import { Class } from '../../../models/Class';
+import { setupClass } from '../../../models/Class';
 
 @Component({
   selector: 'app-class-details',
@@ -11,7 +11,7 @@ import { Class } from '../../../models/Class';
 })
 export class ClassDetailsComponent implements OnInit {
   id: string;
-  class: Class;
+  class: setupClass;
 
   constructor(
     private setupService: SetupService,
@@ -24,10 +24,10 @@ export class ClassDetailsComponent implements OnInit {
     //  Get id from url
     this.id  = this.route.snapshot.params['id']; 
   //  Get Class
-    this.setupService.getClass(this.id).subscribe(data => {
-      // console.log(data)
-      this.class = data;
-    })
+    // this.setupService.getClass(this.id).subscribe(data => {
+    //   // console.log(data)
+    //   this.class = data;
+    // })
     
   }
 

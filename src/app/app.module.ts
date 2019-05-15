@@ -8,6 +8,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
+import { HttpClientModule }    from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
@@ -114,7 +116,8 @@ import { MomentModule } from 'angular2-moment';
     AngularFireModule.initializeApp(environment.firebase, 'ibroking-main'),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    MomentModule
+    MomentModule,
+    HttpClientModule
   ],
   providers: [SetupService],
   bootstrap: [AppComponent]

@@ -4,7 +4,7 @@ import { SetupService } from '../../../services/setup.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Subclass } from '../../../models/Subclass';
-import { Class } from '../../../models/Class';
+import { setupClass } from '../../../models/Class';
 
 @Component({
   selector: 'app-subclass-edit',
@@ -13,7 +13,7 @@ import { Class } from '../../../models/Class';
 })
 export class SubclassEditComponent implements OnInit {
   subclasses: Subclass[];
-  classes: Class[];
+  classes: setupClass[];
 
   id: string;
   subclass: Subclass = {
@@ -45,13 +45,12 @@ export class SubclassEditComponent implements OnInit {
       this.subclass = subclass;
     })
 
-    this.setupService.getClasses().subscribe(classes => {
-      this.classes = classes;
-      for (var i=0; i < this.classes.length; i++) {
-        this.classCodes.push(this.classes[i].code);
-      }
-      
-    });
+    // this.setupService.getClasses().subscribe(classes => {
+    //   this.classes = classes;
+    //   for (var i=0; i < this.classes.length; i++) {
+    //     this.classCodes.push(this.classes[i].code);
+    //   }
+    // });
 
     this.setupService.getSubclasses().subscribe(subclasses => {
       this.subclasses = subclasses;      

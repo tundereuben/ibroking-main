@@ -4,7 +4,7 @@ import { SetupService } from '../../../services/setup.service';
 import { Router, RouterStateSnapshot } from '@angular/router';
 
 import { Subclass } from '../../../models/Subclass';
-import { Class } from '../../../models/Class';
+import { setupClass } from '../../../models/Class';
 
 @Component({
   selector: 'app-subclass-add',
@@ -13,7 +13,7 @@ import { Class } from '../../../models/Class';
 })
 export class SubclassAddComponent implements OnInit {
   subclasses: Subclass[];
-  classes: Class[];
+  classes: setupClass[];
 
   // Initialize ARRAYS & VARIABLES for classCode & productCode => For Dropdowns
   classCodes: string[] = [];   classCode = null;
@@ -36,13 +36,13 @@ export class SubclassAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.setupService.getClasses().subscribe(classes => {
-      this.classes = classes;
-      for (var i=0; i < this.classes.length; i++) {
-        this.classCodes.push(this.classes[i].code);
-      }
+    // this.setupService.getClasses().subscribe(classes => {
+    //   this.classes = classes;
+    //   for (var i=0; i < this.classes.length; i++) {
+    //     this.classCodes.push(this.classes[i].code);
+    //   }
       
-    });
+    // });
 
     this.setupService.getSubclasses().subscribe(subclasses => {
       this.subclasses = subclasses;

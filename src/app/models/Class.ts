@@ -1,5 +1,5 @@
-export interface Class {
-    cla_code?: string,
-    cla_sht_desc?: string,
-    cla_desc?: string,
+export class setupClass {
+    claCode?: number;
+    claShtDesc?: string;
+    claDesc?: string;
 }
