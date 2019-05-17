@@ -16,16 +16,16 @@ export class ClassComponent implements OnInit {
   ngOnInit() {
     this.setupService.getClasses().subscribe(res => {
       this.classes = res;
-    });
-    
+    }); 
   }
 
   delete(_class: setupClass)  : void {
-    this.setupService.deleteClass(_class)
+    if(confirm("Are you sure?")) {
+      this.setupService.deleteClass(_class)
     .subscribe(data => {
       this.classes = this.classes.filter(c => c !== _class);
     })
-    // console.log('Delete clicked', _class);
+    }
   }
 
 }

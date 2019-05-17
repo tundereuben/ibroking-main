@@ -5,15 +5,15 @@
    
     <form #subclassForm="ngForm" (ngSubmit)="onSubmit(subclassForm)">
         <div class="form-group col-sm-6">
-          <label for="name" class=" control-label">Subclass Name</label>
+          <label for="sclShtDesc" class=" control-label">Subclass Name</label>
           <div >
             <input 
             type="text" 
             class="form-control" 
-            name="name"
+            name="sclShtDesc"
             #subclassName="ngModel"
             [ngClass]="{'is-invalid': subclassName.errors && subclassName.touched}"
-            [(ngModel)]="name"
+            [(ngModel)]="subclass.sclShtDesc"
             required 
           >
           <div [hidden]="!subclassName.errors?.required" class="invalid-feedback">
@@ -28,10 +28,10 @@
             <input 
             type="text" 
             class="form-control" 
-            name="code" 
+            name="sclCode" 
             #subclassCode="ngModel"
             [ngClass]="{'is-invalid': subclassCode.errors && subclassCode.touched}"
-            [(ngModel)]="code"
+            [(ngModel)]="subclass.sclCode"
             required 
           >
           <div [hidden]="!subclassCode.errors?.required" class="invalid-feedback">
@@ -45,49 +45,24 @@
             <input 
               type="text" 
               class="form-control" 
-              name="description"
+              name="clsDesc"
               #subclassDescription="ngModel"
-              [(ngModel)]="subclass.description" 
+              [(ngModel)]="subclass.sclDesc" 
             >
           </div>
-        </div>
-        <!-- <div class="form-group col-sm-6">
-          <label for="shortDescription" class=" control-label">Subclass Short Description</label>
-          <div >
-            <input 
-              type="text" 
-              class="form-control" 
-              name="shortDescription" 
-              #subclassShortDescription="ngModel"
-              [(ngModel)]="subclass.shortDescription"
-            >
-          </div>
-        </div> -->
-        
+        </div>        
         <div class="form-group col-sm-6">
-            <label for="classCode" class=" control-label">Class Code</label>
+            <label for="sclClaCode" class=" control-label">Class Code</label>
           <select 
             class="form-control"
-            name="classCode"
-            [(ngModel)]="classCode" 
+            name="sclClaCode"
+            [(ngModel)]="subclass.sclClaCode" 
             required
           >
             <option [ngValue]="null">Select</option>
-            <option *ngFor="let c of classCodes" [ngValue]="c">{{ c }}</option>
+            <option *ngFor="let c of classes" [ngValue]="c.claCode">{{ c.claShtDesc }}</option>
           </select>
         </div>
-
-        <!-- <div class="form-group col-sm-6">
-            <label for="productCode" class=" control-label">Product Code</label>
-          <select 
-            class="form-control"
-            name="productCode"
-            [(ngModel)]="productCode"
-          >
-            <option  [ngValue]="null">Select </option>
-            <option *ngFor="let p of productCodes" [ngValue]="p">{{ p }}</option>
-          </select>
-        </div> -->
         <button class="btn btn-block btn-success">CREATE SUBCLASS</button>
     </form>
   

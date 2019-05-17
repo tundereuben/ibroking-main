@@ -5,19 +5,19 @@
      
       <form #productForm="ngForm" (ngSubmit)="onSubmit(productForm)" >
           <div class="form-group col-sm-6">
-            <label for="name" class=" control-label">Product Name</label>
+            <label for="name" class=" control-label">Product Short Description</label>
             <div >
               <input 
                 type="text" 
                 class="form-control" 
-                name="name"
-                #productName="ngModel"
-                [ngClass]="{'is-invalid': productName.errors && productName.touched}"
-                [(ngModel)]="product.name"
+                name="proShtDesc"
+                #productShtDesc="ngModel"
+                [ngClass]="{'is-invalid': productShtDesc.errors && productShtDesc.touched}"
+                [(ngModel)]="product.proShtDesc"
                 required 
               >
-              <div [hidden]="!productName.errors?.required" class="invalid-feedback">
-                Product Name required
+              <div [hidden]="!productShtDesc.errors?.required" class="invalid-feedback">
+                Product ShtDesc required
               </div>
             </div>
           </div>
@@ -27,10 +27,10 @@
               <input 
                 type="text" 
                 class="form-control" 
-                name="code"
+                name="proCode"
                 #productCode="ngModel"
                 [ngClass]="{'is-invalid': productCode.errors && productCode.touched}"
-                [(ngModel)]="product.code"
+                [(ngModel)]="product.proCode"
                 required  
               >
               <div [hidden]="!productCode.errors?.required" class="invalid-feedback">
@@ -44,26 +44,13 @@
               <input 
                 type="text" 
                 class="form-control" 
-                name="description"
+                name="proDesc"
                 #productDescription="ngModel"
                 [ngClass]="{'is-invalid': productDescription.errors && productDescription.touched}"
-                [(ngModel)]="product.description"
+                [(ngModel)]="product.proDesc"
               >
             </div>
           </div>
-          <!-- <div class="form-group col-sm-6">
-            <label for="shortDescription" class=" control-label">Product Short Description</label>
-            <div >
-              <input 
-                type="text" 
-                class="form-control" 
-                name="shortDescription"
-                #productShortDescription="ngModel"
-                [ngClass]="{'is-invalid': productShortDescription.errors && productShortDescription.touched}"
-                [(ngModel)]="product.shortDescription"
-              >
-            </div>
-          </div> -->
           <button class="btn btn-block btn-success">CREATE PRODUCT</button>
       </form>
     

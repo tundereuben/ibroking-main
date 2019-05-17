@@ -10,8 +10,8 @@
               <input 
                 type="text" 
                 class="form-control" 
-                name="name" 
-                [(ngModel)]="clause.name"
+                name="clsShtDesc" 
+                [(ngModel)]="clause.clsShtDesc"
                 #clauseName="ngModel"
                 [ngClass]="{'is-invalid': clauseName.errors && clauseName.touched}"
                 required
@@ -27,8 +27,8 @@
               <input 
                 type="text" 
                 class="form-control" 
-                name="code" 
-                [(ngModel)]="clause.code"
+                name="clsCode" 
+                [(ngModel)]="clause.clsCode"
                 #clauseCode="ngModel"
                 [ngClass]="{'is-invalid': clauseCode.errors && clauseCode.touched}"
                 required
@@ -39,13 +39,13 @@
             </div>
           </div>
           <div class="form-group col-sm-6">
-            <label for="description" class=" control-label">Clause Description</label>
+            <label for="type" class=" control-label">Clause Type</label>
             <div >
               <input 
                 type="text" 
                 class="form-control" 
-                name="description" 
-                [(ngModel)]="clause.description"
+                name="clsType" 
+                [(ngModel)]="clause.clsType"
               >
             </div>
           </div>
@@ -55,34 +55,21 @@
               <input 
                 type="text" 
                 class="form-control" 
-                name="heading" 
-                [(ngModel)]="clause.heading"
+                name="clsHeading" 
+                [(ngModel)]="clause.clsHeading"
                 >
             </div>
           </div>
-          <div class="form-group col-sm-6">
-            <label for="type" class=" control-label">Clause Type</label>
+          <div class="form-group col-sm-12">
+            <label for="wording" class=" control-label">Clause Wording</label>
             <div >
-              <input 
-                type="text" 
-                class="form-control" 
-                name="type" 
-                [(ngModel)]="clause.type"
-              >
+                <textarea 
+                  class="form-control"  
+                  name="clsWording" 
+                  [(ngModel)]="clause.clsWording"
+                  >
+                </textarea>
             </div>
-          </div>
-          
-          <div class="form-group col-sm-6">
-              <label for="subclassCode" class=" control-label">Clause-Subclass Code</label>
-            <select 
-              class="form-control"
-              name="subclassCode"
-              [(ngModel)]="subclassCode"
-              required
-            >
-              <option [ngValue]="subclassCode">Select</option>
-              <option *ngFor="let s of subclassCodes" [ngValue]="s">{{ s }}s</option>
-            </select>
           </div>
           <button class="btn btn-block btn-success"> CREATE CLAUSE</button>
       </form>

@@ -23,10 +23,10 @@ export class SubclassDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.setupService.getSubclass(this.id).subscribe(subclass => {
-      this.subclass = subclass;
-      // console.log(subclass)
-    })
+    // this.setupService.getSubclass(this.id).subscribe(subclass => {
+    //   this.subclass = subclass;
+    //   // console.log(subclass)
+    // })
   }
 
   onDeleteClick() {

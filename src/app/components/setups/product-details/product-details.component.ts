@@ -22,10 +22,10 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.setupService.getProduct(this.id).subscribe(product => {
-      this.product = product;
-      // console.log(product)
-    })
+    // this.setupService.getProduct(this.id).subscribe(product => {
+    //   this.product = product;
+    //   // console.log(product)
+    // })
   }
 
   onDeleteClick() {

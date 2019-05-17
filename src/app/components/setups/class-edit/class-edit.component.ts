@@ -29,11 +29,18 @@ export class ClassEditComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.setupService.getClass(this.id).subscribe((data) => {
       this.class = data;
-      console.log(this.class);
     })
   }
 
-  // onSubmit({value, valid}: {value: setupClass, valid: boolean}) {
+ onSubmit(value): void {
+    this.setupService.updateClass(value)
+      .subscribe(() => {
+        this.flashMessage.show('Class Updated', {cssClass: 'alert-success', timeout: 4000});
+        this.router.navigate(['/class']);
+      })
+  }
+
+   // onSubmit({value, valid}: {value: setupClass, valid: boolean}) {
   //   if(!valid) {
   //     this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 4000});
   //   } else {
@@ -42,13 +49,5 @@ export class ClassEditComponent implements OnInit {
   //     this.router.navigate(['/class']);
   //   }
   // }
-
-  onSubmit(value): void {
-    this.setupService.updateClass(value)
-      .subscribe(() => {
-        this.flashMessage.show('Class Updated', {cssClass: 'alert-success', timeout: 4000});
-        this.router.navigate(['/class']);
-      })
-  }
 
 }

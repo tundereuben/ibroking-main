@@ -10,7 +10,7 @@ import { Section } from '../../../models/Section';
   styleUrls: ['./section-details.component.css']
 })
 export class SectionDetailsComponent implements OnInit {
-  id: string;
+  id: number;
   section: Section;
 
   constructor(

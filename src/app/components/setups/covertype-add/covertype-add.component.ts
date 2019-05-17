@@ -20,13 +20,7 @@ export class CovertypeAddComponent implements OnInit {
   subclassCodes: string[] = [];   subclassCode = null;
   // productCodes: string[] = []; productCode = null;
  
-  covertype: Covertype = {
-    id: '',
-    name: '',
-    code: '',
-    description: '',
-    subclassCode: ''
-  };
+  covertype: Covertype = {};
 
   @ViewChild('covertypeForm') form: any;
 
@@ -39,23 +33,23 @@ export class CovertypeAddComponent implements OnInit {
   ngOnInit() {
     this.setupService.getSubclasses().subscribe(subclasses => {
       this.subclasses = subclasses;      
-      for (var i=0; i < this.subclasses.length; i++) {
-        this.subclassCodes.push(this.subclasses[i].code);
-      }
+      // for (var i=0; i < this.subclasses.length; i++) {
+      //   this.subclassCodes.push(this.subclasses[i].code);
+      // }
     });
     // console.log(this.subclassCodes)
   }
 
   onSubmit({value, valid}: {value: Covertype, valid: boolean}) {
     if(!valid) {
-      // Show Error Message
       this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
     } else {
-      // Add New Subclass
-      value.subclassCode = this.subclassCode;
-      this.setupService.newCovertype(value);
-      this.flashMessage.show('New Covertype Added', {cssClass: 'alert-success', timeout: 5000});
-      this.router.navigate(['/covertypes']);
+      const sub = this.setupService.addCovertype(this.covertype)
+      .subscribe(data => {
+        this.covertype = data;
+        this.flashMessage.show('New covertype added', {cssClass: 'alert-success', timeout: 4000});
+        this.router.navigate(['/covertypes']);
+    })
     }
   }
 

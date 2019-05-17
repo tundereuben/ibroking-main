@@ -14,18 +14,7 @@
       <div class="form-group">
         <label class="sr-only" for="description">Clause Description</label>
         <input type="text" class="form-control" id="description" placeholder="Clause Description">
-      </div>
-      <!-- <div class="form-group">
-        <label class="sr-only" for="exampleInputPassword3">Proposal Status</label>
-        <select class="form-control">
-          <option>Proposal Status</option>
-          <option>Draft</option>
-          <option>Incomplete</option>
-          <option>Complete</option>
-          <option>Confirmed</option>
-        </select>
-      </div> -->
-     
+      </div>   
       
       <button type="submit" class="btn btn-primary">Search</button>
       <a class="btn btn-success" id="new-class" href="/clause-add">New Clause</a>
@@ -35,23 +24,18 @@
         <tr>
         <th> Code</th>
         <th> Clause Name</th>
-        <th>Description</th>
-        <!-- <th>Short Description</th> -->
         <th>Clause Heading</th>
+        <!-- <th>Clause Wording</th> -->
         <th>Clause Type</th>
-        <th>Class-Subclass Code</th>
-        <!-- <th>Options</th> -->
         <th>Details</th>
         </tr>
         <tr *ngFor="let clause of clauses">
-        <td>{{ clause.code }}</td>
-        <td>{{ clause.name }}</td>
-        <td>{{ clause.description }}</td>
-        <!-- <td>{{ clause.shortDescription }}</td> -->
-        <td>{{ clause.heading }}</td>
-        <td>{{ clause.type }}</td>
-        <td>{{ clause.subclassCode }}</td>
-        <td><a routerLink="/clause-details/{{ clause.id }}" class="btn btn-link"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>View</a></td>
+        <td>{{ clause.clsCode }}</td>
+        <td>{{ clause.clsShtDesc }}</td>
+        <td width="40">{{ clause.clsHeading }}</td>
+        <!-- <td>{{ clause.clsWording }}</td> -->
+        <td>{{ clause.clsType }}</td>
+        <td width="10"><a routerLink="/clause-details/{{ clause.clsCode }}" class="btn btn-link"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>View</a></td>
         </tr>
       </table>
       <ng-template #noClauses>

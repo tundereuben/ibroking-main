@@ -11,14 +11,14 @@
             <input 
               type="text" 
               class="form-control" 
-              name="name" 
+              name="covtShtDesc" 
               #covertypeName="ngModel"
               [ngClass]="{'is-invalid': covertypeName.errors && covertypeName.touched }"
-              [(ngModel)]="covertype.name"
+              [(ngModel)]="covertype.covtShtDesc"
               required
             >
             <div [hidden]="!covertypeName.errors?.required" class="invalid-feedback">
-              Class Name required
+              Covertype Name required
             </div>
           </div>
         </div>
@@ -29,45 +29,45 @@
             <input 
             type="text" 
             class="form-control" 
-            name="code" 
+            name="covtCode" 
             #covertypeCode="ngModel"
             [ngClass]="{'is-invalid': covertypeCode.errors && covertypeCode.touched}"
-            [(ngModel)]="covertype.code"
+            [(ngModel)]="covertype.covtCode"
             required
           >
           <div [hidden]="!covertypeCode.errors?.required" class="invalid-feedback">
-            Class Code required
+            Covertype Code required
           </div>
           </div>
         </div>
         <div class="form-group col-sm-6">
-          <label for="description" class=" control-label">Covertype Description</label>
+          <label for="covtDesc" class=" control-label">Covertype Description</label>
           <div >
             <input 
             type="text" 
             class="form-control" 
-            name="description" 
+            name="covtDesc" 
             #covertypeDescription="ngModel"
-            [(ngModel)]="covertype.description"
+            [(ngModel)]="covertype.covtDesc"
           >
           </div>
         </div>
         <div class="form-group col-sm-6">
-          <label for="subclassCode" class=" control-label">Subclass Code</label>
-          <select 
-            class="form-control"
-            name="subclassCode"
-            [(ngModel)]="subclassCode"
-            required
-          >
-            <option [ngValue]="subclassCode">{{ covertype.subclassCode }}</option>
-            <option *ngFor="let s of subclassCodes" [ngValue]="s">{{ s }}</option>
-          </select>
-      </div>
+          <label for="covtDetails" class=" control-label">Covertype Details</label>
+          <div >
+            <input 
+            type="text" 
+            class="form-control" 
+            name="covtDetails" 
+            #covertypeDetails="ngModel"
+            [ngClass]="{'is-invalid': covertypeDescription.errors && covertypeDescription.touched}"
+            [(ngModel)]="covertype.covtDetails"
+          > 
+          </div>
+        </div>
         <button class="btn btn-block btn-success">EDIT COVERTYPE</button>
     </form>
-  
-  
+
   </div> <!---- end of <div id="main-content">---->
   </div> <!----end of <div id="container">---->
   </div>  <!----end of <div id="content-area">---->

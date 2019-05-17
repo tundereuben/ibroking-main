@@ -58,8 +58,13 @@ export class SetupService {
     this.covertypesCollection = this.afs.collection('covertype',  ref => ref.orderBy('code','asc'));
   };
 
-  // API CALLS
+  // API CALLS & httpOptions
   classesUrl = 'api/classes';
+  subclassesUrl = 'api/subclasses';
+  productsUrl = 'api/products';
+  covertypesUrl = 'api/covertypes';
+  sectionsUrl = 'api/sections';
+  clausesUrl = 'api/clauses';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -81,19 +86,6 @@ export class SetupService {
   // =========================== //
   // ==== CLASS FUNCTIONS ====== //
   // =========================== //
-
-  // getClasses(): Observable<Class[]> {
-  //   // Get classes with the id
-  //  this.classes = this.classesCollection.snapshotChanges().pipe(
-  //    map(actions => actions.map(a => {
-  //      const data = a.payload.doc.data() as Class;
-  //      data.id = a.payload.doc.id; 
-  //      return data; 
-  //     //  console.log(data);
-  //    }))
-  //  )
-  //   return this.classes;
-  // }
 
   /** GET classes. Will 404 if id not found */
   getClasses(): Observable<setupClass[]> {
@@ -123,52 +115,8 @@ export class SetupService {
   /** DELETE:  */
   deleteClass(_class: setupClass) {
     return this.http.delete(this.classesUrl + "/" + _class.claCode);
-}
+  }
 
-  
-
-  // newClass(newClass) {
-  //   // this.classesCollection.add(newClass);
-    
-  //   var xmlhttp = new XMLHttpRequest();
-  //   xmlhttp.open("POST", this.addClassUrl, true);
-  //   // xmlhttp.setRequestHeader("Content-type"," application/json");
-  //   xmlhttp.onreadystatechange = () => {
-  //     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) alert (xmlhttp.responseText);
-  //   }
-  //   xmlhttp.send(JSON.parse(newClass));
-  //   // console.log(newClass.cla_code);
-  // }
-
-  // getClass(id: string): Observable<Class> {
-  //   this.classDoc = this.afs.doc<Class>(`classes/${id}`);
-  //   this.class = this.classDoc.snapshotChanges().pipe(
-  //     map(action => {
-  //       if (action.payload.exists === false ) {
-  //         return null;
-  //       } else {
-  //         const data = action.payload.data() as Class;
-  //         data.id = action.payload.id;
-  //         // console.log(data);
-  //         return data;
-  //       }
-  //     })
-  //   )
-  //   return this.class;
-  // }
-  
-  /** UPDATE: */
-  // updateClass(updateClass: setupClass){
-  //   this.classDoc = this.afs.doc(`classes/${updateClass.claCode}`);
-  //   this.classDoc.update(updateClass);
-  // }
-
-  // deleteClass(deleteClass: Class) {
-  //     this.classDoc = this.afs.doc(`classes/${deleteClass.claCode}`);
-  //     this.classDoc.delete();
-  // }
-
-  
   // ++++++++++ CLASS FUNCTIONS ENDS ++++++++++ //
  
 
@@ -178,47 +126,32 @@ export class SetupService {
   // =========================== //
 
   getSubclasses(): Observable<Subclass[]> {
-    // Get subclasses with the id
-   this.subclasses = this.subclassesCollection.snapshotChanges().pipe(
-     map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as Subclass;
-       data.id = a.payload.doc.id; 
-       return data; 
-     }))
-   )
-    return this.subclasses;
-  }
-
-  newSubclass(newSubclass: Subclass) {
-    this.subclassesCollection.add(newSubclass);
-  }
-
-  getSubclass(id: string): Observable<Subclass> {
-    this.subclassDoc = this.afs.doc<Subclass>(`subclass/${id}`);
-    this.subclass = this.subclassDoc.snapshotChanges().pipe(
-      map(action => {
-        if (action.payload.exists === false ) {
-          return null;
-        } else {
-          const data = action.payload.data() as Subclass;
-          data.id = action.payload.id;
-          // console.log(data);
-          return data;
-        }
-      })
-    )
-    return this.subclass;
+    return this.http.get<Subclass[]>(this.subclassesUrl);
   }
   
-  updateSubclass(updateSubclass: Subclass){
-    this.subclassDoc = this.afs.doc(`subclass/${updateSubclass.id}`);
-    this.subclassDoc.update(updateSubclass);
+  getSubclass(id: number): Observable<Subclass> {
+    const url = `${this.subclassesUrl}/${id}`;
+    return this.http.get<Subclass>(url);
   }
 
-  deleteSubclass(deleteSubclass: Subclass) {
-      this.subclassDoc = this.afs.doc(`subclass/${deleteSubclass.id}`);
-      this.subclassDoc.delete();
+  addSubclass(newSubclass: Subclass): Observable<Subclass> {
+    console.log(newSubclass);
+    return this.http.post<Subclass>(this.subclassesUrl, JSON.stringify(newSubclass), {headers: DEFAULT_HEADERS});
   }
+
+  updateSubclass(updatedSubclass: Subclass): Observable<Subclass> {
+    const url = `${this.subclassesUrl}/${updatedSubclass.sclCode}`;
+    return this.http.put(url, updatedSubclass, this.httpOptions).pipe(
+      tap(_ => console.log(`updated subclass code = ${updatedSubclass.sclCode}`)),
+      catchError(this.handleError<any>('updateSubclass'))
+    );
+  }
+
+  deleteSubclass(subclass: Subclass) {
+    return this.http.delete(this.subclassesUrl + "/" + subclass.sclCode);
+  }
+
+
   // +++++++ SUBCLASS FUNCTIONS ENDS ++++++++ //
 
 
@@ -227,46 +160,29 @@ export class SetupService {
   // =========================== //
 
   getProducts(): Observable<Product[]> {
-    // Get products with the id
-   this.products = this.productsCollection.snapshotChanges().pipe(
-     map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as Product;
-       data.id = a.payload.doc.id; 
-       return data; 
-     }))
-   )
-    return this.products;
-  }
-
-  newProduct(newProduct: Product) {
-    this.productsCollection.add(newProduct);
-  }
-
-  getProduct(id: string): Observable<Product> {
-    this.productDoc = this.afs.doc<Product>(`product/${id}`);
-    this.product = this.productDoc.snapshotChanges().pipe(
-      map(action => {
-        if (action.payload.exists === false ) {
-          return null;
-        } else {
-          const data = action.payload.data() as Product;
-          data.id = action.payload.id;
-          // console.log(data);
-          return data;
-        }
-      })
-    )
-    return this.product;
+    return this.http.get<Product[]>(this.productsUrl);
   }
   
-  updateProduct(updateProduct: Product){
-    this.productDoc = this.afs.doc(`product/${updateProduct.id}`);
-    this.productDoc.update(updateProduct);
+  getProduct(id: number): Observable<Product> {
+    const url = `${this.productsUrl}/${id}`;
+    return this.http.get<Product>(url);
   }
 
-  deleteProduct(deleteProduct: Product) {
-      this.productDoc = this.afs.doc(`product/${deleteProduct.id}`);
-      this.productDoc.delete();
+  addProduct(newProduct: Product): Observable<Product> {
+    console.log(newProduct);
+    return this.http.post<Product>(this.productsUrl, JSON.stringify(newProduct), {headers: DEFAULT_HEADERS});
+  }
+
+  updateProduct(updatedProduct: Product): Observable<Product> {
+    const url = `${this.productsUrl}/${updatedProduct.proCode}`;
+    return this.http.put(url, updatedProduct, this.httpOptions).pipe(
+      tap(_ => console.log(`updated product code = ${updatedProduct.proCode}`)),
+      catchError(this.handleError<any>('updateProduct'))
+    );
+  }
+
+  deleteProduct(product: Product) {
+    return this.http.delete(this.productsUrl + "/" + product.proCode);
   }
   // +++++++ PRODUCT FUNCTIONS ENDS ++++++++ //
 
@@ -275,146 +191,95 @@ export class SetupService {
   // ==== CLAUSES FUNCTIONS ====== //
   // =========================== //
 
-  getClauses(): Observable<Clause[]> {
-    // Get products with the id
-   this.clauses = this.clausesCollection.snapshotChanges().pipe(
-     map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as Clause;
-       data.id = a.payload.doc.id; 
-       return data; 
-     }))
-   )
-    return this.clauses;
-  }
-
-  newClause(newClause: Clause) {
-    this.clausesCollection.add(newClause);
-  }
-
-  getClause(id: string): Observable<Clause> {
-    this.clauseDoc = this.afs.doc<Clause>(`clause/${id}`);
-    this.clause = this.clauseDoc.snapshotChanges().pipe(
-      map(action => {
-        if (action.payload.exists === false ) {
-          return null;
-        } else {
-          const data = action.payload.data() as Clause;
-          data.id = action.payload.id;
-          // console.log(data);
-          return data;
-        }
-      })
-    )
-    return this.clause;
-  }
   
-  updateClause(updateClause: Clause){
-    this.clauseDoc = this.afs.doc(`clause/${updateClause.id}`);
-    this.clauseDoc.update(updateClause);
+  getClauses(): Observable<Clause[]> {
+    return this.http.get<Clause[]>(this.clausesUrl);
   }
 
-  deleteClause(deleteClause: Clause) {
-      this.clauseDoc = this.afs.doc(`clause/${deleteClause.id}`);
-      this.clauseDoc.delete();
+  getClause(id: number): Observable<Clause> {
+    const url = `${this.clausesUrl}/${id}`;
+    return this.http.get<Clause>(url);
+  }
+
+  addClause(newClause: Clause): Observable<Clause> {
+    console.log(newClause);
+    return this.http.post<Clause>(this.clausesUrl, JSON.stringify(newClause), {headers: DEFAULT_HEADERS});
+  }
+
+  updateClause(updatedClause: Clause): Observable<Clause> {
+    const url = `${this.clausesUrl}/${updatedClause.clsCode}`;
+    return this.http.put(url, updatedClause, this.httpOptions).pipe(
+      tap(_ => console.log(`updated clause code = ${updatedClause.clsCode}`)),
+      catchError(this.handleError<any>('updateClause'))
+    );
+  }
+
+  deleteClause(clause: Clause) {
+    return this.http.delete(this.clausesUrl + "/" + clause.clsCode);
   }
   // +++++++ CLAUSES FUNCTIONS ENDS ++++++++ //
 
 
   // =========================== //
-  // ==== CLAUSES SECTIONS ====== //
+  // ====  SECTIONS FUNCTIONS ====== //
   // =========================== //
 
   getSections(): Observable<Section[]> {
-    // Get section with the id
-   this.sections = this.sectionsCollection.snapshotChanges().pipe(
-     map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as Section;
-       data.id = a.payload.doc.id; 
-       return data; 
-     }))
-   )
-    return this.sections;
+    return this.http.get<Section[]>(this.sectionsUrl);
   }
 
-  newSection(newSection: Section) {
-    this.sectionsCollection.add(newSection);
+  getSection(id: number): Observable<Section> {
+    const url = `${this.sectionsUrl}/${id}`;
+    return this.http.get<Section>(url);
   }
 
-  getSection(id: string): Observable<Section> {
-    this.sectionDoc = this.afs.doc<Section>(`section/${id}`);
-    this.section = this.sectionDoc.snapshotChanges().pipe(
-      map(action => {
-        if (action.payload.exists === false ) {
-          return null;
-        } else {
-          const data = action.payload.data() as Section;
-          data.id = action.payload.id;
-          // console.log(data);
-          return data;
-        }
-      })
-    )
-    return this.section;
-  }
-  
-  updateSection(updateSection: Section){
-    this.sectionDoc = this.afs.doc(`section/${updateSection.id}`);
-    this.sectionDoc.update(updateSection);
+  addSection(newSection: Section): Observable<Section> {
+    return this.http.post<Section>(this.sectionsUrl, JSON.stringify(newSection), {headers: DEFAULT_HEADERS});
   }
 
-  deleteSection(deleteSection: Section) {
-      this.sectionDoc = this.afs.doc(`section/${deleteSection.id}`);
-      this.sectionDoc.delete();
+  updateSection(updatedSection: Section): Observable<Section> {
+    const url = `${this.sectionsUrl}/${updatedSection.sectCode}`;
+    return this.http.put(url, updatedSection, this.httpOptions).pipe(
+      tap(_ => console.log(`updated Section code = ${updatedSection.sectCode}`)),
+      catchError(this.handleError<any>('updateSection'))
+    );
+  }
+
+  deleteSection(section: Section) {
+    return this.http.delete(this.sectionsUrl + "/" + section.sectCode);
   }
   // +++++++ SECTIONS FUNCTIONS ENDS ++++++++ //
 
 
 
   // =========================== //
-  // ==== COVERTYPES SECTIONS ====== //
+  // ==== COVERTYPES FUNCTIONS ====== //
   // =========================== //
 
   getCovertypes(): Observable<Covertype[]> {
-    // Get Covertype with the id
-   this.covertypes = this.covertypesCollection.snapshotChanges().pipe(
-     map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as Covertype;
-       data.id = a.payload.doc.id; 
-       return data; 
-     }))
-   )
-    return this.covertypes;
-  }
-
-  newCovertype(newCovertype: Covertype) {
-    this.covertypesCollection.add(newCovertype);
-  }
-
-  getCovertype(id: string): Observable<Covertype> {
-    this.covertypeDoc = this.afs.doc<Covertype>(`covertype/${id}`);
-    this.covertype = this.covertypeDoc.snapshotChanges().pipe(
-      map(action => {
-        if (action.payload.exists === false ) {
-          return null;
-        } else {
-          const data = action.payload.data() as Covertype;
-          data.id = action.payload.id;
-          // console.log(data);
-          return data;
-        }
-      })
-    )
-    return this.covertype;
+    return this.http.get<Covertype[]>(this.covertypesUrl);
   }
   
-  updateCovertype(updateCovertype: Covertype){
-    this.covertypeDoc = this.afs.doc(`covertype/${updateCovertype.id}`);
-    this.covertypeDoc.update(updateCovertype);
+  getCovertype(id: number): Observable<Covertype> {
+    const url = `${this.covertypesUrl}/${id}`;
+    return this.http.get<Covertype>(url);
   }
 
-  deleteCovertype(deleteCovertype: Covertype) {
-      this.covertypeDoc = this.afs.doc(`covertype/${deleteCovertype.id}`);
-      this.covertypeDoc.delete();
+  addCovertype(newCovertype: Covertype): Observable<Covertype> {
+    return this.http.post<Covertype>(this.covertypesUrl, JSON.stringify(newCovertype), {headers: DEFAULT_HEADERS});
+  }
+
+  updateCovertype(updatedCovertype: Covertype): Observable<Covertype> {
+    console.log(updatedCovertype);
+    const url = `${this.covertypesUrl}/${updatedCovertype.covtCode}`;
+    return this.http.put(url, updatedCovertype, this.httpOptions).pipe(
+      tap(_ => console.log(`updated covertype code = ${updatedCovertype.covtCode}`)),
+      catchError(this.handleError<any>('updateCovertype'))
+    );
+  }
+
+  deleteCovertype(covertype: Covertype) {
+    return this.http.delete(this.covertypesUrl + "/" + covertype.covtCode);
   }
   // +++++++ COVERTYPES FUNCTIONS ENDS ++++++++ //
 }

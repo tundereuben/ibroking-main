@@ -16,7 +16,6 @@ export class ClausesComponent implements OnInit {
   ngOnInit() {
     this.setupService.getClauses().subscribe(clauses => {
       this.clauses = clauses;
-      // console.log(this.clauses);
     })
   }
 

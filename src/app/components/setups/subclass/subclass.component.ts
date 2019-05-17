@@ -10,14 +10,22 @@ import { Subclass } from '../../../models/Subclass';
 })
 export class SubclassComponent implements OnInit {
   subclasses: Subclass[];
+  subclass: Subclass;
 
   constructor(private setupService: SetupService) { }
 
   ngOnInit() {
     this.setupService.getSubclasses().subscribe(subclasses => {
       this.subclasses = subclasses;
-      // console.log(this.subclasses)
-    })
+    });
   }
 
+  delete(subclass: Subclass)  : void {
+    if(confirm("Are you sure?")) {
+      this.setupService.deleteSubclass(subclass)
+      .subscribe(data => {
+        this.subclasses = this.subclasses.filter(s => s !== subclass);
+      })
+    }
+  }
 }

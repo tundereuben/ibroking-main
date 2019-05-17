@@ -9,10 +9,10 @@
             <input 
               type="text"   
               class="form-control" 
-              name="name" 
+              name="sectShtDesc" 
               #sectionName="ngModel"
               [ngClass]="{'is-invalid': sectionName.errors && sectionName.touched}"
-              [(ngModel)]="section.name"
+              [(ngModel)]="section.sectShtDesc"
               required
             >
             <div [hidden]="!sectionName.errors?.required" class="invalid-feedback">
@@ -24,41 +24,41 @@
             <input 
               type="text" 
               class="form-control" 
-              name="code" 
+              name="sectCode" 
               #sectionCode="ngModel"
               [ngClass]="{'is-invalid': sectionCode.errors && sectionCode.touched}"
-              [(ngModel)]="section.code"
+              [(ngModel)]="section.sectCode"
               required
             >
             <div [hidden]="!sectionCode.errors?.required" class="invalid-feedback">
               Section Code required
             </div>
           </div>
-          <div class="form-group col-sm-12">
+          <div class="form-group col-sm-6">
             <label for="description" class=" control-label">Section Description</label>
             <input 
               type="text" 
               class="form-control" 
-              name="description"
+              name="sectDesc"
               #sectionDescription="ngModel"
               [ngClass]="{'is-invalid': sectionDescription.errors && sectionDescription.touched}"
-              [(ngModel)]="section.description"
+              [(ngModel)]="section.sectDesc"
               required 
             >
           </div>
-          <div class="form-group col-sm-3">
+          <div class="form-group col-sm-6">
             <label for="type" class=" control-label">Section Type</label>
             <input 
               type="text" 
               class="form-control" 
-              name="type" 
+              name="sectType" 
               #sectionType="ngModel"
               [ngClass]="{'is-invalid': sectionType.errors && sectionType.touched}"
-              [(ngModel)]="section.type"
+              [(ngModel)]="section.sectType"
               required 
             >
           </div>
-          <div class="form-group col-sm-3">
+          <!-- <div class="form-group col-sm-3">
             <label for="covertypeCode" class=" control-label">Section-Covertype Code</label>
           <select 
             class="form-control"
@@ -93,7 +93,7 @@
             [(ngModel)]="section.rateDivisionFactor"
             required 
           >
-        </div>
+        </div> -->
           <button class="btn btn-block btn-success">CREATE SECTION</button>
       </form>
     

@@ -16,16 +16,7 @@ export class ClauseAddComponent implements OnInit {
   subclasses: Subclass[];
 
   id: string;
-  clause: Clause = {
-    id: '',
-    code: '',
-    name: '',
-    description: '',
-    // shortDescription: '',
-    heading: '',
-    type: '',
-    subclassCode: ''
-  }
+  clause: Clause = {}
 
   @ViewChild('clauseForm') form: any;
 
@@ -46,9 +37,9 @@ export class ClauseAddComponent implements OnInit {
     this.setupService.getSubclasses().subscribe(subclasses => {
       this.subclasses = subclasses;
 
-      for (var i=0; i < this.subclasses.length; i++) {
-        this.subclassCodes.push(this.subclasses[i].code);
-      }
+      // for (var i=0; i < this.subclasses.length; i++) {
+      //   this.subclassCodes.push(this.subclasses[i].code);
+      // }
     })
   }
 
@@ -58,11 +49,14 @@ export class ClauseAddComponent implements OnInit {
         cssClass: 'alert-danger', timeout: 4000
       });
     } else {
-      this.setupService.newClause(value);
-      this.flashMessage.show('New Clause added', {
-        cssClass: 'alert-success', timeout: 4000
+      const sub =  this.setupService.addClause(this.clause)
+      .subscribe(data => {
+        this.clause = data
+        this.flashMessage.show('New Clause added', {
+          cssClass: 'alert-success', timeout: 4000
+        });
+        this.router.navigate(['/clauses']);
       });
-      this.router.navigate(['/clauses']);
     }
   }
 

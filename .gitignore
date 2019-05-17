@@ -46,3 +46,5 @@ Thumbs.db
 ibroking_setups.sql
 /src
 apikey.ts
+/environments
+/services/initial_setup.ts

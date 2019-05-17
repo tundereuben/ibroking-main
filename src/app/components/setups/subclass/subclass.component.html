@@ -22,24 +22,21 @@
     <div class="table-responsive" style="margin-top:30px;">
     <table *ngIf="subclasses?.length > 0; else noSubclasses" class="table table-hover">
       <tr>
-      <th> Code</th>
-      <th> Name</th>
+      <th> Subclass Code</th>
+      <th> Short Description</th>
       <th>Description</th>
-      <!-- <th>Short Description</th> -->
       <th>Class Code</th>
-      <!-- <th>Subclass-Product Code</th> -->
-      <!-- <th>Options</th> -->
-      <th>Details</th>
+      <th>Edit</th>
+      <th>Delete</th>
       </tr>
       <tr *ngFor="let subclass of subclasses">
-      <td>{{ subclass.code }}</td>
-      <td>{{ subclass.name }}</td>
-      <td>{{ subclass.description }}</td>
-      <!-- <td>{{ subclass.shortDescription }}</td> -->
-      <td>{{ subclass.classCode }}</td>
-      <!-- <td>{{ subclass.productCode }}</td> -->
-      <!-- <td>200,000,000.00</td> -->
-      <td><a routerLink="/subclass-details/{{ subclass.id }}" class="btn btn-link"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>View</a></td>
+      <td>{{ subclass.sclCode }}</td>
+      <td>{{ subclass.sclShtDesc }}</td>
+      <td>{{ subclass.sclDesc }}</td>
+      <td>{{ subclass.sclClaCode }}</td>
+      <!-- <td><a routerLink="/subclass-details/{{ subclass.id }}" class="btn btn-link"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>View</a></td> -->
+      <td><a routerLink="/subclass-edit/{{ subclass.sclCode }}" class="btn btn-secondary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a></td>
+      <td><a (click)="delete(subclass)" class="btn btn-secondary"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></td>
       </tr>
     </table>
   </div>

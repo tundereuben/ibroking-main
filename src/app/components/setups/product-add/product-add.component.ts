@@ -4,6 +4,7 @@ import { SetupService } from '../../../services/setup.service';
 import { Router, RouterStateSnapshot } from '@angular/router';
 
 import { Product } from '../../../models/Product';
+// import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-add',
@@ -12,14 +13,8 @@ import { Product } from '../../../models/Product';
 })
 export class ProductAddComponent implements OnInit {
   products: Product[];
-
-  product: Product = {
-    id: '',
-    code: 0,
-    name: '',
-    description: '',
-    // shortDescription: ''
-  }
+  product: Product = {}; 
+  // private sub = Subscription;
 
   @ViewChild('productForm') form: any;
 
@@ -30,6 +25,7 @@ export class ProductAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
   }
 
   onSubmit({value, valid}: {value: Product, valid: boolean}) {
@@ -38,11 +34,12 @@ export class ProductAddComponent implements OnInit {
         cssClass: 'alert-danger', timeout: 4000
       });
     } else {
-      this.setupService.newProduct(value);
-      this.flashMessage.show('New product added', {
-        cssClass: 'alert-success', timeout: 4000
+      const sub = this.setupService.addProduct(this.product)
+      .subscribe(data => {
+        this.product = data;
+        this.flashMessage.show('New Product added', {cssClass: 'alert-success', timeout: 4000});
+        this.router.navigate(['/products']);
       });
-      this.router.navigate(['/products']);
     }
   }
 

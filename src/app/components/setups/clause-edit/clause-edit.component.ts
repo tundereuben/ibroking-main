@@ -14,20 +14,8 @@ import { Subclass } from '../../../models/Subclass';
 export class ClauseEditComponent implements OnInit {
   subclasses: Subclass[];
 
-  id: string;
-  clause: Clause = {
-    id: '',
-    code: '',
-    name: '',
-    description: '',
-    // shortDescription: '',
-    heading: '',
-    type: '',
-    subclassCode: ''
-  }
-
-  // Set dropdown for classCode
-  subclassCodes: string[] =[] ; subclassCode = this.clause.subclassCode;
+  id: number;
+  clause: Clause = {}
 
   constructor(
     private setupService: SetupService,
@@ -46,24 +34,29 @@ export class ClauseEditComponent implements OnInit {
       this.subclasses = subclasses; 
       // console.log(this.subclasses)
 
-      for (var i=0; i < this.subclasses.length; i++) {
-        this.subclassCodes.push(this.subclasses[i].code);
-      }
+      // for (var i=0; i < this.subclasses.length; i++) {
+      //   this.subclassCodes.push(this.subclasses[i].code);
+      // }
       
     })
   }
 
-  onSubmit({value, valid}: {value: Clause, valid: boolean}){
-    if(!valid) {
-      this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 4000});
-    } else {
-      // Add id to clause
-      value.id = this.id;
-      // Update client
-      this.setupService.updateClause(value);
-      this.flashMessage.show('Clause updated', {cssClass: 'alert-success', timeout: 4000});
-      this.router.navigate(['/clauses']);
-    }
+  // onSubmit({value, valid}: {value: Clause, valid: boolean}){
+  //   if(!valid) {
+  //     this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 4000});
+  //   } else {
+  //     this.setupService.updateClause(value);
+  //     this.flashMessage.show('Clause updated', {cssClass: 'alert-success', timeout: 4000});
+  //     this.router.navigate(['/clauses']);
+  //   }
+  // }
+
+  onSubmit(value): void {
+    this.setupService.updateClause(value)
+      .subscribe(() => {
+        this.flashMessage.show('Clause Updated', {cssClass: 'alert-success', timeout: 4000});
+        this.router.navigate(['/clauses']);
+      })
   }
 
 }

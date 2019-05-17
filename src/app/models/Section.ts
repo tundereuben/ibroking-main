@@ -1,10 +1,6 @@
 export interface Section {
-    id?: string,
-    name?: string,
-    code?: string,
-    description?: string,
-    type?: string,
-    covertypeCode?: string   
-    premiumRate?: number,
-    rateDivisionFactor?: number
+    sectCode?: number,
+    sectShtDesc?: string,
+    sectDesc?: string,
+    sectType?: string
 }

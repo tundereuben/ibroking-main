@@ -16,11 +16,17 @@ export class CovertypesComponent implements OnInit {
   ngOnInit() {
     this.setupService.getCovertypes().subscribe(covertypes => {
       this.covertypes = covertypes;
-      // console.log(this.covertypes)
-    }
-
-    );
+    });
     
+  }
+
+  delete(covertype: Covertype)  : void {
+    if(confirm("Are you sure?")) {
+      this.setupService.deleteCovertype(covertype)
+      .subscribe(data => {
+        this.covertypes = this.covertypes.filter(p => p !== covertype);
+    });
+    }
   }
 
 }

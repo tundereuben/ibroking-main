@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: key, // include key to use file,
+    apiKey: 'AIzaSyC26UbAghDAYEHIGJpOZQePgOWtStV_tpg', // include key to use file,
     authDomain: "turnkeyhr-8da3d.firebaseapp.com",
     databaseURL: "https://turnkeyhr-8da3d.firebaseio.com",
     projectId: "turnkeyhr-8da3d",

@@ -16,8 +16,15 @@ export class SectionsComponent implements OnInit {
   ngOnInit() {
     this.setupService.getSections().subscribe(sections=> {
       this.sections = sections;
-      // console.log(sections)
     })
   }
 
+  delete(section: Section)  : void {
+    if(confirm("Are you sure?")) {
+      this.setupService.deleteSection(section)
+    .subscribe(data => {
+      this.sections = this.sections.filter(c => c !== section);
+    })
+    }
+  }
 }

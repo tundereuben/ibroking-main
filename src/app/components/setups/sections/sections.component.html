@@ -26,20 +26,17 @@
         <th> Section Name</th>
         <th>Description</th>
         <th>Section Type</th>
-        <th>Section Cover Type</th>
-        <th>Premium Rate</th>
-        <th>Division Factor</th>
-        <th>Details</th>
+        <th>Edit</th>
+        <th>Delete</th>
         </tr>
         <tr *ngFor="let section of sections">
-        <td>{{ section.code }}</td>
-        <td>{{ section.name }}</td>
-        <td>{{ section.description}}</td>
-        <td>{{ section.type }}</td>
-        <td>{{ section.covertypeCode }}</td>
-        <td>{{ section.premiumRate }}</td>
-        <td>{{ section.rateDivisionFactor }}</td>
-        <td><a routerLink="/section-details/{{ section.id }}" class="btn btn-link"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>View</a></td>
+        <td>{{ section.sectCode }}</td>
+        <td>{{ section.sectShtDesc }}</td>
+        <td>{{ section.sectDesc}}</td>
+        <td>{{ section.sectType }}</td>
+        <td><a routerLink="/section-edit/{{ section.sectCode }}" class="btn btn-secondary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a></td>
+        <td><a (click)="delete(section)" class="btn btn-secondary"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></td>
+        <!-- <td><a routerLink="/section-details/{{ section.id }}" class="btn btn-link"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>View</a></td> -->
       </table>
       <ng-template>
         <h5>There are no sections in the system.</h5>

@@ -13,22 +13,15 @@ import { setupClass } from '../../../models/Class';
 })
 export class SubclassEditComponent implements OnInit {
   subclasses: Subclass[];
+  subclass: Subclass = {};
   classes: setupClass[];
+  class: setupClass = {};
 
-  id: string;
-  subclass: Subclass = {
-    id: '',
-    name: '',
-    code: '',
-    description: '',
-    // shortDescription: '',
-    classCode: '',
-    productCode: ''
-  };
+  id: number;
 
   // Initialize ARRAYS & VARIABLES for classCode & productCode => For Dropdowns
-  classCodes: string[] = [];   classCode = this.subclass.classCode;
-  productCodes: string[] = []; productCode = this.subclass.productCode;
+  // classCodes: string[] = [];   classCode = this.subclass.classCode;
+  // productCodes: string[] = []; productCode = this.subclass.productCode;
 
 
   constructor(
@@ -39,7 +32,7 @@ export class SubclassEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Get id from url, then fetch client
+    // Get id from url, then fetch subclass
     this.id = this.route.snapshot.params['id'];
     this.setupService.getSubclass(this.id).subscribe(subclass => {
       this.subclass = subclass;
@@ -52,23 +45,34 @@ export class SubclassEditComponent implements OnInit {
     //   }
     // });
 
-    this.setupService.getSubclasses().subscribe(subclasses => {
-      this.subclasses = subclasses;      
-    })
+    this.setupService.getClasses().subscribe(classes => {
+      this.classes = classes;    
+    });
+    
   }
 
-  onSubmit({value, valid}: {value: Subclass, valid: boolean}) {
-    if(!valid) {
-      // Show Error Message
-      this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
-    } else {
-      // Add id to Subclass, then update
-      value.id = this.id;
-      this.setupService.updateSubclass(value);
-      this.flashMessage.show('New Subclass Added', {cssClass: 'alert-success', timeout: 5000});
-      this.router.navigate(['/subclass']);
-    }
+  onSubmit(value): void {
+    if(value) {
+      this.setupService.updateSubclass(value)
+      .subscribe(() => {
+        this.flashMessage.show('Subclass Updated', {cssClass: 'alert-success', timeout: 4000});
+        this.router.navigate(['/subclass']);
+      });
+    } 
   }
+
+  // onSubmit({value, valid}: {value: Subclass, valid: boolean}) {
+  //   if(!valid) {
+  //     // Show Error Message
+  //     this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
+  //   } else {
+  //     // Add id to Subclass, then update
+  //     value.id = this.id;
+  //     this.setupService.updateSubclass(value);
+  //     this.flashMessage.show('New Subclass Added', {cssClass: 'alert-success', timeout: 5000});
+  //     this.router.navigate(['/subclass']);
+  //   }
+  // }
 
   // Set the classCode and productCode
   // setClassCode(e) {

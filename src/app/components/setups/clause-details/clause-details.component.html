@@ -9,34 +9,26 @@
           </div>
           <div class="panel-body"><!-- Pn1 Bdy -->
              <div class="table-responsive"><!-- Table responsive -->
-            <table class="table table-striped table-condensed ">
+            <table class="table table-striped table-condensed table-bordered">
              <tr>
                 <td><strong>Clause Code</strong></td>
-                <td>{{ clause?.code }}</td>
+                <td>{{ clause?.clsCode }}</td>
               </tr>
               <tr>
                 <td><strong>Clause Name</strong></td>
-                <td>{{ clause?.name }}</td>
+                <td>{{ clause?.clsShtDesc }}</td>
               </tr>
               <tr>
-                <td><strong>Clause Description</strong></td>
-                <td>{{ clause?.description }}</td>
-              <!-- </tr>
-                        <tr>
-                <td><strong>Clause Short Description</strong></td>
-                <td>{{ clause?.shortDescription }}</td>
-              </tr> -->
-              <tr>
                 <td><strong>Clause Heading</strong></td>
-                <td>{{ clause?.heading }}</td>
+                <td>{{ clause?.clsHeading }}</td>
               </tr>  
               <tr>
                 <td><strong>Clause Type</strong></td>
-                <td>{{ clause?.type }}</td>
+                <td>{{ clause?.clsType }}</td>
               </tr> 
               <tr>
-                  <td><strong>Class-Subclass Code</strong></td>
-                  <td>{{ clause?.subclassCode }}</td>
+                  <td><strong>Clause Wording</strong></td>
+                  <td>{{ clause?.clsWording }}</td>
                 </tr> 			    
             </table>
           </div><!-- Table responsive -->
@@ -49,7 +41,7 @@
               Edit Clause
             </a>
       
-            <button (click)="onDeleteClick()" class="btn btn-danger">
+            <button (click)="onDeleteClick(clause)" class="btn btn-danger">
               <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
               Delete Clause
             </button>

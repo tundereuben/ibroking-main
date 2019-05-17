@@ -10,7 +10,7 @@ import { Covertype } from '../../../models/Covertype';
   styleUrls: ['./covertype-details.component.css']
 })
 export class CovertypeDetailsComponent implements OnInit {
-  id: string;
+  id: number;
   covertype: Covertype;
 
   constructor(

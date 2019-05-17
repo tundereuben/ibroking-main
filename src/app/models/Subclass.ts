@@ -1,9 +1,7 @@
 export interface Subclass {
-    id?: string,
-    name?: string,
-    code?: string,
-    description?: string,
-    // shortDescription?: string    
-    classCode?: string,
-    productCode?: string
+    id?: number,
+    sclCode?: number,
+    sclClaCode?: string,
+    sclDesc?: string,
+    sclShtDesc?: string   
 }

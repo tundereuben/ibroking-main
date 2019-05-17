@@ -11,13 +11,11 @@ import { Product } from '../../../models/Product';
   styleUrls: ['./product-edit.component.css']
 })
 export class ProductEditComponent implements OnInit {
-  id: string;
+  id: number;
   product: Product = {
-    id: '',
-    name: '',
-    code: 0,
-    description: '',
-    // shortDescription: ''
+    proCode: null,
+    proShtDesc: null,
+    proDesc: ''
   }
 
   constructor(
@@ -29,20 +27,18 @@ export class ProductEditComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.setupService.getProduct(this.id).subscribe(product => {
-      this.product = product;
-    })
+    this.setupService.getProduct(this.id).subscribe((data) => {
+      this.product = data;
+    });
+    
   }
 
-  onSubmit({value, valid}: {value: Product, valid: boolean }) {
-    if(!valid) {
-      this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 4000});
-    } else {
-      value.id = this.id;
-      this.setupService.updateProduct(value);
-      this.flashMessage.show('Product updated', {cssClass: 'alert-success', timeout: 4000});
-      this.router.navigate(['/products']);
-    }
+  onSubmit(value): void {
+    this.setupService.updateProduct(value)
+      .subscribe(() => {
+        this.flashMessage.show('Product Updated', {cssClass: 'alert-success', timeout: 4000});
+        this.router.navigate(['/products']);
+      })
   }
 
 }
