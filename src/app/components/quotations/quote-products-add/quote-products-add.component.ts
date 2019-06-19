@@ -24,14 +24,14 @@ export class QuoteProductsAddComponent implements OnInit {
   coverTo: string; 
 
   quoteProduct: QuoteProduct = {
-    id: '',
-    name: '',
-    code: 0,
-    description: '',
-    quoteCode: 0,
-    productCode: 0, 
-    coverFrom: '',
-    coverTo: ''
+    // id: '',
+    // name: '',
+    // code: 0,
+    // description: '',
+    // quoteCode: 0,
+    // productCode: 0, 
+    // coverFrom: '',
+    // coverTo: ''
   }
  
   @ViewChild('quoteProductForm') form: any;
@@ -44,24 +44,24 @@ export class QuoteProductsAddComponent implements OnInit {
 
   ngOnInit() {
     // get quoteCode from session variable
-    this.quoteInfo = JSON.parse(sessionStorage.getItem("quoteInfo"));
-    this.quoteCode = this.quoteInfo.code;
-    this.quoteProduct.coverFrom = this.quoteInfo.coverFrom;
-    this.quoteProduct.coverTo = this.quoteInfo.coverTo;
+    // this.quoteInfo = JSON.parse(sessionStorage.getItem("quoteInfo"));
+    // this.quoteCode = this.quoteInfo.code;
+    // this.quoteProduct.coverFrom = this.quoteInfo.coverFrom;
+    // this.quoteProduct.coverTo = this.quoteInfo.coverTo;
     // console.log(this.quoteProduct.coverFrom, this.quoteProduct.coverTo);
 
     
-    this.quotationService.getProducts().subscribe(products => {
-      this.products = products;
-    });
+    // this.quotationService.getProducts().subscribe(products => {
+    //   this.products = products;
+    // });
 
     // Fetch existing products, get last product number, then generate new product number
     this.quotationService.getQuoteProducts().subscribe(quoteProducts => {
       this.quoteProducts = quoteProducts;
       for(var i=0; i < quoteProducts.length; i++){
-        if(quoteProducts[i].code > this.quoteProduct.code ) this.quoteProduct.code = quoteProducts[i].code;
+        // if(quoteProducts[i].code > this.quoteProduct.code ) this.quoteProduct.code = quoteProducts[i].code;
       }
-      this.quoteProduct.code += 1;
+      // this.quoteProduct.code += 1;
       // console.log(this.quoteProduct.code)
     });
   }
@@ -78,9 +78,9 @@ export class QuoteProductsAddComponent implements OnInit {
       this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
     } else {
       // Add New Quote
-      value.quoteCode = this.quoteCode;
-      value.code = this.quoteProduct.code;
-      this.quotationService.newQuoteProduct(value);
+      // value.quoteCode = this.quoteCode;
+      // value.code = this.quoteProduct.code;
+      // this.quotationService.newQuoteProduct(value);
       // save quoteProductValue in session variable
       // sessionStorage.setItem("quoteProductCode", JSON.stringify(value.code));
       sessionStorage.setItem("quoteProduct", JSON.stringify(value));

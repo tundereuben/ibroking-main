@@ -20,23 +20,33 @@ export class QuotationAddComponent implements OnInit {
   back: boolean  // Check when back button is clicked.
 
   quotation: Quotation = {
-    id: '',
-    code: 0,
-    quoteNo: 0,
-    client: {},
-    agent: {},
-    source: '',
-    branch: '',
-    currency: {},
-    coverFrom: '',
-    coverTo: '',
-    paymentFrequency: '',
-    totalPropertyValue: 0,
-    status: '',
-    expiryDate: '',
-    ok: '',
-    premium: 0,
-    commissionAmount: 0,
+    quotAuthorisedBy: '',
+    quotAuthorisedDt: null,
+    quotBrnCode: 0,
+    quotCancelReason: '',
+    quotClntCode: 0,
+    quotClntType: '',
+    quotCode: 0,
+    quotCommAmt: 0,
+    quotConfirmed: '',
+    quotConfirmedBy: '',
+    quotConfirmedDt: null,
+    quotCoverFrom: null,
+    quotCoverTo: null,
+    quotCurCode: 0,
+    quotCurSymbol: '',
+    quotDate: null,
+    quotExpiryDate: null,
+    quotFreqOfPayment: '',
+    quotNo: 0,
+    quotPremium: 0,
+    quotPreparedBy: '',
+    quotPreparedDt: null,
+    quotReadyBy: '',
+    quotReadyDate: null,
+    quotRevised: '',
+    quotStatus: '',
+    quotTotPropertyVal: 0
   };
 
   clients: any[]  = [];  client = null
@@ -63,7 +73,7 @@ export class QuotationAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // fetch clients from API, assign clientCode
+    // fetch clients from API
     var users = [];
     fetch(this.usersUrl)
     .then((resp) => resp.json())
@@ -93,25 +103,25 @@ export class QuotationAddComponent implements OnInit {
     // Fetch existing quotes, get last quote number, then generate new quote number
     this.quotationService.getQuotations().subscribe(quotations => {
       this.quotations = quotations;
-      for(var i=0; i < quotations.length; i++){
-        if(quotations[i].code > this.code ) this.code = quotations[i].code;
-      }
-      this.code += 1;
+      // for(var i=0; i < quotations.length; i++){
+      //   if(quotations[i].code > this.code ) this.code = quotations[i].code;
+      // }
+      // this.code += 1;
     });   
 
     //  If the back button was clicked.
     this.back = JSON.parse(sessionStorage.getItem("back"));
     if(this.back) {
-      this.quotation = JSON.parse(sessionStorage.getItem("quoteInfo"));
-      this.client = this.quotation.client;
-      this.agent = this.quotation.agent;
-      this.source = this.quotation.source;
-      this.branch = this.quotation.branch;
-      this.currency = this.quotation.currency;
-      this.coverFrom = this.quotation.coverFrom;
-      this.coverTo = this.quotation.coverTo;
-      this.paymentFrequency = this.quotation.paymentFrequency;
-      console.log(this.quotation, this.quotation.id);
+      // this.quotation = JSON.parse(sessionStorage.getItem("quoteInfo"));
+      // this.client = this.quotation.client;
+      // this.agent = this.quotation.agent;
+      // this.source = this.quotation.source;
+      // this.branch = this.quotation.branch;
+      // this.currency = this.quotation.currency;
+      // this.coverFrom = this.quotation.coverFrom;
+      // this.coverTo = this.quotation.coverTo;
+      // this.paymentFrequency = this.quotation.paymentFrequency;
+      // console.log(this.quotation, this.quotation.id);
     }
     
   }
@@ -133,9 +143,9 @@ export class QuotationAddComponent implements OnInit {
       // Show Error Message
       this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
     } else {
-      // Add New Quote
-      value.code = this.code;
-      this.quotationService.newQuotation(value);
+      // // Add New Quote
+      // value.code = this.code;
+      // this.quotationService.newQuotation(value);
 
       // save values in a session variable, then re-route to quote-products
       sessionStorage.setItem("quoteInfo", JSON.stringify(value));
@@ -143,12 +153,12 @@ export class QuotationAddComponent implements OnInit {
 
       //  Get id of quotation
       this.quotationService.getQuotations().subscribe(quotations => {
-        this.quotations = quotations;
-        this.quotations.forEach((quotation) => {
-          if(quotation.code == value.code) {
-            sessionStorage.setItem("quoteId", JSON.stringify(quotation.id));
-          }
-        })
+        // this.quotations = quotations;
+        // this.quotations.forEach((quotation) => {
+        //   if(quotation.code == value.code) {
+        //     sessionStorage.setItem("quoteId", JSON.stringify(quotation.id));
+        //   }
+        // })
       });
     }
   }

@@ -23,12 +23,12 @@ export class QuoteProductsEditComponent implements OnInit {
 
   id: string;
   quoteProduct: QuoteProduct = {
-    id: '',
-    name: '',
-    code: 0,
-    description: '',
-    quoteCode: 0,
-    productCode: 0
+    // id: '',
+    // name: '',
+    // code: 0,
+    // description: '',
+    // quoteCode: 0,
+    // productCode: 0
   } 
 
 
@@ -41,15 +41,15 @@ export class QuoteProductsEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
-    this.quotationService.getQuoteProduct(this.id).subscribe(quoteProduct => {
-      this.quoteProduct = quoteProduct;
-      console.log(this.quoteProduct);
-    });
+    // this.id = this.route.snapshot.params['id'];
+    // this.quotationService.getQuoteProduct(this.id).subscribe(quoteProduct => {
+    //   this.quoteProduct = quoteProduct;
+    //   console.log(this.quoteProduct);
+    // });
 
-    this.quotationService.getProducts().subscribe(products => {
-      this.products = products;
-    });
+    // this.quotationService.getProducts().subscribe(products => {
+    //   this.products = products;
+    // });
   }
 
   onSubmit({value, valid}: {value: QuoteProduct, valid: boolean}) {
@@ -58,11 +58,11 @@ export class QuoteProductsEditComponent implements OnInit {
       this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
     } else {
       // Add id to Quote and Update Quote
-      value.id = this.id
-      this.quotationService.updateQuoteProduct(value);
-      this.flashMessage.show('Quote Product updated Successfully!', {cssClass: 'alert-success', timeout:4000});
-      // this.router.navigate([`/quotation-details/${this.id}`]);
-      this.goBack();
+      // value.id = this.id
+      // this.quotationService.updateQuoteProduct(value);
+      // this.flashMessage.show('Quote Product updated Successfully!', {cssClass: 'alert-success', timeout:4000});
+      // // this.router.navigate([`/quotation-details/${this.id}`]);
+      // this.goBack();
     }
   }
 

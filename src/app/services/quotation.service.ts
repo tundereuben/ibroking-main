@@ -1,147 +1,183 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
+
+import { HttpClient, HttpHeaders } from '@angular/common/http'; 
 
 import { Quotation } from '../models/Quotation';
 import { QuoteProduct } from '../models/QuoteProduct';
 import { QuoteRisk } from '../models/QuoteRisk';
 import { QuoteRiskLimit } from '../models/QuoteRiskLimit';
+import { DEFAULT_HEADERS } from '../models/authorization';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuotationService {
-  quotationsCollection: AngularFirestoreCollection<Quotation>;
-  quotationDoc: AngularFirestoreDocument<Quotation>;
+//   quotationsCollection: AngularFirestoreCollection<Quotation>;
+//   quotationDoc: AngularFirestoreDocument<Quotation>;
   quotations: Observable<Quotation[]>;
   quotation: Observable<Quotation>;
   
-  quoteProductsCollection: AngularFirestoreCollection<QuoteProduct>;
-  quoteProductDoc: AngularFirestoreDocument<QuoteProduct>;
+//   quoteProductsCollection: AngularFirestoreCollection<QuoteProduct>;
+//   quoteProductDoc: AngularFirestoreDocument<QuoteProduct>;
   quoteProducts: Observable<QuoteProduct[]>;
   quoteProduct: Observable<QuoteProduct>;
 
-  productsCollection: AngularFirestoreCollection<QuoteProduct> // Fetch already setup products
-  productDoc: AngularFirestoreDocument<QuoteProduct>;
+//   productsCollection: AngularFirestoreCollection<QuoteProduct> // Fetch already setup products
+//   productDoc: AngularFirestoreDocument<QuoteProduct>;
   products: Observable<QuoteProduct[]>;
   product: Observable<QuoteProduct>;
 
-  quoteRisksCollection: AngularFirestoreCollection<QuoteRisk> 
-  quoteRiskDoc: AngularFirestoreDocument<QuoteRisk>;
-  quoteRisks: Observable<QuoteRisk[]>;
+//   quoteRisksCollection: AngularFirestoreCollection<QuoteRisk> 
+//   quoteRiskDoc: AngularFirestoreDocument<QuoteRisk>;
+  quoteRisks: Observable<QuoteRisk[]>; 
   quoteRisk: Observable<QuoteRisk>;
 
-  quoteRiskLimitsCollection: AngularFirestoreCollection<QuoteRiskLimit> 
-  quoteRiskLimitDoc: AngularFirestoreDocument<QuoteRiskLimit>;
+//   quoteRiskLimitsCollection: AngularFirestoreCollection<QuoteRiskLimit> 
+//   quoteRiskLimitDoc: AngularFirestoreDocument<QuoteRiskLimit>;
   quoteRiskLimits: Observable<QuoteRiskLimit[]>;
   quoteRiskLimit: Observable<QuoteRiskLimit>;
   
-  constructor(private afs: AngularFirestore) { 
-    this.quotationsCollection = this.afs.collection('quotations', ref => ref.orderBy('code','desc'));
-    this.quoteProductsCollection = this.afs.collection('quote_products', ref => ref.orderBy('code','asc'));
-    this.productsCollection = this.afs.collection('product', ref => ref.orderBy('code','asc'));
-    this.quoteRisksCollection = this.afs.collection('quote_risks', ref => ref.orderBy('code','asc'));
-    this.quoteRiskLimitsCollection = this.afs.collection('quote_risk_limits', ref => ref.orderBy('code','asc'));
+  constructor(private afs: AngularFirestore, private http: HttpClient) { 
+    // this.quotationsCollection = this.afs.collection('quotations', ref => ref.orderBy('code','desc'));
+    // this.quoteProductsCollection = this.afs.collection('quote_products', ref => ref.orderBy('code','asc'));
+    // this.productsCollection = this.afs.collection('product', ref => ref.orderBy('code','asc'));
+    // this.quoteRisksCollection = this.afs.collection('quote_risks', ref => ref.orderBy('code','asc'));
+    // this.quoteRiskLimitsCollection = this.afs.collection('quote_risk_limits', ref => ref.orderBy('code','asc'));
   }
+
+  // API CALLS & httpOptions
+  quotationUrl = 'http://localhost:8080/api/quotations';
+  quoteProductUrl = 'http://localhost:8080/api/quotproducts';
+  quoteRiskUrl = 'http://localhost:8080/api/quotrisks';
+  quoteRiskLimitUrl = 'http://localhost:8080/api/quotrisklimits';
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
+  };
+
+  // Error handler
+//   private handleError<T> (operation = 'operation', result?: T) {
+//     return (error: any): Observable<T> =>  {
+//       console.error(error);
+//       console.log(`${operation} failed: ${error.message}`);
+//       return of(result as T);
+//     }
+//   }
+ 
 
   // =========================== //
   // ==== QUOTATION DETAILS FUNCTIONS ====== //
   // =========================== //
 
+  /** GET quotations. Will 404 if id not found */
   getQuotations(): Observable<Quotation[]> {
-    // Get quotationses with the id
-   this.quotations = this.quotationsCollection.snapshotChanges().pipe(
-     map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as Quotation;
-       data.id = a.payload.doc.id; 
-       return data; 
-      //  console.log(data);
-     }))
-   )
-    return this.quotations;
+    return this.http.get<Quotation[]>(this.quotationUrl);
   }
 
-  newQuotation(newQuotation: Quotation) {
-    this.quotationsCollection.add(newQuotation);
+   /** GET quotation by id. Will 404 if id not found */
+   getQuotation(id: number): Observable<Quotation> {
+    const url = `${this.quotationUrl}/${id}`;
+    return this.http.get<Quotation>(url);
   }
 
-  getQuotation(id: string): Observable<Quotation> {
-    this.quotationDoc = this.afs.doc<Quotation>(`quotations/${id}`);
-    this.quotation = this.quotationDoc.snapshotChanges().pipe(
-      map(action => {
-        if (action.payload.exists === false ) {
-          return null;
-        } else {
-          const data = action.payload.data() as Quotation;
-          data.id = action.payload.id;
-          // console.log(data);
-          return data;
-        }
-      })
-    )
-    return this.quotation;
-  }
-  
-  updateQuotation(updateQuotation: Quotation){
-    this.quotationDoc = this.afs.doc(`quotations/${updateQuotation.id}`);
-    this.quotationDoc.update(updateQuotation);
+  /** POST: add a new class to the server */
+  addQuotation(newQuotation: Quotation): Observable<Quotation> {
+    return this.http.post<Quotation>(this.quotationUrl, JSON.stringify(newQuotation), {headers: DEFAULT_HEADERS});
   }
 
-  deleteQuotation(deleteQuotation: Quotation) {
-      this.quotationDoc = this.afs.doc(`quotations/${deleteQuotation.id}`);
-      this.quotationDoc.delete();
+  /** PUT:  */
+  updateQuotation(updatedQuotation: Quotation): Observable<Quotation> {
+    const url = `${this.quotationUrl}/${updatedQuotation.quotCode}`;
+    return this.http.put(url, updatedQuotation, this.httpOptions);
   }
+
+  /** DELETE:  */
+  deleteQuotation(quotation: Quotation) {
+    return this.http.delete(this.quotationUrl + "/" + quotation.quotCode);
+  }
+
   // ++++++++++ QUOTATION DETAILS FUNCTIONS ENDS ++++++++++ //
-
+  
 
 
     // =========================== //
   // ==== QUOTE PRODUCT FUNCTIONS ====== //
   // =========================== //
+  /** GET quote products. Will 404 if id not found */
   getQuoteProducts(): Observable<QuoteProduct[]> {
-    // Get quotationses with the id
-   this.quoteProducts = this.quoteProductsCollection.snapshotChanges().pipe(
-     map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as QuoteProduct;
-       data.id = a.payload.doc.id; 
-       return data; 
-      //  console.log(data);
-     }))
-   )
-    return this.quoteProducts;
+    return this.http.get<QuoteProduct[]>(this.quoteProductUrl);
   }
 
-  newQuoteProduct(newQuoteProduct: QuoteProduct) {
-    this.quoteProductsCollection.add(newQuoteProduct);
+   /** GET quote product by id. Will 404 if id not found */
+   getQuoteProduct(id: number): Observable<QuoteProduct> {
+    const url = `${this.quotationUrl}/${id}`;
+    return this.http.get<QuoteProduct>(url);
   }
 
-  getQuoteProduct(id: string): Observable<QuoteProduct> {
-    this.quoteProductDoc = this.afs.doc<QuoteProduct>(`quote_products/${id}`);
-    this.quoteProduct = this.quoteProductDoc.snapshotChanges().pipe(
-      map(action => {
-        if (action.payload.exists === false ) {
-          return null;
-        } else {
-          const data = action.payload.data() as QuoteProduct;
-          data.id = action.payload.id;
-          // console.log(data);
-          return data;
-        }
-      })
-    )
-    return this.quoteProduct;
+  /** POST: add a new quoteProduct to the server */
+  addQuoteProduct(newQuoteProduct: QuoteProduct): Observable<QuoteProduct> {
+    return this.http.post<QuoteProduct>(this.quoteProductUrl, JSON.stringify(newQuoteProduct), {headers: DEFAULT_HEADERS});
   }
+
+  /** PUT:  */
+  updateQuoteProduct(updatedQuoteProduct: QuoteProduct): Observable<QuoteProduct> {
+    const url = `${this.quotationUrl}/${updatedQuoteProduct.qpCode}`;
+    return this.http.put(url, updatedQuoteProduct, this.httpOptions);
+  }
+
+  /** DELETE:  */
+  deleteQuoteProduct(quoteProduct: QuoteProduct) {
+    return this.http.delete(this.quoteProductUrl + "/" + quoteProduct.qpCode);
+  }
+
+//   getQuoteProducts(): Observable<QuoteProduct[]> {
+//     // Get quotationses with the id
+//    this.quoteProducts = this.quoteProductsCollection.snapshotChanges().pipe(
+//      map(actions => actions.map(a => {
+//        const data = a.payload.doc.data() as QuoteProduct;
+//        data.id = a.payload.doc.id; 
+//        return data; 
+//       //  console.log(data);
+//      }))
+//    )
+//     return this.quoteProducts;
+//   }
+
+//   newQuoteProduct(newQuoteProduct: QuoteProduct) {
+//     this.quoteProductsCollection.add(newQuoteProduct);
+//   }
+
+//   getQuoteProduct(id: string): Observable<QuoteProduct> {
+//     this.quoteProductDoc = this.afs.doc<QuoteProduct>(`quote_products/${id}`);
+//     this.quoteProduct = this.quoteProductDoc.snapshotChanges().pipe(
+//       map(action => {
+//         if (action.payload.exists === false ) {
+//           return null;
+//         } else {
+//           const data = action.payload.data() as QuoteProduct;
+//           data.id = action.payload.id;
+//           // console.log(data);
+//           return data;
+//         }
+//       })
+//     )
+//     return this.quoteProduct;
+//   }
   
-  updateQuoteProduct(updateQuoteProduct: QuoteProduct){
-    this.quoteProductDoc = this.afs.doc(`quote_products/${updateQuoteProduct.id}`);
-    this.quoteProductDoc.update(updateQuoteProduct);
-  }
+//   updateQuoteProduct(updateQuoteProduct: QuoteProduct){
+//     this.quoteProductDoc = this.afs.doc(`quote_products/${updateQuoteProduct.id}`);
+//     this.quoteProductDoc.update(updateQuoteProduct);
+//   }
 
-  deleteQuoteProduct(deleteQuoteProduct: QuoteProduct) {
-      this.quoteProductDoc = this.afs.doc(`quote_product/${deleteQuoteProduct.id}`);
-      this.quoteProductDoc.delete();
-  }
+//   deleteQuoteProduct(deleteQuoteProduct: QuoteProduct) {
+//       this.quoteProductDoc = this.afs.doc(`quote_product/${deleteQuoteProduct.id}`);
+//       this.quoteProductDoc.delete();
+//   }
   // ++++++++++ QUOTE PRODUCTS FUNCTIONS ENDS ++++++++++ //
 
 
@@ -151,109 +187,131 @@ export class QuotationService {
   // =========================== //
 
   getQuoteRisks(): Observable<QuoteRisk[]> {
-    // Get quotationses with the id
-   this.quoteRisks = this.quoteRisksCollection.snapshotChanges().pipe(
-     map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as QuoteRisk;
-       data.id = a.payload.doc.id; 
-       return data; 
-     }))
-   )
-    return this.quoteRisks;
+    return this.http.get<QuoteRisk[]>(this.quoteRiskUrl);
   }
 
-  newQuoteRisk(newQuoteRisk: QuoteRisk) {
-    this.quoteRisksCollection.add(newQuoteRisk);
+   /** GET quote Risk by id. Will 404 if id not found */
+   getQuoteRisk(id: number): Observable<QuoteRisk> {
+    const url = `${this.quotationUrl}/${id}`;
+    return this.http.get<QuoteRisk>(url);
   }
 
-  getQuoteRisk(id: string): Observable<QuoteRisk> {
-    this.quoteRiskDoc = this.afs.doc<QuoteRisk>(`quote_risks/${id}`);
-    this.quoteRisk= this.quoteRiskDoc.snapshotChanges().pipe(
-      map(action => {
-        if (action.payload.exists === false ) {
-          return null;
-        } else {
-          const data = action.payload.data() as QuoteRisk;
-          data.id = action.payload.id;
-          return data;
-        }
-      })
-    )
-    return this.quoteRisk;
+  /** POST: add a new quoteRisk to the server */
+  addQuoteRisk(newQuoteRisk: QuoteRisk): Observable<QuoteRisk> {
+    return this.http.post<QuoteRisk>(this.quoteRiskUrl, JSON.stringify(newQuoteRisk), {headers: DEFAULT_HEADERS});
   }
+
+   /** PUT:  */
+   updateQuoteRisk(updatedQuoteRisk: QuoteRisk): Observable<QuoteRisk> {
+    const url = `${this.quoteRiskUrl}/${updatedQuoteRisk.qrCode}`;
+    return this.http.put(url, updatedQuoteRisk, this.httpOptions);
+  }
+
+  /** DELETE:  */
+  deleteQuoteRisk(quoteRisk: QuoteRisk) {
+    return this.http.delete(this.quoteRiskUrl + "/" + quoteRisk.qrCode);
+  }
+
+  /** PUT:  */
+//   updateQuoteRisk(updatedQuoteRisk: QuoteRisk): Observable<QuoteRisk> {
+//     const url = `${this.quotationUrl}/${updatedQuoteRisk.qpCode}`;
+//     return this.http.put(url, updatedQuoteRisk, this.httpOptions);
+//   }
+
+  /** DELETE:  */
+//   deleteQuoteRisk(quoteRisk: QuoteRisk) {
+//     return this.http.delete(this.quoteRiskUrl + "/" + quoteProduct.qpCode);
+//   }
+
+
+//   getQuoteRisks(): Observable<QuoteRisk[]> {
+//     // Get quotationses with the id
+//    this.quoteRisks = this.quoteRisksCollection.snapshotChanges().pipe(
+//      map(actions => actions.map(a => {
+//        const data = a.payload.doc.data() as QuoteRisk;
+//        data.id = a.payload.doc.id; 
+//        return data; 
+//      }))
+//    )
+//     return this.quoteRisks;
+//   }
+
+//   newQuoteRisk(newQuoteRisk: QuoteRisk) {
+//     this.quoteRisksCollection.add(newQuoteRisk);
+//   }
+
+//   getQuoteRisk(id: string): Observable<QuoteRisk> {
+//     this.quoteRiskDoc = this.afs.doc<QuoteRisk>(`quote_risks/${id}`);
+//     this.quoteRisk= this.quoteRiskDoc.snapshotChanges().pipe(
+//       map(action => {
+//         if (action.payload.exists === false ) {
+//           return null;
+//         } else {
+//           const data = action.payload.data() as QuoteRisk;
+//           data.id = action.payload.id;
+//           return data;
+//         }
+//       })
+//     )
+//     return this.quoteRisk;
+//   }
   
-  updateQuoteRisk(updateQuoteRisk: QuoteRisk){
-    this.quoteRiskDoc = this.afs.doc(`quote_risks/${updateQuoteRisk.id}`);
-    this.quoteRiskDoc.update(updateQuoteRisk);
-  }
+//   updateQuoteRisk(updateQuoteRisk: QuoteRisk){
+//     this.quoteRiskDoc = this.afs.doc(`quote_risks/${updateQuoteRisk.id}`);
+//     this.quoteRiskDoc.update(updateQuoteRisk);
+//   }
 
-  deleteQuoteRisk(deleteQuoteRisk: QuoteRisk) {
-      this.quoteRiskDoc = this.afs.doc(`quote_risks/${deleteQuoteRisk.id}`);
-      this.quoteRiskDoc.delete();
-  }
+//   deleteQuoteRisk(deleteQuoteRisk: QuoteRisk) {
+//       this.quoteRiskDoc = this.afs.doc(`quote_risks/${deleteQuoteRisk.id}`);
+//       this.quoteRiskDoc.delete();
+//   }
   // ++++++++++ QUOTE RISK FUNCTIONS ENDS ++++++++++ //
 
 
    // =========================== //
   // ==== QUOTE RISK LIMTITS FUNCTIONS ====== //
   // =========================== //
-  getQuoteRiskLimits(): Observable<QuoteRisk[]> {
-    // Get quotations with the id
-   this.quoteRiskLimits = this.quoteRiskLimitsCollection.snapshotChanges().pipe(
-     map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as QuoteRisk;
-       data.id = a.payload.doc.id; 
-       return data; 
-     }))
-   )
-    return this.quoteRiskLimits;
+  getQuoteRiskLimits(): Observable<QuoteRiskLimit[]> {
+    return this.http.get<QuoteRiskLimit[]>(this.quoteRiskLimitUrl);
   }
 
-  newQuoteRiskLimit(newQuoteRiskLimit: QuoteRiskLimit) {
-    this.quoteRiskLimitsCollection.add(newQuoteRiskLimit);
+   /** GET quote RiskLimit by id. Will 404 if id not found */
+   getQuoteRiskLimit(id: number): Observable<QuoteRiskLimit> {
+    const url = `${this.quotationUrl}/${id}`;
+    return this.http.get<QuoteRiskLimit>(url);
   }
 
-  getQuoteRiskLimit(id: string): Observable<QuoteRiskLimit> {
-    this.quoteRiskLimitDoc = this.afs.doc<QuoteRisk>(`quote_risk_limits/${id}`);
-    this.quoteRiskLimit = this.quoteRiskLimitDoc.snapshotChanges().pipe(
-      map(action => {
-        if (action.payload.exists === false ) {
-          return null;
-        } else {
-          const data = action.payload.data() as QuoteRiskLimit;
-          data.id = action.payload.id;
-          return data;
-        }
-      })
-    )
-    return this.quoteRiskLimit;
-  }
-  
-  updateQuoteRiskLimit(updateQuoteRiskLimit: QuoteRiskLimit){
-    this.quoteRiskLimitDoc = this.afs.doc(`quote_risk_limits/${updateQuoteRiskLimit.id}`);
-    this.quoteRiskLimitDoc.update(updateQuoteRiskLimit);
+  /** POST: add a new quoteRiskLimit to the server */
+  addQuoteRiskLimit(newQuoteRiskLimit: QuoteRiskLimit): Observable<QuoteRiskLimit> {
+    return this.http.post<QuoteRiskLimit>(this.quoteRiskLimitUrl, JSON.stringify(newQuoteRiskLimit), {headers: DEFAULT_HEADERS});
   }
 
-  deleteQuoteRiskLimit(deleteQuoteRiskLimit: QuoteRiskLimit) {
-      this.quoteRiskLimitDoc = this.afs.doc(`quote_risk_limits/${deleteQuoteRiskLimit}`);
-      this.quoteRiskLimitDoc.delete();
+   /** PUT:  */
+   updateQuoteRiskLimit(updatedQuoteRiskLimit: QuoteRiskLimit): Observable<QuoteRiskLimit> {
+    const url = `${this.quoteRiskLimitUrl}/${updatedQuoteRiskLimit.qrlCode}`;
+    return this.http.put(url, updatedQuoteRiskLimit, this.httpOptions);
+  }
+
+  /** DELETE:  */
+  deleteQuotRiskLimit(quotRiskLimit: QuoteRiskLimit) {
+    return this.http.delete(this.quoteRiskLimitUrl + "/" + quotRiskLimit.qrlCode);
   }
   // ++++++++++ QUOTE RISK LIMITS FUNCTIONS ENDS ++++++++++ //
   
   
   // ++++++++++ API FETCHES ++++++++++ //
-  getProducts(): Observable<QuoteProduct[]> {
-    // Get quotationses with the id
-   this.products = this.productsCollection.snapshotChanges().pipe(
-     map(actions => actions.map(a => {
-       const data = a.payload.doc.data() as QuoteProduct;
-       data.id = a.payload.doc.id; 
-       return data; 
-      //  console.log(data);
-     }))
-   )
-    return this.products;
-  };
+//   getProducts(): Observable<QuoteProduct[]> {
+//     // Get quotationses with the id
+//    this.products = this.productsCollection.snapshotChanges().pipe(
+//      map(actions => actions.map(a => {
+//        const data = a.payload.doc.data() as QuoteProduct;
+//        data.id = a.payload.doc.id; 
+//        return data; 
+//       //  console.log(data);
+//      }))
+//    )
+//     return this.products;
+//   };
 
   currencies = {
     "NGN": {

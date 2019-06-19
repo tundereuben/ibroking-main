@@ -27,19 +27,19 @@ export class QuoteRiskLimitsEditComponent implements OnInit {
   commissionAmount: number;
 
   quoteRiskLimits: QuoteRiskLimit[] = [];
-  id:string;
+  id:number;
   quoteRiskLimit: QuoteRiskLimit = {
-    id: '',
-    code: 0,
-    quoteCode: 0,
-    quoteRiskCode: 0,
-    sectionCode: 0,
-    limitAmount: 0,
-    premiumRate: 0,
-    premiumAmount: 0,
-    commissionAmount: 0,
-    rateDivisionFactor: 0,
-    riskSectionCode: 0,
+    // id: '',
+    // code: 0,
+    // quoteCode: 0,
+    // quoteRiskCode: 0,
+    // sectionCode: 0,
+    // limitAmount: 0,
+    // premiumRate: 0,
+    // premiumAmount: 0,
+    // commissionAmount: 0,
+    // rateDivisionFactor: 0,
+    // riskSectionCode: 0,
   };
 
 
@@ -56,14 +56,14 @@ export class QuoteRiskLimitsEditComponent implements OnInit {
     this.id = this.route.snapshot.params['id']; 
     this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
     this.quotationService.getQuoteRiskLimit(this.id).subscribe(quoteRiskLimit => {
-    this.quoteRiskLimit = quoteRiskLimit;
-    this.limitAmount = quoteRiskLimit.limitAmount;
-    this.premiumRate = quoteRiskLimit.premiumRate;
-    this.rateDivisionFactor = quoteRiskLimit.rateDivisionFactor;
-    this.premiumAmount = this.quoteRiskLimit.premiumAmount;
+      // this.quoteRiskLimit = quoteRiskLimit;
+      // this.limitAmount = quoteRiskLimit.limitAmount;
+      // this.premiumRate = quoteRiskLimit.premiumRate;
+      // this.rateDivisionFactor = quoteRiskLimit.rateDivisionFactor;
+      // this.premiumAmount = this.quoteRiskLimit.premiumAmount;
     });
 
-    this.riskSectionCode = this.quoteRiskLimit.riskSectionCode;
+    // this.riskSectionCode = this.quoteRiskLimit.riskSectionCode;
     
     this.setupService.getSections().subscribe(sections => {
       this.sections = sections;
@@ -102,9 +102,9 @@ export class QuoteRiskLimitsEditComponent implements OnInit {
       this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
     } else {
       // Add id to Quote and Update Quote
-      value.id = this.id
-      value.premiumAmount = this.premiumAmount;
-      value.commissionAmount = this.commissionAmount;
+      // value.id = this.id
+      // value.premiumAmount = this.premiumAmount;
+      // value.commissionAmount = this.commissionAmount;
       this.quotationService.updateQuoteRiskLimit(value);
 
       // update quotation information 
@@ -115,10 +115,10 @@ export class QuoteRiskLimitsEditComponent implements OnInit {
         commissionAmount: this.commissionAmount
       };
       // console.log(postData)
-      this.quotationService.updateQuotation(postData);
+      // this.quotationService.updateQuotation(postData);
 
-      this.flashMessage.show('Quote Risk Limit updated Successfully!', {cssClass: 'alert-success', timeout:4000});
-      this.router.navigate([`/quotation-details/${this.quoteId}`]);
+      // this.flashMessage.show('Quote Risk Limit updated Successfully!', {cssClass: 'alert-success', timeout:4000});
+      // this.router.navigate([`/quotation-details/${this.quoteId}`]);
     }
   }
 

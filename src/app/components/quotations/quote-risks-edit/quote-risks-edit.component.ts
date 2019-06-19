@@ -23,23 +23,23 @@ export class QuoteRisksEditComponent implements OnInit {
 
   id: string;
   quoteRisk: QuoteRisk = {
-    id: '',
-    code: 0,
-    name: '',
-    quoteCode: 0,
-    quoteNo: '',
-    riskId: '',
-    riskDescription: '',
-    value: '',
-    subclassCode: 0,
-    quoteProductCode: 0,
-    coverTypeCode: 0,
-    premium: 0,
-    coverFrom: '',
-    coverTo: '',
-    clientCode: 0,
-    clientType: '',
-    annualPremium: 0,
+    // id: '',
+    // code: 0,
+    // name: '',
+    // quoteCode: 0,
+    // quoteNo: '',
+    // riskId: '',
+    // riskDescription: '',
+    // value: '',
+    // subclassCode: 0,
+    // quoteProductCode: 0,
+    // coverTypeCode: 0,
+    // premium: 0,
+    // coverFrom: '',
+    // coverTo: '',
+    // clientCode: 0,
+    // clientType: '',
+    // annualPremium: 0,
   }
 
   constructor(
@@ -51,16 +51,16 @@ export class QuoteRisksEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-     // Get id from url and fetch quotation 
-     this.id = this.route.snapshot.params['id'];
-     this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
-     this.quotationService.getQuoteRisk(this.id).subscribe(quoteRisk => {
-       this.quoteRisk = quoteRisk;
-      //  console.log(quoteRisk);
-     });
+    //  // Get id from url and fetch quotation 
+    //  this.id = this.route.snapshot.params['id'];
+    //  this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
+    //  this.quotationService.getQuoteRisk(this.id).subscribe(quoteRisk => {
+    //    this.quoteRisk = quoteRisk;
+    //   //  console.log(quoteRisk);
+    //  });
 
-     this.riskSubclass = this.quoteRisk.subclassCode;
-     this.riskCovertype = this.quoteRisk.coverTypeCode
+    //  this.riskSubclass = this.quoteRisk.subclassCode;
+    //  this.riskCovertype = this.quoteRisk.coverTypeCode
 
 
      // get quoteCode from session variable
@@ -78,19 +78,19 @@ export class QuoteRisksEditComponent implements OnInit {
      });
   }
 
-  onSubmit({value, valid}: {value: QuoteRisk, valid: boolean}) {
-    if(!valid) {
-      // Show Error Message
-      this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 4000});
-    } else {
-      // Add id to Risk and Update Risk
-      value.id = this.id;
-      this.quotationService.updateQuoteRisk(value);
-      this.flashMessage.show('Quote Risk updated Successfully!', {cssClass: 'alert-success', timeout:4000});
-      // save values in a session variable, then re-route to quote-products
-      // sessionStorage.setItem("quoteCode", JSON.stringify(value.code));
-      this.router.navigate([`/quotation-details/${this.quoteId}`]);
-    }
-  }
+  // onSubmit({value, valid}: {value: QuoteRisk, valid: boolean}) {
+  //   if(!valid) {
+  //     // Show Error Message
+  //     this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 4000});
+  //   } else {
+  //     // Add id to Risk and Update Risk
+  //     // value.id = this.id;
+  //     // this.quotationService.updateQuoteRisk(value);
+  //     // this.flashMessage.show('Quote Risk updated Successfully!', {cssClass: 'alert-success', timeout:4000});
+  //     // // save values in a session variable, then re-route to quote-products
+  //     // // sessionStorage.setItem("quoteCode", JSON.stringify(value.code));
+  //     // this.router.navigate([`/quotation-details/${this.quoteId}`]);
+  //   }
+  // }
 
 }

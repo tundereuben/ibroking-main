@@ -15,20 +15,20 @@
             <div class="table-responsive"><!-- Tbl Respons -->
               <table class="table table-bordered" >
               <tr>
-                <th>Quote Code</th>
-                <th>Client </th>
+                <th> Quote No </th>
+                <th>Client Code</th>
                 <th>From Date</th>
                 <th>To Date</th>
                 <th>Currency</th>
                 <th>Payment Frequency</th>
               </tr> 
               <tr>
-                <td>{{quotation?.code}}</td>
-                <td>{{ quotation?.client.name }}</td>
-                <td>{{ quotation?.coverFrom}}</td>
-                <td>{{ quotation?.coverTo}}</td>
-                <td>{{ quotation?.currency.name}} ({{ quotation?.currency.symbol }})</td>
-                <td>{{ quotation?.paymentFrequency }}</td>
+                <td>{{quotation?.quotNo}}</td>
+                <td>{{ quotation?.quotClntCode }}</td>
+                <td>{{ quotation?.quotCoverFrom | date }}</td>
+                <td>{{ quotation?.quotCoverTo | date }}</td>
+                <td>{{ quotation?.quotCurSymbol}} </td>
+                <td>{{ quotation?.quotFreqOfPayment }}</td>
               </tr>
                                                                      
             </table>
@@ -58,10 +58,10 @@
               </th>
             </tr> 
             <tr *ngFor="let product of quoteProducts">
-              <td>{{ product?.productCode }}</td>
+              <td>{{ product?.qpProCode }}</td>
               <td>{{ product?.code }} </td> 
-              <td>{{ product?.coverFrom }}</td>
-              <td>{{ product?.coverTo }}</td>
+              <td>{{ product?.qpWefDate | date }}</td>
+              <td>{{ product?.qpWetDate | date }}</td>
               <td>
                 <div id="buttons">
                   <a routerLink="/quote-products-edit/{{ product.id }}" class="btn "> 
@@ -71,7 +71,7 @@
                   <a (click)="onDeleteClick()" class="btn ">
                     <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
                   </a>
-                  <button (click)="showRisks($event)" class="btn btn-primary" id="{{ product.code }}"> <!-- upon click, refresh risk details -->	
+                  <button (click)="showRisks($event)" class="btn btn-primary" id="{{ product.qpCode }}"> <!-- upon click, refresh risk details -->	
                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Risks
                   </button>
                 </div>
@@ -97,9 +97,9 @@
             <th>Risk ID</th>
             <th>From Date</th>
             <th>To Date</th>
-            <th>Cover Type</th>
+            <th>Cover Type Code</th>
             <th>Description</th>
-            <th>Subclass</th>
+            <th>Subclass Code</th>
             <td>
                 <a (click)="addRisk()" routerLink="/quote-risks-add"> 
                   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Risk
@@ -107,13 +107,13 @@
             </td>
           </tr> 
           <tr *ngFor="let risk of quoteRisks">
-            <td>{{ risk?.code }}</td>
-            <td>{{ risk?.riskId }}</td>
-            <td>{{ risk?.fromDate }}</td>
-            <td>{{ risk?.toDate }}</td>
-            <td>{{ risk?.riskCovertype }}</td>
-            <td>{{ risk?.riskDescription }}</td>
-            <td>{{ risk?.riskSubclass }}</td>
+            <td>{{ risk?.qrCode }}</td>
+            <td>{{ risk?.qrItemDesc }}</td>
+            <td>{{ risk?.qrWefDate | date }}</td>
+            <td>{{ risk?.qrWetDate | date }}</td>
+            <td>{{ risk?.qrCovtCode }}</td>
+            <td>{{ risk?.qrDesc }}</td>
+            <td>{{ risk?.qrSclCode }}</td>
             <td>
               <div id="buttons">
                 <a routerLink="/quote-risks-edit/{{ risk.id }}" class="btn "> 
@@ -123,7 +123,7 @@
                 <a (click)="onDeleteClick()" class="btn ">
                   <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
                 </a>
-                <button (click)="showRiskLimits($event)" class="btn btn-primary" id="{{ risk.code }}"> <!-- upon click, refresh risk details -->	
+                <button (click)="showRiskLimits($event)" class="btn btn-primary" id="{{ risk.qrCode }}"> <!-- upon click, refresh risk details -->	
                   <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Risk Limits
                 </button>
               </div>
@@ -158,12 +158,12 @@
             </th>
           </tr> 
           <tr *ngFor="let riskLimit of quoteRiskLimits">
-            <td>{{ riskLimit?.code }}</td>
-            <td>{{ riskLimit?.riskSectionCode }}</td>
-            <td>{{ riskLimit?.limitAmount }}</td>
-            <td>{{ riskLimit?.premiumRate }}</td>
-            <td>{{ riskLimit?.rateDivisionFactor }}</td>
-            <td>{{ riskLimit?.premiumAmount }}</td>
+            <td>{{ riskLimit?.qrlCode }}</td>
+            <td>{{ riskLimit?.qrlSectCode }}</td>
+            <td>{{ riskLimit?.qrlLimitAmt }}</td>
+            <td>{{ riskLimit?.qrlPremRate }}</td>
+            <td>{{ riskLimit?.qrlRateDivFactor }}</td>
+            <td>{{ riskLimit?.qrlPremAmt }}</td>
             <td>
                 <div id="buttons" >
                     <a (click)="editRiskLimit()" routerLink="/quote-risk-limits-edit/{{ riskLimit.id }}" class="btn "> 

@@ -33,9 +33,9 @@
     <div class="table-responsive" style="margin-top:30px;">
     <table *ngIf='quotations?.length > 0 ; else noQuotations' class="table table-hover">
       <tr>
-      <!-- <th> Code </th> -->
+      <!-- <th> Quot Code </th> -->
       <th> Quote No. </th>
-      <th>Client</th>
+      <th>Client Code</th>
       <th>Payment Freq.</th>
       <th>Cover From</th>
       <th>Cover To </th>
@@ -44,15 +44,15 @@
       <th>View</th> 
       </tr>
       <tr *ngFor="let quotation of quotations">
-        <!-- <td>{{ quotation.code }}</td> -->
-        <td>2018/{{ quotation.code }}</td>
-        <td>{{ quotation.client.name }} </td>
-        <td>{{ quotation.paymentFrequency }} </td>
-        <td>{{ quotation.coverFrom }}</td>
-        <td>{{ quotation.coverTo }}</td>
-        <td>{{ quotation.currency.symbol }}</td>
+        <!-- <td>{{ quotation.quotCode }}</td> -->
+        <td>{{ quotation.quotNo }}</td>
+        <td>{{ quotation.quotClntCode }} </td>
+        <td>{{ quotation.quotFreqOfPayment }} </td>
+        <td>{{ quotation.quotCoverFrom | date }}</td>
+        <td>{{ quotation.quotCoverTo | date }}</td>
+        <td>{{ quotation.quotCurSymbol }}</td>
         <!-- <<td>{{quotation.ok }} </td> -->
-        <td><a routerLink="/quotation-details/{{ quotation.id }}" class="btn btn-link"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> </a></td>
+        <td><a routerLink="/quotation-details/{{ quotation.quotCode }}" class="btn btn-link"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> </a></td>
       </tr>
     </table>
 

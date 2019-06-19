@@ -15,44 +15,43 @@ export class QuotationEditComponent implements OnInit {
   quotations: Quotation[] = [];
   id: string;
   quotation: Quotation = { 
-    id: '',
-    code: 0,
-    quoteNo: 0,
-    client: {}, // remove clientCode & clientName
-    clientCode: 0,
-    clientName: '',
-    agentCode: 0,
-    source: '',
-    branch: '',
-    currency: {},
-    coverFrom: '',
-    coverTo: '',
-    paymentFrequency: '',
-    totalPropertyValue: 0,
-    status: '',
-    expiryDate: '',
-    ok: '',
-    premium: 0,
-    commissionAmount: 0,
-    // clientType: '',
+    // code: 0,
+    // quoteNo: 0,
+    // client: {}, // remove clientCode & clientName
+    // clientCode: 0,
+    // clientName: '',
+    // agentCode: 0,
+    // source: '',
+    // branch: '',
+    // currency: {},
+    // coverFrom: '',
+    // coverTo: '',
+    // paymentFrequency: '',
+    // totalPropertyValue: 0,
+    // status: '',
+    // expiryDate: '',
+    // ok: '',
+    // premium: 0,
+    // commissionAmount: 0,
+    // // clientType: '',
   };
 
-  clients: any[]  = []; client; 
-  agentCode = this.quotation.agentCode; 
-  // code = this.quotation.code;
+  // clients: any[]  = []; client; 
+  // agentCode = this.quotation.agentCode; 
+  // // code = this.quotation.code;
 
-  source = this.quotation.source; 
-  sources: any[] = ['Direct', 'Walk-In', 'Referred']; 
+  // source = this.quotation.source; 
+  // sources: any[] = ['Direct', 'Walk-In', 'Referred']; 
 
-  branch = this.quotation.branch;
-  branches: any[] = ['Lagos', 'Abuja', 'Kaduna', 'Kano' ]; 
+  // branch = this.quotation.branch;
+  // branches: any[] = ['Lagos', 'Abuja', 'Kaduna', 'Kano' ]; 
 
-  currencies: any[] = [];      
-  // currencyCode = this.quotation.currency.code; 
-  // currencySymbol = this.quotation.currency.symbol; 
-  currency = this.quotation.currency;
+  // currencies: any[] = [];      
+  // // currencyCode = this.quotation.currency.code; 
+  // // currencySymbol = this.quotation.currency.symbol; 
+  // currency = this.quotation.currency;
 
-  paymentFrequencies: string[] = ['Anually', 'Semi-anually', 'Quarterly'];   paymentFrequency = this.quotation.paymentFrequency;
+  // paymentFrequencies: string[] = ['Anually', 'Semi-anually', 'Quarterly'];   paymentFrequency = this.quotation.paymentFrequency;
 
   usersUrl = 'https://jsonplaceholder.typicode.com/users';
   currencyUrl = 'https://restcountries.eu/rest/v2/currency/cop';
@@ -67,10 +66,10 @@ export class QuotationEditComponent implements OnInit {
   ngOnInit() {
     // Get id from url and fetch quotation 
     this.id = this.route.snapshot.params['id'];
-    this.quotationService.getQuotation(this.id).subscribe(quotation => {
-      this.quotation = quotation;
-      this.client = this.quotation.client;
-    });
+    // this.quotationService.getQuotation(this.id).subscribe(quotation => {
+    //   this.quotation = quotation;
+    //   this.client = this.quotation.client;
+    // });
 
     // fetch clients from API, assign clientCode
     var users = [];
@@ -86,19 +85,19 @@ export class QuotationEditComponent implements OnInit {
         });  
       }
     });
-    this.clients = users; 
+    // this.clients = users; 
 
-    // fetch currencies from API
-    var currencies = this.quotationService.currencies;
-    // console.log(currencies)
-    var size = 0, key; var code = 0;
-    for (key in currencies) {
-      this.currencies.push({
-        "code": code++,
-        "name": currencies[key].name,
-        "symbol": currencies[key].symbol
-      });
-    }
+    // // fetch currencies from API
+    // var currencies = this.quotationService.currencies;
+    // // console.log(currencies)
+    // var size = 0, key; var code = 0;
+    // for (key in currencies) {
+    //   this.currencies.push({
+    //     "code": code++,
+    //     "name": currencies[key].name,
+    //     "symbol": currencies[key].symbol
+    //   });
+    // }
   } 
 
   onSubmit({value, valid}: {value: Quotation, valid: boolean}) {
@@ -107,7 +106,7 @@ export class QuotationEditComponent implements OnInit {
       this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
     } else {
       // Add id to Quote and Update Quote
-      value.id = this.id
+      // value.id = this.id
       this.quotationService.updateQuotation(value);
       this.flashMessage.show('Quote updated Successfully!', {cssClass: 'alert-success', timeout:4000});
       // save values in a session variable, then re-route to quote-products

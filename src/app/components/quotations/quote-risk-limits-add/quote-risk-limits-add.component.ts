@@ -30,15 +30,7 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
 
   quoteRiskLimits: QuoteRiskLimit[] = [];
   quoteRiskLimit: QuoteRiskLimit = {
-    id: '',
-    code: 0,
-    quoteCode: 0,
-    quoteRiskCode: 0,
-    sectionCode: 0,
-    limitAmount: 0,
-    premiumRate: 0,
-    premiumAmount: 0,
-    rateDivisionFactor: 0
+    
   };
 
   @ViewChild('quoteRiskLimitForm') form: any;
@@ -64,11 +56,11 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
 
     // Fetch existing riskLimit, get last riskLimit number, then generate new riskLimit number
     this.quotationService.getQuoteRiskLimits().subscribe(quoteRiskLimits => {
-      this.quoteRiskLimits = quoteRiskLimits; 
-      for(var i=0; i < quoteRiskLimits.length; i++){
-        if(quoteRiskLimits[i].code > this.quoteRiskLimit.code ) this.quoteRiskLimit.code = quoteRiskLimits[i].code;
-      }
-      this.quoteRiskLimit.code += 1;
+      // this.quoteRiskLimits = quoteRiskLimits; 
+      // for(var i=0; i < quoteRiskLimits.length; i++){
+      //   if(quoteRiskLimits[i].code > this.quoteRiskLimit.code ) this.quoteRiskLimit.code = quoteRiskLimits[i].code;
+      // }
+      // this.quoteRiskLimit.code += 1;
     });
   };
 
@@ -116,11 +108,11 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
 
       // Add New Quote
       // value.quoteCode = this.quoteCode;
-      value.quoteRiskCode = this.quoteRiskCode;
-      value.premiumAmount = this.premiumAmount;
-      value.commissionAmount = this.commissionAmount;
-      value.code = this.quoteRiskLimit.code;
-      this.quotationService.newQuoteRiskLimit(value);
+      // value.quoteRiskCode = this.quoteRiskCode;
+      // value.premiumAmount = this.premiumAmount;
+      // value.commissionAmount = this.commissionAmount;
+      // value.code = this.quoteRiskLimit.code;
+      // this.quotationService.newQuoteRiskLimit(value);
 
       // update quotation information 
       var postData = {
@@ -130,7 +122,7 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
         commissionAmount: this.commissionAmount
       };
       // console.log(postData)
-      this.quotationService.updateQuotation(postData);
+      // this.quotationService.updateQuotation(postData);
 
       // save quoteRisk in session variable & route
       sessionStorage.setItem("quoteRiskLimitValue", JSON.stringify(value));

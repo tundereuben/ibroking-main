@@ -59,12 +59,19 @@ export class SetupService {
   };
 
   // API CALLS & httpOptions
-  classesUrl = 'api/classes';
-  subclassesUrl = 'api/subclasses';
-  productsUrl = 'api/products';
-  covertypesUrl = 'api/covertypes';
-  sectionsUrl = 'api/sections';
-  clausesUrl = 'api/clauses';
+  // classesUrl = 'api/classes';
+  // subclassesUrl = 'api/subclasses';
+  // productsUrl = 'api/products';
+  // covertypesUrl = 'api/covertypes';
+  // sectionsUrl = 'api/sections';
+  // clausesUrl = 'api/clauses';
+
+  classesUrl = 'http://localhost:8080/api/classes';
+  subclassesUrl = 'http://localhost:8080/api/subclasses';
+  productsUrl = 'http://localhost:8080/api/products';
+  covertypesUrl = 'http://localhost:8080/api/covertypes';
+  sectionsUrl = 'http://localhost:8080/api/sections';
+  clausesUrl = 'http://localhost:8080/api/clauses';
 
   httpOptions = {
     headers: new HttpHeaders({
