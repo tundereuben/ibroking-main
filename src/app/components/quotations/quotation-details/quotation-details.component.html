@@ -28,7 +28,7 @@
                 <td>{{ quotation?.quotCoverFrom | date }}</td>
                 <td>{{ quotation?.quotCoverTo | date }}</td>
                 <td>{{ quotation?.quotCurSymbol}} </td>
-                <td>{{ quotation?.quotFreqOfPayment }}</td>
+                <td>{{ quotation?.quotPaymentFrequency }}</td>
               </tr>
                                                                      
             </table>
@@ -47,8 +47,8 @@
           <div class="table-responsive"><!-- Tbl Respons -->
             <table class="table table-bordered" >
             <tr>
+              <th>Quote Product Code</th>
               <th>Product Code</th>
-              <th>Product</th>
               <th>From Date</th>
               <th>To Date</th>
               <th> 
@@ -58,8 +58,8 @@
               </th>
             </tr> 
             <tr *ngFor="let product of quoteProducts">
-              <td>{{ product?.qpProCode }}</td>
-              <td>{{ product?.code }} </td> 
+              <td>{{ product?.qpCode }}</td>
+              <td>{{ product?.qpQuotcode }} </td> 
               <td>{{ product?.qpWefDate | date }}</td>
               <td>{{ product?.qpWetDate | date }}</td>
               <td>
@@ -68,8 +68,8 @@
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                   </a>
                   
-                  <a (click)="onDeleteClick()" class="btn ">
-                    <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                  <a (click)="deleteProduct($event)" class="btn ">
+                    <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="{{ product.qpCode }}"></span>
                   </a>
                   <button (click)="showRisks($event)" class="btn btn-primary" id="{{ product.qpCode }}"> <!-- upon click, refresh risk details -->	
                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Risks
@@ -120,8 +120,8 @@
                   <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 </a>
                 
-                <a (click)="onDeleteClick()" class="btn ">
-                  <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                <a (click)="deleteRisk($event)" class="btn"  >
+                  <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="{{ risk.qrCode }}"></span>
                 </a>
                 <button (click)="showRiskLimits($event)" class="btn btn-primary" id="{{ risk.qrCode }}"> <!-- upon click, refresh risk details -->	
                   <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Risk Limits
@@ -166,12 +166,12 @@
             <td>{{ riskLimit?.qrlPremAmt }}</td>
             <td>
                 <div id="buttons" >
-                    <a (click)="editRiskLimit()" routerLink="/quote-risk-limits-edit/{{ riskLimit.id }}" class="btn "> 
+                    <a (click)="editRiskLimit()" routerLink="/quote-risk-limits-edit/{{ riskLimit.qrlCode }}" class="btn "> 
                       <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     </a>
                     
                     <a (click)="deleteRiskLimit($event)" class="btn">
-                      <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="{{ riskLimit.id }}"></span>
+                      <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" id="{{ riskLimit.qrlCode }}"></span>
                     </a>
                   </div>
             </td>

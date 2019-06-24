@@ -123,12 +123,12 @@
             <label for="client">Client</label> <!--  => noBack -->
             <select 
               class="form-control"
-              name="client"
+              name="quotClntCode"
               [(ngModel)]="client" 
               required
             >
               <option [ngValue]="null"> Select </option>
-              <option *ngFor="let c of clients" [ngValue]="c">{{ c.code }} | {{ c.name }} ({{ c.email }}) </option>
+              <option *ngFor="let c of clients" [ngValue]="c.code">{{ c.code }} | {{ c.name }} ({{ c.email }}) </option>
             </select>
           </div>
           <div 
@@ -136,7 +136,7 @@
             <label for="agent">Agent</label>
             <select 
               class="form-control"
-              name="agent"
+              name="quotAgntCode"
               [(ngModel)]="agent" 
               required
             >
@@ -148,7 +148,7 @@
             <label for="source">Source</label>
             <select 
               class="form-control"
-              name="source"
+              name="quoteSource"
               [(ngModel)]="source" 
               required
             >
@@ -160,7 +160,7 @@
             <label for="branchCode">Branch</label>
             <select 
               class="form-control"
-              name="branch"
+              name="quotBranch"
               [(ngModel)]="branch" 
               required
             >
@@ -175,12 +175,12 @@
                 <label for="currency">Currency</label>
                 <select 
                   class="form-control"
-                  name="currency"
+                  name="quotCurSymbol"
                   [(ngModel)]="currency" 
                   required
                 >
                   <option [ngValue]="null"> Select  </option>
-                  <option *ngFor="let c of currencies" [ngValue]="c">{{ c.symbol + ' | ' + c.name  }}</option>
+                  <option *ngFor="let c of currencies" [ngValue]="c.shtDesc">{{ c.symbol + ' | ' + c.name +  ' | ' + c.shtDesc }}</option>
                 </select>
               </div>
           <div class="form-group">
@@ -188,9 +188,9 @@
             <input 
               type="date" 
               class="form-control"
-              name="coverFrom"
+              name="quotCoverFrom"
               #quotationCoverFrom="ngModel"
-              [(ngModel)]="coverFrom" 
+              [(ngModel)]="quotCoverFrom" 
               required
               (change)="computeCoverTo($event)"
             >
@@ -200,9 +200,9 @@
               <input 
                 type="date" 
                 class="form-control"
-                name="coverTo"
+                name="quotCoverTo"
                 #quotationCoverTo="ngModel"
-                [(ngModel)]="coverTo" 
+                [(ngModel)]="quotCoverTo" 
                 required
               >
             </div>
@@ -210,12 +210,12 @@
             <label for="paymentFrequency">Payment Frequency</label>
             <select 
               class="form-control"
-              name="paymentFrequency"
-              [(ngModel)]="paymentFrequency" 
+              name="quotPaymentFrequency"
+              [(ngModel)]="quotPaymentFrequency" 
               required
             >
               <option [ngValue]="null"> Select </option>
-              <option *ngFor="let p of paymentFrequencies" [ngValue]="p">{{ p }}</option>
+              <option *ngFor="let p of quotPaymentFrequencies" [ngValue]="p">{{ p }}</option>
             </select>
           </div>
           </div>

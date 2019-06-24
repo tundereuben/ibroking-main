@@ -9,7 +9,7 @@ export interface QuoteRisk {
     qrValue?: number,
     qrSclCode?: number,
     qrQpCode?: number,
-    qrCovtCode?: number
+    qrCovtCode?: number,
     qrCovtShtDesc?: String,
     qrPremium?: number,
     qrBindCode?: number, 
@@ -39,23 +39,4 @@ export interface QuoteRisk {
     qrWefDate?: Date,
     qrWetDate?: Date
 
-
-    // id?: string,
-    // code?: number,
-    // name?: string,
-    // quoteCode?: number,
-    // quoteRiskCode?: number,
-    // quoteNo?: string,
-    // riskId?: string,
-    // riskDescription?: string,
-    // value?: string,
-    // subclassCode?: number,
-    // quoteProductCode?: number,
-    // coverTypeCode?: number,
-    // premium?: number,
-    // coverFrom?: string,
-    // coverTo?: string,
-    // clientCode?: number,
-    // clientType?: string,
-    // annualPremium?: number,
 }

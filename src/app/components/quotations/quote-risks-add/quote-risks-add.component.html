@@ -11,9 +11,9 @@
           <input 
             type="text" 
             class="form-control"
-            name="riskId"
+            name="qrPropertyId"
             #quoteRiskId="ngModel"
-            [(ngModel)]="quoteRisk.riskId" 
+            [(ngModel)]="quoteRisk.qrPropertyId" 
             required
           >
         </div>
@@ -22,9 +22,9 @@
           <input 
             type="text" 
             class="form-control"
-            name="riskDescription"
+            name="qrItemDesc"
             #quoteRiskDescription="ngModel"
-            [(ngModel)]="quoteRisk.riskDescription" 
+            [(ngModel)]="quoteRisk.qrItemDesc" 
             required
           >
         </div>
@@ -33,7 +33,7 @@
           <label for="riskSubclass">Risk Subclass</label>
           <select 
             class="form-control"
-            name="riskSubclass"
+            name="qrSclCode"
             [(ngModel)]="riskSubclass" 
             required
           >
@@ -49,12 +49,12 @@
             <label for="riskCovertype">Risk Covertype</label>
             <select 
               class="form-control"
-              name="riskCovertype"
+              name="qrCovtCode"
               [(ngModel)]="riskCovertype" 
               required
             >
               <option [ngValue]="null">Select</option>
-              <option *ngFor="let c of covertypes" [ngValue]="c.covtCode">{{ c.covtShtDesc }} </option>
+              <option *ngFor="let c of covertypes" [ngValue]="c.covtCode">{{ c.covtDesc }} </option>
             </select>
           </div> 
           <div class="form-group">
@@ -62,9 +62,9 @@
           <input 
             type="date" 
             class="form-control"
-            name="fromDate"
+            name="qrWefDate"
             #quoteRiskFrom="ngModel"
-            [(ngModel)]="quoteRisk.coverFrom" 
+            [(ngModel)]="quoteRisk.qrWefDate" 
             required
           >
         </div>
@@ -73,9 +73,9 @@
           <input 
             type="date" 
             class="form-control"
-            name="toDate"
+            name="qrWetDate"
             #quoteRiskTo="ngModel"
-            [(ngModel)]="quoteRisk.coverTo" 
+            [(ngModel)]="quoteRisk.qrWetDate" 
             required
           >
         </div>

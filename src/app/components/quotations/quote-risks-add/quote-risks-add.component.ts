@@ -16,31 +16,26 @@ import { Covertype } from '../../../models/Covertype';
 export class QuoteRisksAddComponent implements OnInit {
 // quoteCode: string;
 isAdd: boolean;
-quoteId: string;
+// quoteId: string;
 quoteProductCode: number;
+qrCode: number; // fetch all quote risk limits & use the most recent
 quoteProduct: any; // Fetch from session storage
 subclasses: Subclass[] = []; riskSubclass = null;
 covertypes: Covertype[] = []; riskCovertype = null;
 quoteRisks: QuoteRisk[] = [];
 
 quoteRisk: QuoteRisk = {
-  // id: '',
-  // code: 0,
-  // name: '',
-  // quoteCode: 0,
-  // quoteNo: '',
-  // riskId: '',
-  // riskDescription: '',
-  // value: '',
-  // subclassCode: 0,
-  // quoteProductCode: 0,
-  // coverTypeCode: 0,
-  // premium: 0,
-  // coverFrom: '',
-  // coverTo: '',
-  // clientCode: 0,
-  // clientType: '',
-  // annualPremium: 0,
+  qrCode: 0,
+  qrQuotCode: 0,
+  qrQuotNo: '',
+  qrPropertyId: '',
+  qrItemDesc: '',
+  qrSclCode: 0,
+  qrQpCode: 0,
+  qrCovtCode: 0,
+  qrClntCode: 0,
+  qrWefDate: null,
+  qrWetDate: null
 }
 
 @ViewChild('quoteRiskForm') form: any;
@@ -56,11 +51,10 @@ quoteRisk: QuoteRisk = {
     // get quoteCode from session variable
     this.isAdd = JSON.parse(sessionStorage.getItem("isAdd"));
     this.quoteProduct = JSON.parse(sessionStorage.getItem("quoteProduct"));
-    // this.quoteRisk.coverFrom = this.quoteProduct.coverFrom;
-    // this.quoteRisk.coverTo = this.quoteProduct.coverTo;
-    console.log(this.quoteProduct.coverFrom, this.quoteProduct.coverTo);
-    this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
-    this.quoteProductCode =this.quoteProduct.code;
+    this.quoteRisk.qrWefDate = this.quoteProduct.qpWefDate;
+    this.quoteRisk.qrWetDate = this.quoteProduct.qpWetDate;
+    // this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
+    // this.quoteProductCode = this.quoteProduct.code;
     console.log(this.quoteProduct);
         
     this.setupService.getSubclasses().subscribe(subclasses => {
@@ -76,10 +70,7 @@ quoteRisk: QuoteRisk = {
     // Fetch existing risks, get last risk number, then generate new risk number
     this.quotationService.getQuoteRisks().subscribe(quoteRisks => {
       this.quoteRisks = quoteRisks; 
-      for(var i=0; i < quoteRisks.length; i++){
-        // if(quoteRisks[i].code > this.quoteRisk.code ) this.quoteRisk.code = quoteRisks[i].code;
-      }
-      // this.quoteRisk.code += 1;
+      this.qrCode = this.quoteRisks[0].qrCode + 1;
     });
   }
 
@@ -89,12 +80,16 @@ quoteRisk: QuoteRisk = {
       this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
     } else {
       // Add New Risk
-      // value.quoteCode = parseInt(this.quoteCode);
-      // value.quoteProductCode = this.quoteProductCode; 
-      // value.code = this.quoteRisk.code;
-      // this.quotationService.newQuoteRisk(value);
+      value.qrCode = this.qrCode;
+      value.qrQuotCode = this.quoteProduct.qpQuotCode;
+      value.qrQuotNo = this.quoteProduct.qpQuotNo; 
+      value.qrQpCode = this.quoteProduct.qpCode;
+      this.quotationService.addQuoteRisk(value)
+      .subscribe(response => 
+        // console.log(response), 
+        err => console.log(err));
+      
       // save quoteRisk in session variable
-      // sessionStorage.setItem("quoteRiskCode", JSON.stringify(value.code));
       sessionStorage.setItem("quoteRisk", JSON.stringify(value));
       this.router.navigate(['/quote-risk-limits-add']);
     }

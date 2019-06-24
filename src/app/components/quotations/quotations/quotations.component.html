@@ -33,7 +33,7 @@
     <div class="table-responsive" style="margin-top:30px;">
     <table *ngIf='quotations?.length > 0 ; else noQuotations' class="table table-hover">
       <tr>
-      <!-- <th> Quot Code </th> -->
+      <th> Quot Code </th>
       <th> Quote No. </th>
       <th>Client Code</th>
       <th>Payment Freq.</th>
@@ -44,10 +44,10 @@
       <th>View</th> 
       </tr>
       <tr *ngFor="let quotation of quotations">
-        <!-- <td>{{ quotation.quotCode }}</td> -->
+        <td>{{ quotation.quotCode }}</td>
         <td>{{ quotation.quotNo }}</td>
         <td>{{ quotation.quotClntCode }} </td>
-        <td>{{ quotation.quotFreqOfPayment }} </td>
+        <td>{{ quotation.quotPaymentFrequency }} </td>
         <td>{{ quotation.quotCoverFrom | date }}</td>
         <td>{{ quotation.quotCoverTo | date }}</td>
         <td>{{ quotation.quotCurSymbol }}</td>

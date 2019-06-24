@@ -10,8 +10,8 @@
           <label for="agent">Section </label>
           <select 
           class="form-control"
-          name="riskSectionCode"
-          [(ngModel)]="riskSectionCode" 
+          name="qrlSectCode"
+          [(ngModel)]="qrlSectCode" 
           required
           >
             <option [ngValue]="null">Select</option>
@@ -24,9 +24,9 @@
             type="number" 
             class="form-control" 
             placeholder="e.g. 1000000"
-            name="limitAmount"
+            name="qrlLimitAmt"
             #quoteLimitAmount="ngModel"
-            [(ngModel)]="limitAmount" 
+            [(ngModel)]="qrlLimitAmt" 
             (keyup)="getLimitAmount($event.target.value)"
             required
           >
@@ -48,14 +48,14 @@
 
       <div class="col-md-6">
         <div class="form-group">
-          <label for="rateDivisionFactor">Rate Division Factor</label>
+          <label for="qrlRateDivFactor">Rate Division Factor</label>
           <input 
             type="number" 
             class="form-control" 
             placeholder="e.g. 100"
-            name="rateDivisionFactor"
+            name="qrlRateDivFactor"
             #quoteRateDivisionFactor="ngModel"
-            [(ngModel)]="rateDivisionFactor" 
+            [(ngModel)]="qrlRateDivFactor" 
             (keyup)="getRateDivisionFactor($event.target.value)"
             required
           >
@@ -89,8 +89,8 @@
       
       
       <div id="rule"></div> 
-      <div *ngIf="isAddToRisk">
-          <!-- <div *ngIf="isAddToRisk; else default"> -->
+      <!-- <div *ngIf="isAddToRisk"> -->
+          <div *ngIf="isAddToRisk; else default">
           <button class="btn btn-info pull-right">Add New Risk Limit&nbsp;<span class="glyphicon" aria-hidden="true"></span></button>
       </div>  
       <ng-template #default>

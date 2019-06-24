@@ -101,11 +101,26 @@ export class QuotationDetailsComponent implements OnInit {
   //   sessionStorage.setItem("quoteId", JSON.stringify(this.id)); // store quoteId for re-routing
   // }
 
-  // deleteRiskLimit(event) {
-  //   var id = event.target.id;
-  //   this.quotationService.deleteQuoteRiskLimit(id);
-  //   window.location.reload();
-  // }
+  // Delete Risk Limit
+  deleteRiskLimit(event) {
+    var id = event.target.id;
+    this.quotationService.deleteQuoteRiskLimit(id).subscribe();
+    window.location.reload();
+  }
+
+  // Delete Risk
+  deleteRisk(event) {
+    var id = event.target.id;
+    this.quotationService.deleteQuoteRisk(id).subscribe();
+    window.location.reload();
+  }
+
+  // Delete Risk
+  deleteProduct(event) {
+    var id = event.target.id;
+    this.quotationService.deleteQuoteProduct(id).subscribe();
+    window.location.reload();
+  }
 
   // addRisk(){
   //   var isAdd = true;
@@ -119,15 +134,17 @@ export class QuotationDetailsComponent implements OnInit {
   // }
   
 
-  // onDeleteClick() {
-  //   if(confirm('Are you sure?')) {
-  //     this.quotationService.deleteQuotation(this.quotation);
-  //     this.flashMessage.show('Quotation removed', {
-  //       cssClass: 'alert-success', timeout: 4000
-  //     });
-  //     this.router.navigate(['/quotations']);
-  //   }
-  // }
+  onDeleteClick() {
+    if(confirm('Are you sure?')) {
+      this.quotationService.deleteQuotation(this.quotation).subscribe();
+      this.flashMessage.show('Quotation removed', {
+        cssClass: 'alert-success', timeout: 4000
+      });
+      window.location.reload();
+      this.router.navigate(['/quotations']);
+      
+    }
+  }
 
   // addingNew(){
   //   sessionStorage.setItem("quoteRiskCode", JSON.stringify(this.quoteRiskCode));

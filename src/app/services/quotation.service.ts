@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map, tap, retry } from 'rxjs/operators';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http'; 
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'; 
 
 import { Quotation } from '../models/Quotation';
 import { QuoteProduct } from '../models/QuoteProduct';
 import { QuoteRisk } from '../models/QuoteRisk';
 import { QuoteRiskLimit } from '../models/QuoteRiskLimit';
 import { DEFAULT_HEADERS } from '../models/authorization';
+import { pipe } from '@angular/core/src/render3';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +55,7 @@ export class QuotationService {
   quoteRiskUrl = 'http://localhost:8080/api/quotrisks';
   quoteRiskLimitUrl = 'http://localhost:8080/api/quotrisklimits';
 
-  httpOptions = {
+httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
     })
@@ -63,11 +64,24 @@ export class QuotationService {
   // Error handler
 //   private handleError<T> (operation = 'operation', result?: T) {
 //     return (error: any): Observable<T> =>  {
-//       console.error(error);
+//     //   console.error(error);
 //       console.log(`${operation} failed: ${error.message}`);
 //       return of(result as T);
-//     }
+//     };
 //   }
+  private handleError(error: HttpErrorResponse) {
+      if(error.error instanceof ErrorEvent) {
+          console.log('An error occured:', error.error.message);
+      } else {
+          console.log(
+              `Backend returned code ${error.status} ` +
+              `body was: ${error.error}`
+          );
+      }
+      return throwError(
+          'Something bad happened; please try again later.'
+      );
+  }
  
 
   // =========================== //
@@ -76,7 +90,11 @@ export class QuotationService {
 
   /** GET quotations. Will 404 if id not found */
   getQuotations(): Observable<Quotation[]> {
-    return this.http.get<Quotation[]>(this.quotationUrl);
+    return this.http.get<Quotation[]>(this.quotationUrl)
+    .pipe(
+        retry(3),
+        catchError(this.handleError)
+    );
   }
 
    /** GET quotation by id. Will 404 if id not found */
@@ -87,7 +105,10 @@ export class QuotationService {
 
   /** POST: add a new class to the server */
   addQuotation(newQuotation: Quotation): Observable<Quotation> {
-    return this.http.post<Quotation>(this.quotationUrl, JSON.stringify(newQuotation), {headers: DEFAULT_HEADERS});
+    return this.http.post<Quotation>(this.quotationUrl, newQuotation, this.httpOptions)
+    .pipe(
+        catchError(this.handleError)
+    );
   }
 
   /** PUT:  */
@@ -98,7 +119,13 @@ export class QuotationService {
 
   /** DELETE:  */
   deleteQuotation(quotation: Quotation) {
-    return this.http.delete(this.quotationUrl + "/" + quotation.quotCode);
+    const url = `${this.quotationUrl }/${quotation.quotCode}`;
+    console.log(url);
+    return this.http.delete(url, this.httpOptions)
+    .pipe(
+        catchError(this.handleError)
+    );
+    // return this.http.delete(this.quotationUrl + "/" + quotation.quotCode);
   }
 
   // ++++++++++ QUOTATION DETAILS FUNCTIONS ENDS ++++++++++ //
@@ -121,7 +148,10 @@ export class QuotationService {
 
   /** POST: add a new quoteProduct to the server */
   addQuoteProduct(newQuoteProduct: QuoteProduct): Observable<QuoteProduct> {
-    return this.http.post<QuoteProduct>(this.quoteProductUrl, JSON.stringify(newQuoteProduct), {headers: DEFAULT_HEADERS});
+    return this.http.post<QuoteProduct>(this.quoteProductUrl, newQuoteProduct, this.httpOptions)
+    .pipe(
+        catchError(this.handleError)
+    );;
   }
 
   /** PUT:  */
@@ -131,8 +161,12 @@ export class QuotationService {
   }
 
   /** DELETE:  */
-  deleteQuoteProduct(quoteProduct: QuoteProduct) {
-    return this.http.delete(this.quoteProductUrl + "/" + quoteProduct.qpCode);
+  deleteQuoteProduct(id: number) {
+    const url = `${this.quoteProductUrl }/${id}`;
+    return this.http.delete(url, this.httpOptions)
+    .pipe(
+        catchError(this.handleError)
+    );
   }
 
 //   getQuoteProducts(): Observable<QuoteProduct[]> {
@@ -203,13 +237,17 @@ export class QuotationService {
 
    /** PUT:  */
    updateQuoteRisk(updatedQuoteRisk: QuoteRisk): Observable<QuoteRisk> {
-    const url = `${this.quoteRiskUrl}/${updatedQuoteRisk.qrCode}`;
+    const url = `${this.quoteRiskUrl}/${updatedQuoteRisk.qrCode}`; 
     return this.http.put(url, updatedQuoteRisk, this.httpOptions);
   }
 
   /** DELETE:  */
-  deleteQuoteRisk(quoteRisk: QuoteRisk) {
-    return this.http.delete(this.quoteRiskUrl + "/" + quoteRisk.qrCode);
+  deleteQuoteRisk(id: number) {
+    const url = `${this.quoteRiskUrl }/${id}`;
+    return this.http.delete(url, this.httpOptions)
+    .pipe(
+        catchError(this.handleError)
+    );
   }
 
   /** PUT:  */
@@ -293,8 +331,12 @@ export class QuotationService {
   }
 
   /** DELETE:  */
-  deleteQuotRiskLimit(quotRiskLimit: QuoteRiskLimit) {
-    return this.http.delete(this.quoteRiskLimitUrl + "/" + quotRiskLimit.qrlCode);
+  deleteQuoteRiskLimit(id: number): Observable<{}> {
+    const url = `${this.quoteRiskLimitUrl }/${id}`;
+    return this.http.delete(url, this.httpOptions)
+    .pipe(
+        catchError(this.handleError)
+    );
   }
   // ++++++++++ QUOTE RISK LIMITS FUNCTIONS ENDS ++++++++++ //
   

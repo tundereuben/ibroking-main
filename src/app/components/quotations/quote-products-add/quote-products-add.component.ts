@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { QuotationService } from '../../../services/quotation.service';
+import { SetupService } from '../../../services/setup.service';
 import { Router, RouterStateSnapshot } from '@angular/router';
 
 import { Product } from '../../../models/Product';
@@ -14,24 +15,26 @@ import { QuoteProduct } from '../../../models/QuoteProduct';
 })
 export class QuoteProductsAddComponent implements OnInit {
 
-  products: QuoteProduct[] = []; product = null;
+  products: Product[] = []; product = null;
   quotations: Quotation[] = []; quotation = null
   quoteProducts: QuoteProduct[] = [];
   productCode = null;
   quoteCode: number; // Get quoteCode from session
-  quoteInfo: any; // get quotation from session
+  qpCode: number; // get qoute product from by increment latest quote code
   coverFrom: string;
   coverTo: string; 
 
   quoteProduct: QuoteProduct = {
-    // id: '',
-    // name: '',
-    // code: 0,
-    // description: '',
-    // quoteCode: 0,
-    // productCode: 0, 
-    // coverFrom: '',
-    // coverTo: ''
+    qpCode: 0,
+    qpProCode: 0,
+    qpProShtDesc: '',
+    qpWefDate: null,
+    qpWetDate: null,
+    qpQuotCode: 0,
+    qpQuotNo: '',
+    qpTotalSi: 0,
+    qpPremium: 0,
+    qpComm: 0
   }
  
   @ViewChild('quoteProductForm') form: any;
@@ -39,30 +42,29 @@ export class QuoteProductsAddComponent implements OnInit {
   constructor(
     private flashMessage: FlashMessagesService,
     private quotationService: QuotationService, 
+    private setupService: SetupService,
     private router: Router
   ) { }
 
   ngOnInit() {
     // get quoteCode from session variable
-    // this.quoteInfo = JSON.parse(sessionStorage.getItem("quoteInfo"));
+    this.quotation = JSON.parse(sessionStorage.getItem("quotation"));
     // this.quoteCode = this.quoteInfo.code;
-    // this.quoteProduct.coverFrom = this.quoteInfo.coverFrom;
-    // this.quoteProduct.coverTo = this.quoteInfo.coverTo;
-    // console.log(this.quoteProduct.coverFrom, this.quoteProduct.coverTo);
+    this.quoteProduct.qpWefDate = this.quotation.quotCoverFrom;
+    this.quoteProduct.qpWetDate = this.quotation.quotCoverTo;
+    console.log(this.quotation);
 
     
-    // this.quotationService.getProducts().subscribe(products => {
-    //   this.products = products;
-    // });
+    this.setupService.getProducts().subscribe(products => {
+      this.products = products;
+      // console.log(this.products);
+    });
 
     // Fetch existing products, get last product number, then generate new product number
     this.quotationService.getQuoteProducts().subscribe(quoteProducts => {
       this.quoteProducts = quoteProducts;
-      for(var i=0; i < quoteProducts.length; i++){
-        // if(quoteProducts[i].code > this.quoteProduct.code ) this.quoteProduct.code = quoteProducts[i].code;
-      }
-      // this.quoteProduct.code += 1;
-      // console.log(this.quoteProduct.code)
+      this.qpCode = this.quoteProducts[0].qpCode + 1;
+      // console.log(this.quoteProducts[0]);
     });
   }
 
@@ -73,6 +75,7 @@ export class QuoteProductsAddComponent implements OnInit {
   }
 
   onSubmit({value, valid}: {value: QuoteProduct, valid: boolean}) {
+    // console.log(value, valid);
     if(!valid) {
       // Show Error Message
       this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
@@ -80,9 +83,15 @@ export class QuoteProductsAddComponent implements OnInit {
       // Add New Quote
       // value.quoteCode = this.quoteCode;
       // value.code = this.quoteProduct.code;
-      // this.quotationService.newQuoteProduct(value);
+      value.qpCode = this.qpCode;
+      value.qpQuotNo = this.quotation.quotNo;
+      value.qpQuotCode = this.quotation.quotCode;
+      value.qpAgntCode = this.quotation.quotAgntCode;
+      this.quotationService.addQuoteProduct(value)
+      .subscribe(response => 
+                  // console.log(response), 
+                  err => console.log(err));
       // save quoteProductValue in session variable
-      // sessionStorage.setItem("quoteProductCode", JSON.stringify(value.code));
       sessionStorage.setItem("quoteProduct", JSON.stringify(value));
       this.router.navigate(['/quote-risks-add']); 
     }

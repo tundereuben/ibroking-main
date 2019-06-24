@@ -13,13 +13,12 @@ import { Section } from '../../../models/Section';
   styleUrls: ['./quote-risk-limits-add.component.css']
 })
 export class QuoteRiskLimitsAddComponent implements OnInit {
-  // quoteRiskSectionValue: any;
-  // quoteCode: number;
+
   isAdd: boolean;
-  quoteRiskCode: number;
+  qrlCode: number;
   quoteRisk: any;
   quoteId: string;
-  sections: Section[] = []; riskSectionCode = null;
+  sections: Section[] = []; qrlSectCode = null;
 
   // For premium computation
   limitAmount: number; 
@@ -43,12 +42,9 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.quoteRiskCode = parseInt(JSON.parse(sessionStorage.getItem("quoteRiskCode")));
     this.quoteRisk = JSON.parse(sessionStorage.getItem("quoteRisk"));
-    this.quoteRiskCode = this.quoteRisk.code;
     // console.log(this.quoteRisk);
     this.isAdd = JSON.parse(sessionStorage.getItem("isAdd"));
-    this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
 
     this.setupService.getSections().subscribe(sections => {
       this.sections = sections;
@@ -56,11 +52,9 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
 
     // Fetch existing riskLimit, get last riskLimit number, then generate new riskLimit number
     this.quotationService.getQuoteRiskLimits().subscribe(quoteRiskLimits => {
-      // this.quoteRiskLimits = quoteRiskLimits; 
-      // for(var i=0; i < quoteRiskLimits.length; i++){
-      //   if(quoteRiskLimits[i].code > this.quoteRiskLimit.code ) this.quoteRiskLimit.code = quoteRiskLimits[i].code;
-      // }
-      // this.quoteRiskLimit.code += 1;
+      this.quoteRiskLimits = quoteRiskLimits; 
+      // console.log(this.quoteRiskLimits[0]);
+      this.qrlCode = this.quoteRiskLimits[0].qrlCode + 1; 
     });
   };
 
@@ -100,27 +94,35 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
     } else {
       
       // fetch session variables
-      var quoteInfo = JSON.parse(sessionStorage.getItem("quoteInfo"));
       var quoteProduct = JSON.parse(sessionStorage.getItem("quoteProduct"));
       var quoteRisk = JSON.parse(sessionStorage.getItem("quoteRisk"));
-      console.log(quoteInfo, quoteProduct, quoteRisk);
+      var quotation = JSON.parse(sessionStorage.getItem("quotation"));
+      // console.log(quotation);
 
 
-      // Add New Quote
-      // value.quoteCode = this.quoteCode;
-      // value.quoteRiskCode = this.quoteRiskCode;
-      // value.premiumAmount = this.premiumAmount;
+      // Add New Quote Risk Limit
+      value.qrlCode = this.qrlCode;
+      value.qrlQrCode = quoteRisk.qrCode;
+      value.qrlQrQuotCode = quoteRisk.qrQuotCode;
+      value.qrlQpCode = quoteRisk.qrQpCode; 
+      value.qrlQpProCode = quoteProduct.qpProCode;     
+      value.qrlPremAmt = this.premiumAmount;
+      value.qrlClntCode = quotation.quotClntCode;
       // value.commissionAmount = this.commissionAmount;
-      // value.code = this.quoteRiskLimit.code;
-      // this.quotationService.newQuoteRiskLimit(value);
+      value.qrlPremRate = this.premiumRate;
+      
+      this.quotationService.addQuoteRiskLimit(value)
+      .subscribe(response => 
+        // console.log(response), 
+        err => console.log(err));
 
       // update quotation information 
-      var postData = {
-        id: this.quoteId,
-        premiumAmount: this.premiumAmount,
-        totalPropertyValue: this.limitAmount,
-        commissionAmount: this.commissionAmount
-      };
+      // var postData = {
+      //   id: this.quoteId,
+      //   premiumAmount: this.premiumAmount,
+      //   totalPropertyValue: this.limitAmount,
+      //   commissionAmount: this.commissionAmount
+      // };
       // console.log(postData)
       // this.quotationService.updateQuotation(postData);
 

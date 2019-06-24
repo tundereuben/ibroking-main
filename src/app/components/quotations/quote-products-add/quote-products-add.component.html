@@ -10,12 +10,12 @@
         <label for="product">Product</label>
         <select 
           class="form-control"
-          name="productCode"
+          name="qpProCode"
           [(ngModel)]="productCode" 
           required
         >
           <option [ngValue]="null">Select</option>
-          <option *ngFor="let p of products" [ngValue]="p.code">{{ p.name }} </option>
+          <option *ngFor="let p of products" [ngValue]="p.proCode">{{ p.proDesc }} </option>
         </select>
       </div>
       </div>
@@ -26,9 +26,9 @@
           <input 
             type="date" 
             class="form-control"
-            name="coverFrom"
+            name="qpWefDate"
             #quotationCoverFrom="ngModel"
-            [(ngModel)]="quoteProduct.coverFrom" 
+            [(ngModel)]="quoteProduct.qpWefDate" 
             required
           >
         </div>
@@ -37,9 +37,9 @@
           <input 
             type="date" 
             class="form-control"
-            name="coverTo"
+            name="qpWetDate"
             #quotationCoverTo="ngModel"
-            [(ngModel)]="quoteProduct.coverTo" 
+            [(ngModel)]="quoteProduct.qpWetDate" 
             required
           >
         </div>

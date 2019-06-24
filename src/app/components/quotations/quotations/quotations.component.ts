@@ -18,7 +18,7 @@ export class QuotationsComponent implements OnInit {
     this.quotationService.getQuotations().subscribe(quotations => {
       this.quotations = quotations;
       this.quotations.forEach(function(doc){
-        console.log(doc);
+        // console.log(doc);
       }) 
     });
   }
