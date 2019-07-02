@@ -11,6 +11,7 @@ import { Product } from '../models/Product';
 import { Clause } from '../models/Clause';
 import { Section } from '../models/Section';
 import { Covertype } from '../models/Covertype';
+import { Id } from '../models/Id';
 
 import { Client } from '../models/Client';
 
@@ -50,6 +51,9 @@ export class SetupService {
   covertypes: Observable<Covertype[]>;
   covertype: Observable<Covertype>;
 
+  ids: Observable<Id[]>;
+  id: Observable<Id>;
+
   constructor(
     // private afs: AngularFirestore,
     private http: HttpClient ) { 
@@ -76,6 +80,7 @@ export class SetupService {
   sectionsUrl = 'http://localhost:8080/api/sections';
   clausesUrl = 'http://localhost:8080/api/clauses';
   clientsUrl = 'http://localhost:8080/api/clients';
+  idsUrl = 'http://localhost:8080/api/ids';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -324,4 +329,37 @@ export class SetupService {
     return this.http.delete(this.clientsUrl + "/" + client.clntCode);
   }
   // +++++++ CLIENT FUNCTIONS ENDS ++++++++ //
+
+
+  // =========================== //
+  // ==== IDs FUNCTIONS ====== //
+  // =========================== //
+  getIds(): Observable<Id[]> {
+    return this.http.get<Id[]>(this.idsUrl);
+  }
+    
+  getId(id: number): Observable<Id> {
+    const url = `${this.idsUrl}/${id}`;
+    return this.http.get<Id>(url);
+  }
+
+  addId(newId: Id): Observable<Id> {
+    return this.http.post<Id>(this.idsUrl, JSON.stringify(newId), {headers: DEFAULT_HEADERS});
+  }
+
+  updateId(updatedId: Id): Observable<Id> {
+    const url = `${this.idsUrl}/${updatedId.idCode}`;
+    return this.http.put(url, updatedId, this.httpOptions).pipe(
+      tap(_ => console.log(`updated id code = ${updatedId.idCode}`)),
+      catchError(this.handleError<any>('updateId'))
+    );
+  }
+
+  deleteId(id: Id) {
+    return this.http.delete(this.idsUrl + "/" + id.idCode);
+  }
+ 
+  // +++++++ IDs FUNCTIONS ENDS ++++++++ //
+
 }
+

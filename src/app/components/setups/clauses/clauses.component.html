@@ -60,7 +60,7 @@
           <tr *ngFor="let clause of clauses" class="clause-values">
           <td>{{ clause.clsCode }}</td>
           <td>{{ clause.clsName }}</td>
-          <td> <a routerLink="/clauses"> X </a> </td>
+          <td> <a (click)="delete(clause)" class="btn btn-secondary"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a> </td>
           </tr>
         </table>
         <ng-template #noClauses>

@@ -41,10 +41,16 @@ export class ClausesComponent implements OnInit {
           cssClass: 'alert-success', timeout: 3000
         });
         this.router.navigate(['/clauses']);
-        // location.reload();
       });
     }
   }
 
-
+  delete(clause: Clause)  : void {
+    if(confirm("Are you sure?")) {
+      this.setupService.deleteClause(clause)
+    .subscribe(data => {
+      this.clauses = this.clauses.filter(c => c !== clause);
+    })
+    }
+  }
 }

@@ -53,6 +53,8 @@ import { QuoteRiskLimitsAddComponent } from './components/quotations/quote-risk-
 import { QuoteRiskLimitsDetailsComponent } from './components/quotations/quote-risk-limits-details/quote-risk-limits-details.component';
 import { QuoteRiskLimitsEditComponent } from './components/quotations/quote-risk-limits-edit/quote-risk-limits-edit.component';
 
+import { IdsComponent } from './components/setups/ids/ids.component';
+
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
@@ -108,6 +110,8 @@ const routes: Routes = [
   {path: 'quote-risk-limits-add', component: QuoteRiskLimitsAddComponent},
   {path: 'quote-risk-limits-details/:id', component: QuoteRiskLimitsDetailsComponent},
   {path: 'quote-risk-limits-edit/:id', component: QuoteRiskLimitsEditComponent},
+
+  {path: 'ids', component: IdsComponent},
 
   {path: '**', component: NotFoundComponent},
 ];
