@@ -32,7 +32,7 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
     
   };
 
-  @ViewChild('quoteRiskLimitForm') form: any;
+  @ViewChild('quoteRiskLimitForm', {static: false }) form: any;
 
   constructor(
     private flashMessage: FlashMessagesService,

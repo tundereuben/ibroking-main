@@ -16,7 +16,7 @@ export class ClassAddComponent implements OnInit {
   class: setupClass = new setupClass();
   private sub = Subscription;
 
-  @ViewChild('classForm') form: any;
+  @ViewChild('classForm', {static: false }) form: any;
 
   constructor(
     private flashMessage: FlashMessagesService,

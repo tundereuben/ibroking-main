@@ -58,6 +58,7 @@ import { QuoteRiskLimitsAddComponent } from './components/quotations/quote-risk-
 import { QuoteRiskLimitsEditComponent } from './components/quotations/quote-risk-limits-edit/quote-risk-limits-edit.component';
 import { QuoteRiskLimitsDetailsComponent } from './components/quotations/quote-risk-limits-details/quote-risk-limits-details.component';
 import { MomentModule } from 'angular2-moment';
+import { IdsComponent } from './components/setups/ids/ids.component';
 
 
 @NgModule({
@@ -107,6 +108,7 @@ import { MomentModule } from 'angular2-moment';
     QuoteRiskLimitsAddComponent,
     QuoteRiskLimitsEditComponent,
     QuoteRiskLimitsDetailsComponent,
+    IdsComponent,
   ],
   imports: [
     BrowserModule,

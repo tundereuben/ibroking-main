@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SetupService } from '../../../services/setup.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { Router, RouterStateSnapshot } from '@angular/router';
 
 import { Clause } from '../../../models/Clause'
 
@@ -10,13 +12,39 @@ import { Clause } from '../../../models/Clause'
 })
 export class ClausesComponent implements OnInit {
   clauses: Clause[];
+  clause: Clause = {}
+
+  @ViewChild('clauseForm', {static: false }) form: any;
   
-  constructor(private setupService: SetupService) { }
+  constructor(
+    private setupService: SetupService,
+    private router: Router, 
+    private flashMessage: FlashMessagesService
+    ) { }
 
   ngOnInit() {
     this.setupService.getClauses().subscribe(clauses => {
       this.clauses = clauses;
     })
   }
+
+  onSubmit({value, valid} : {value: Clause, valid: boolean}){
+    if(!valid) {
+      this.flashMessage.show('Please fill out the form correctly', {
+        cssClass: 'alert-danger', timeout: 3000
+      });
+    } else {
+      const sub =  this.setupService.addClause(value)
+      .subscribe(clause => {
+        this.clauses.push(clause)
+        this.flashMessage.show('New Clause added', {
+          cssClass: 'alert-success', timeout: 3000
+        });
+        this.router.navigate(['/clauses']);
+        // location.reload();
+      });
+    }
+  }
+
 
 }

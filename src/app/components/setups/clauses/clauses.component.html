@@ -2,48 +2,71 @@
     <div id="container">
     <h1 class="page-title"> CLAUSES SETUP</h1>
     <div id="main-content">
-     <form class="form-inline">
+
+     <form class="form-inline"  #clauseForm="ngForm" (ngSubmit)="onSubmit(clauseForm)">
+
       <div class="form-group">
-        <label class="sr-only" for="code">Clause Code</label>
-        <input type="text" class="form-control" id="code" placeholder="Clause Code">
+        <label class="sr-only" for="clsCode">Clause Code</label>
+        <div >
+            <input 
+              type="text" 
+              class="form-control" 
+              name="clsCode" 
+              [(ngModel)]="clsCode"
+              placeholder="Clause Code"
+              #clauseCode="ngModel"
+              [ngClass]="{'is-invalid': clauseCode.errors && clauseCode.touched}"
+              required
+            >
+            <!-- <div [hidden]="!clsCode.errors?.required" class="invalid-feedback">
+                Clause Code required
+            </div> -->
+          </div>
       </div>
-      <div class="form-group">
+
+      <div class="form-group" >
         <label class="sr-only" for="name">Clause Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Clause Name">
+        <div >
+            <input 
+              type="text" 
+              class="form-control" 
+              name="clsName" 
+              [(ngModel)]="clsName"
+              placeholder="Clause Name"
+              #clauseName="ngModel"
+              [ngClass]="{'is-invalid': clauseName.errors && clauseName.touched}"
+              required
+            >
+            <!-- <div [hidden]="!clsName.errors?.required" class="invalid-feedback">
+                Clause Name required
+            </div> -->
+          </div>
       </div>
-      <div class="form-group">
-        <label class="sr-only" for="description">Clause Description</label>
-        <input type="text" class="form-control" id="description" placeholder="Clause Description">
-      </div>   
       
-      <button type="submit" class="btn btn-primary">Search</button>
-      <a class="btn btn-success" id="new-class" href="/clause-add">New Clause</a>
-      
-      <div class="table-responsive" style="margin-top:30px;">
-      <table *ngIf="clauses?.length > 0; else noClauses" class="table table-hover">
-        <tr>
-        <th> Code</th>
-        <th> Clause Name</th>
-        <th>Clause Heading</th>
-        <!-- <th>Clause Wording</th> -->
-        <th>Clause Type</th>
-        <th>Details</th>
-        </tr>
-        <tr *ngFor="let clause of clauses">
-        <td>{{ clause.clsCode }}</td>
-        <td>{{ clause.clsShtDesc }}</td>
-        <td width="40">{{ clause.clsHeading }}</td>
-        <!-- <td>{{ clause.clsWording }}</td> -->
-        <td>{{ clause.clsType }}</td>
-        <td width="10"><a routerLink="/clause-details/{{ clause.clsCode }}" class="btn btn-link"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>View</a></td>
-        </tr>
-      </table>
-      <ng-template #noClauses>
-        <h5>There are no CLAUSES in the system</h5>
-      </ng-template>
-    </div>
+      <!-- <button type="submit" class="btn btn-primary">Search</button> -->
+      <button type="submit" class="btn btn-success">Add Clause</button>
+      <!-- <a class="btn btn-success" id="new-class" href="/clause-add">New Clause</a> -->
     </form>
     
+    <div class="table-responsive" style="margin-top:30px;">
+        <table *ngIf="clauses?.length > 0; else noClauses" class="table table-hover">
+        <!-- <table class="table table-hover"> -->
+          <tr>
+            <th> Clause Code</th>
+            <th>Clause Name</th>
+            <th></th>
+          </tr>
+
+          <tr *ngFor="let clause of clauses" class="clause-values">
+          <td>{{ clause.clsCode }}</td>
+          <td>{{ clause.clsName }}</td>
+          <td> <a routerLink="/clauses"> X </a> </td>
+          </tr>
+        </table>
+        <ng-template #noClauses>
+          <h5>There are no CLAUSES in the system</h5>
+        </ng-template>
+      </div>
     
     
     </div> <!---- end of <div id="main-content">---->

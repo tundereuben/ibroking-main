@@ -1,4 +1,4 @@
-import { Component, OnInit, ɵConsole } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { QuotationService } from '../../../services/quotation.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
@@ -122,17 +122,22 @@ export class QuotationDetailsComponent implements OnInit {
     window.location.reload();
   }
 
-  // addRisk(){
-  //   var isAdd = true;
-  //   sessionStorage.setItem("isAdd", JSON.stringify(isAdd));
-  //   this.addingNew();
-  // }
+  addRisk(){
+    var isAdd = true;
+    sessionStorage.setItem("isAdd", JSON.stringify(isAdd));
+    this.addingNew();
+  }
 
-  // addProduct(){
-  //   var isAdd = true;
-  //   this.addingNew();
-  // }
-  
+  addProduct(){
+    var isAdd = true;
+    this.addingNew();
+  } 
+
+  editQuoteProduct(event){
+    var qpCode = event.target.id;
+    sessionStorage.setItem("qpCode", JSON.stringify(qpCode));
+  }
+   
 
   onDeleteClick() {
     if(confirm('Are you sure?')) {
@@ -146,13 +151,13 @@ export class QuotationDetailsComponent implements OnInit {
     }
   }
 
-  // addingNew(){
-  //   sessionStorage.setItem("quoteRiskCode", JSON.stringify(this.quoteRiskCode));
-  //   sessionStorage.setItem("quoteProductCode", JSON.stringify(this.quoteProductCode)); 
-  //   sessionStorage.setItem("quoteId", JSON.stringify(this.id));
-  //   sessionStorage.setItem("quoteCode", JSON.stringify(this.quoteCode));
-  //   // console.log(this.quoteCode);
-  // }
+  addingNew(){
+    sessionStorage.setItem("quotation", JSON.stringify(this.quotation));
+    sessionStorage.setItem("quoteProductCode", JSON.stringify(this.quoteProductCode)); 
+    // sessionStorage.setItem("quoteId", JSON.stringify(this.id));
+    // sessionStorage.setItem("quoteCode", JSON.stringify(this.quoteCode));
+    console.log(this.quotation);
+  }
 
 } 
 

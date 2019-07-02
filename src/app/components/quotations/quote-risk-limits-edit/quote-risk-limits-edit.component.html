@@ -10,12 +10,12 @@
           <label for="agent">Section </label>
           <select 
           class="form-control"
-          name="riskSectionCode"
-          [(ngModel)]="quoteRiskLimit.riskSectionCode" 
+          name="qrlSectCode"
+          [(ngModel)]="quoteRiskLimit.qrlSectCode" 
           required
           >
-            <option [ngValue]="quoteRiskLimit.riskSectionCode">{{ quoteRiskLimit.riskSectionCode }}</option>
-            <option *ngFor="let s of sections" [ngValue]="s.code">{{ s.name }} </option>
+            <option [ngValue]="quoteRiskLimit.qrlSectCode">{{ quoteRiskLimit.qrlSectCode }}</option>
+            <option *ngFor="let s of sections" [ngValue]="s.sectCode">{{ s.sectShtDesc }} </option>
           </select>
         </div>
         <div class="form-group">
@@ -23,36 +23,39 @@
           <input 
             type="number" 
             class="form-control" 
-            name="limitAmount"
+            placeholder="e.g. 1000000"
+            name="qrlLimitAmt"
             #quoteLimitAmount="ngModel"
-            [(ngModel)]="quoteRiskLimit.limitAmount" 
+            [(ngModel)]="quoteRiskLimit.qrlLimitAmt" 
             (keyup)="getLimitAmount($event)"
             required
           >
         </div>
         <div class="form-group">
-          <label for="premiumRate">Premium Rate</label>
-          <input 
-            type="number" 
-            class="form-control" 
-            name="premiumRate"
-            #quotePremiumRate="ngModel"
-            [(ngModel)]="quoteRiskLimit.premiumRate" 
-            (keyup)="getPremiumRate($event.target.value)"
-            required
-          >
-        </div>
+            <label for="premiumRate">Premium Rate</label>
+            <input 
+              type="number" 
+              class="form-control" 
+              placeholder="e.g. 10"
+              name="qrlPremRate"
+              #quotePremiumRate="ngModel"
+              [(ngModel)]="quoteRiskLimit.qrlPremRate" 
+              (keyup)="getPremiumRate($event.target.value)"
+              required
+            >
+          </div>
       </div>
 
       <div class="col-md-6">
         <div class="form-group">
-          <label for="rateDivisionFactor">Rate Division Factor</label>
+          <label for="qrlRateDivFactor">Rate Division Factor</label>
           <input 
             type="number" 
             class="form-control" 
-            name="rateDivisionFactor"
+            placeholder="e.g. 100"
+            name="qrlRateDivFactor"
             #quoteRateDivisionFactor="ngModel"
-            [(ngModel)]="quoteRiskLimit.rateDivisionFactor" 
+            [(ngModel)]="quoteRiskLimit.qrlRateDivFactor" 
             (keyup)="getRateDivisionFactor($event.target.value)"
             required
           >
@@ -62,29 +65,43 @@
           <input 
             type="number" 
             class="form-control" 
+            placeholder="0" 
             name="premiumAmount"
             #quotePremiumAmount="ngModel"
-            [(ngModel)]="premiumAmount" 
-            required
+            [(ngModel)]="quoteRiskLimit.qrlPremAmt" 
             disabled
           >
         </div>
         <div class="form-group">
-          <label for="commissionAmount">commission Amount</label>
+          <label for="commissionAmount">Commission Amount</label>
           <input 
             type="number" 
             class="form-control" 
+            placeholder="0" 
             name="commissionAmount"
-            #quoteCommissionAmount="ngModel"
+            #quoteCommissionAmmount="ngModel"
             [(ngModel)]="commissionAmount" 
-            required
             disabled
           >
         </div>
       </div>
+
+      
       
       <div id="rule"></div> 
-      <button  class="btn btn-info pull-right">Update&nbsp; </button>
+      <!-- <div *ngIf="isAddToRisk"> -->
+          <div *ngIf="isAddToRisk; else default">
+          <button class="btn btn-info pull-right">Add New Risk Limit&nbsp;<span class="glyphicon" aria-hidden="true"></span></button>
+      </div>  
+      <ng-template #default>
+          <a routerLink="/quote-products-add" class="btn btn-info pull-left"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back&nbsp;</a> 
+          <button class="btn btn-info pull-right">Save&nbsp;<span class="glyphicon glyphicon-save" aria-hidden="true"></span></button>
+      </ng-template>
+
+      <!-- <div>
+        <a routerLink="/quote-products-add" class="btn btn-info pull-left"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back&nbsp;</a> 
+          <button class="btn btn-info pull-right">Save&nbsp;<span class="glyphicon glyphicon-save" aria-hidden="true"></span></button>
+      </div> -->
       
       </form>
     </div>

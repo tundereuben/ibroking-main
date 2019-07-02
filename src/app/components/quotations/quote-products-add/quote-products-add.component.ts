@@ -37,7 +37,7 @@ export class QuoteProductsAddComponent implements OnInit {
     qpComm: 0
   }
  
-  @ViewChild('quoteProductForm') form: any;
+  @ViewChild('quoteProductForm', {static: false}) form: any;
 
   constructor(
     private flashMessage: FlashMessagesService,
@@ -49,7 +49,7 @@ export class QuoteProductsAddComponent implements OnInit {
   ngOnInit() {
     // get quoteCode from session variable
     this.quotation = JSON.parse(sessionStorage.getItem("quotation"));
-    // this.quoteCode = this.quoteInfo.code;
+    // this.quoteCode = this.quotation.quotCode;
     this.quoteProduct.qpWefDate = this.quotation.quotCoverFrom;
     this.quoteProduct.qpWetDate = this.quotation.quotCoverTo;
     console.log(this.quotation);

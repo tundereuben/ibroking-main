@@ -16,7 +16,7 @@
               <table class="table table-bordered" >
               <tr>
                 <th> Quote No </th>
-                <th>Client Code</th>
+                <th>Quote Code</th>
                 <th>From Date</th>
                 <th>To Date</th>
                 <th>Currency</th>
@@ -24,7 +24,7 @@
               </tr> 
               <tr>
                 <td>{{quotation?.quotNo}}</td>
-                <td>{{ quotation?.quotClntCode }}</td>
+                <td>{{ quotation?.quotCode }}</td>
                 <td>{{ quotation?.quotCoverFrom | date }}</td>
                 <td>{{ quotation?.quotCoverTo | date }}</td>
                 <td>{{ quotation?.quotCurSymbol}} </td>
@@ -64,8 +64,8 @@
               <td>{{ product?.qpWetDate | date }}</td>
               <td>
                 <div id="buttons">
-                  <a routerLink="/quote-products-edit/{{ product.id }}" class="btn "> 
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                  <a (click)="editQuoteProduct($event)" routerLink="/quote-products-edit/{{ product.qpCode }}" class="btn "> 
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="{{ product.qpCode }}"></span>
                   </a>
                   
                   <a (click)="deleteProduct($event)" class="btn ">
@@ -97,7 +97,7 @@
             <th>Risk ID</th>
             <th>From Date</th>
             <th>To Date</th>
-            <th>Cover Type Code</th>
+            <!-- <th>Cover Type Code</th> -->
             <th>Description</th>
             <th>Subclass Code</th>
             <td>
@@ -111,12 +111,12 @@
             <td>{{ risk?.qrItemDesc }}</td>
             <td>{{ risk?.qrWefDate | date }}</td>
             <td>{{ risk?.qrWetDate | date }}</td>
-            <td>{{ risk?.qrCovtCode }}</td>
-            <td>{{ risk?.qrDesc }}</td>
+            <!-- <td>{{ risk?.qrCovtCode }}</td> -->
+            <td>{{ risk?.qrItemDesc }}</td>
             <td>{{ risk?.qrSclCode }}</td>
             <td>
               <div id="buttons">
-                <a routerLink="/quote-risks-edit/{{ risk.id }}" class="btn "> 
+                <a routerLink="/quote-risks-edit/{{ risk.qrCode }}" class="btn "> 
                   <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 </a>
                 

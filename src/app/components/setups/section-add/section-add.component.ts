@@ -20,7 +20,7 @@ export class SectionAddComponent implements OnInit {
   sections: Section[];
   section: Section = {}
 
-  @ViewChild('sectionForm') form: any;
+  @ViewChild('sectionForm', {static: false}) form: any;
 
   constructor(
     private flashMessage: FlashMessagesService,

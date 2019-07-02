@@ -3,10 +3,10 @@
 <div id="container">
 
 <h1 class="page-title"> QUOTE DETAILS 
-  <small>
-    <span *ngIf="back; else newCode">(xxx-xxxx-{{ code-1 }})</span> <!-- Review: remove -1-->
+  <!-- <small>
+    <span *ngIf="back; else newCode">(xxx-xxxx-{{ code-1 }})</span> 
     <ng-template #newCode>(xxx-xxxx-{{ code }})</ng-template>
-  </small>
+  </small> -->
 </h1>
 
 <div id="main-content">
@@ -20,11 +20,11 @@
             <label for="client">Client </label> <!-- => blackClicked -->
             <select 
               class="form-control"
-              name="client"
-              [(ngModel)]="client" 
+              name="quotClntCode"
+              [(ngModel)]="quotClntCode" 
               required
             >
-              <option [ngValue]="client"> {{ client.code }} | {{ client.name }} ({{ client.email }})</option>
+              <option [ngValue]="quotClntCode"> {{ quotClntCode }} </option>
               <option *ngFor="let c of clients" [ngValue]="c">{{ c.code }} | {{ c.name }} ({{ c.email }}) </option>
             </select>
           </div>
@@ -161,11 +161,11 @@
             <select 
               class="form-control"
               name="quotBranch"
-              [(ngModel)]="branch" 
+              [(ngModel)]="quotBranch" 
               required
             >
             <option [ngValue]="null"> Select </option>
-            <option *ngFor="let b of branches" [ngValue]="b">{{ b }}</option>
+            <option *ngFor="let b of quotBranches" [ngValue]="b">{{ b }}</option>
             </select>
           </div>  
           </div>

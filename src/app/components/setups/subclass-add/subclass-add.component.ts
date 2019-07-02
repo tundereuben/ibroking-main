@@ -24,7 +24,7 @@ export class SubclassAddComponent implements OnInit {
  
   
 
-  @ViewChild('subclassForm') form: any;
+  @ViewChild('subclassForm', {static: false}) form: any;
 
   constructor(
     private flashMessage: FlashMessagesService,

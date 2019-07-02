@@ -11,9 +11,9 @@
         <input 
           type="text" 
           class="form-control"
-          name="riskId"
+          name="qrPropertyId"
           #quoteRiskId="ngModel"
-          [(ngModel)]="quoteRisk.riskId" 
+          [(ngModel)]="quoteRisk.qrPropertyId" 
           required
         >
       </div>
@@ -22,9 +22,9 @@
         <input 
           type="text" 
           class="form-control"
-          name="riskDescription"
+          name="qrItemDesc"
           #quoteRiskDescription="ngModel"
-          [(ngModel)]="quoteRisk.riskDescription" 
+          [(ngModel)]="quoteRisk.qrItemDesc" 
           required
         >
       </div>
@@ -33,12 +33,12 @@
         <label for="riskSubclass">Risk Subclass</label>
         <select 
           class="form-control"
-          name="riskSubclass"
-          [(ngModel)]="quoteRisk.riskSubclass" 
+          name="qrSclCode"
+          [(ngModel)]="quoteRisk.qrSclCode" 
           required
         >
-          <option [ngValue]="quoteRisk.riskSubclass">{{ quoteRisk.riskSubclass }}</option>
-          <option *ngFor="let s of subclasses" [ngValue]="s.code">{{ s.name }} </option>
+          <option [ngValue]="quoteRisk.qrSclCode">{{ quoteRisk.qrSclCode }}</option>
+          <option *ngFor="let s of subclasses" [ngValue]="s.sclCode">{{ s.sclShtDesc }} </option>
         </select>
       </div>
      
@@ -49,12 +49,12 @@
           <label for="riskCovertype">Risk Covertype</label>
           <select 
             class="form-control"
-            name="riskCovertype"
-            [(ngModel)]="quoteRisk.riskCovertype" 
+            name="qrCovtCode"
+            [(ngModel)]="quoteRisk.qrCovtCode" 
             required
           >
-            <option [ngValue]="quoteRisk.riskCovertype">{{ quoteRisk.riskCovertype }}</option>
-            <option *ngFor="let c of covertypes" [ngValue]="c.code">{{ c.name }} </option>
+            <option [ngValue]="quoteRisk.qrCovtCode">{{ quoteRisk.qrCovtCode }}</option>
+            <option *ngFor="let c of covertypes" [ngValue]="c.covtCode">{{ c.covtShtDesc }} </option>
           </select>
         </div> 
         <div class="form-group">
@@ -62,9 +62,9 @@
         <input 
           type="date" 
           class="form-control"
-          name="fromDate"
+          name="qrWefDate"
           #quoteRiskFrom="ngModel"
-          [(ngModel)]="quoteRisk.fromDate" 
+          [(ngModel)]="quoteRisk.qrWefDate" 
           required
         >
       </div>
@@ -73,9 +73,9 @@
         <input 
           type="date" 
           class="form-control"
-          name="toDate"
+          name="qrWetDate"
           #quoteRiskTo="ngModel"
-          [(ngModel)]="quoteRisk.toDate" 
+          [(ngModel)]="quoteRisk.qrWetDate" 
           required
         >
       </div>
@@ -86,8 +86,8 @@
       <button  class="btn btn-info pull-right">Update&nbsp;<span class="glyphicon" aria-hidden="true"></span></button>
     </div> 
     <ng-template #default>
-      <a routerLink="/quote-products-add" class="btn btn-info pull-left"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back&nbsp;</a>
-      <button  class="btn btn-info pull-right">Next&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></button>
+      <!-- <a routerLink="/quote-products-add" class="btn btn-info pull-left"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back&nbsp;</a> -->
+      <button  class="btn btn-info pull-right">Update&nbsp;</button>
     </ng-template>
     
     </form>

@@ -18,7 +18,7 @@ export class ClauseAddComponent implements OnInit {
   id: string;
   clause: Clause = {}
 
-  @ViewChild('clauseForm') form: any;
+  @ViewChild('clauseForm', {static: false }) form: any;
 
   // Set dropdown for classCode
   subclassCodes: string[] =[] ; subclassCode = null;

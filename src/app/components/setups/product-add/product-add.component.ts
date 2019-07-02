@@ -16,7 +16,7 @@ export class ProductAddComponent implements OnInit {
   product: Product = {}; 
   // private sub = Subscription;
 
-  @ViewChild('productForm') form: any;
+  @ViewChild('productForm', {static: false }) form: any;
 
   constructor(
     private flashMessage: FlashMessagesService,

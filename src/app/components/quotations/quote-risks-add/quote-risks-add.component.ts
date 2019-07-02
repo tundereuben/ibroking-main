@@ -38,7 +38,7 @@ quoteRisk: QuoteRisk = {
   qrWetDate: null
 }
 
-@ViewChild('quoteRiskForm') form: any;
+@ViewChild('quoteRiskForm', {static: false}) form: any;
 
   constructor(
     private flashMessage: FlashMessagesService,

@@ -13,45 +13,56 @@ import { stringify } from 'querystring';
 })
 export class QuotationEditComponent implements OnInit {
   quotations: Quotation[] = [];
-  id: string;
+  quoteCode: number;
   quotation: Quotation = { 
-    // code: 0,
-    // quoteNo: 0,
-    // client: {}, // remove clientCode & clientName
-    // clientCode: 0,
-    // clientName: '',
-    // agentCode: 0,
-    // source: '',
-    // branch: '',
-    // currency: {},
-    // coverFrom: '',
-    // coverTo: '',
-    // paymentFrequency: '',
-    // totalPropertyValue: 0,
-    // status: '',
-    // expiryDate: '',
-    // ok: '',
-    // premium: 0,
-    // commissionAmount: 0,
-    // // clientType: '',
+    quotAuthorisedBy: '',
+    quotAgntAgentCode: 0,
+    quotAuthorisedDt: null,
+    quotBrnCode: 0,
+    quotBranch: '',
+    quotCancelReason: '',
+    quotClntCode: 0,
+    quotClntType: '',
+    quotCode: 0,
+    quotCommAmt: 0,
+    quotConfirmed: '',
+    quotConfirmedBy: '',
+    quotConfirmedDt: null,
+    quotCoverFrom: null,
+    quotCoverTo: null,
+    quotCurCode: 0,
+    quotCurSymbol: '',
+    quotDate: null,
+    quotExpiryDate: null,
+    quotPaymentFrequency: '',
+    quotNo: '',
+    quotPremium: 0,
+    quotPreparedBy: '',
+    quotPreparedDt: null,
+    quotReadyBy: '',
+    quotReadyDate: null,
+    quotRevised: '',
+    quotStatus: '',
+    quotTotPropertyVal: 0
   };
 
-  // clients: any[]  = []; client; 
+  quotClntCodes: any[]  = []; quotClntCode; 
   // agentCode = this.quotation.agentCode; 
-  // // code = this.quotation.code;
+  // code = this.quotation.code;
 
   // source = this.quotation.source; 
-  // sources: any[] = ['Direct', 'Walk-In', 'Referred']; 
+  sources: any[] = ['Direct', 'Walk-In', 'Referred']; 
 
   // branch = this.quotation.branch;
-  // branches: any[] = ['Lagos', 'Abuja', 'Kaduna', 'Kano' ]; 
+  branches: any[] = ['Lagos', 'Abuja', 'Kaduna', 'Kano' ]; 
 
-  // currencies: any[] = [];      
+  currencies: any[] = [];      
   // // currencyCode = this.quotation.currency.code; 
   // // currencySymbol = this.quotation.currency.symbol; 
   // currency = this.quotation.currency;
 
-  // paymentFrequencies: string[] = ['Anually', 'Semi-anually', 'Quarterly'];   paymentFrequency = this.quotation.paymentFrequency;
+  paymentFrequencies: string[] = ['Anually', 'Semi-anually', 'Quarterly'];   
+  // paymentFrequency = this.quotation.paymentFrequency;
 
   usersUrl = 'https://jsonplaceholder.typicode.com/users';
   currencyUrl = 'https://restcountries.eu/rest/v2/currency/cop';
@@ -65,11 +76,13 @@ export class QuotationEditComponent implements OnInit {
 
   ngOnInit() {
     // Get id from url and fetch quotation 
-    this.id = this.route.snapshot.params['id'];
-    // this.quotationService.getQuotation(this.id).subscribe(quotation => {
-    //   this.quotation = quotation;
-    //   this.client = this.quotation.client;
-    // });
+    this.quoteCode = this.route.snapshot.params['id'];
+    this.quotationService.getQuotation(this.quoteCode).subscribe(quotation => {
+      this.quotation = quotation;
+      var coverFrom = quotation.quotCoverFrom;
+
+      // this.client = this.quotation.client;
+    });
 
     // fetch clients from API, assign clientCode
     var users = [];
@@ -85,33 +98,35 @@ export class QuotationEditComponent implements OnInit {
         });  
       }
     });
-    // this.clients = users; 
+    this.quotClntCodes = users; 
 
-    // // fetch currencies from API
-    // var currencies = this.quotationService.currencies;
-    // // console.log(currencies)
-    // var size = 0, key; var code = 0;
-    // for (key in currencies) {
-    //   this.currencies.push({
-    //     "code": code++,
-    //     "name": currencies[key].name,
-    //     "symbol": currencies[key].symbol
-    //   });
-    // }
+    // fetch currencies from API
+    var currencies = this.quotationService.currencies;
+    // console.log(currencies)
+    var size = 0, key; var code = 0;
+    for (key in currencies) {
+      this.currencies.push({
+        "code": code++,
+        "shtDesc": currencies[key].code,
+        "name": currencies[key].name,
+        "symbol": currencies[key].symbol
+      });
+    }
   } 
 
   onSubmit({value, valid}: {value: Quotation, valid: boolean}) {
     if(!valid) {
       // Show Error Message
-      this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
+      this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 3000});
     } else {
       // Add id to Quote and Update Quote
-      // value.id = this.id
-      this.quotationService.updateQuotation(value);
+      value.quotCode = this.quoteCode;
+      this.quotationService.updateQuotation(value)
+      .subscribe(response => 
+        // console.log(response), 
+        err => console.log(err));
       this.flashMessage.show('Quote updated Successfully!', {cssClass: 'alert-success', timeout:4000});
-      // save values in a session variable, then re-route to quote-products
-      // sessionStorage.setItem("quoteCode", JSON.stringify(value.code));
-      this.router.navigate([`/quotation-details/${this.id}`]);
+      this.router.navigate([`/quotation-details/${this.quoteCode}`]);
     }
   }
 }

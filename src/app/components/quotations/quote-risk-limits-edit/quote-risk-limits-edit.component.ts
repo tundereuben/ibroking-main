@@ -29,17 +29,15 @@ export class QuoteRiskLimitsEditComponent implements OnInit {
   quoteRiskLimits: QuoteRiskLimit[] = [];
   id:number;
   quoteRiskLimit: QuoteRiskLimit = {
-    // id: '',
-    // code: 0,
-    // quoteCode: 0,
-    // quoteRiskCode: 0,
-    // sectionCode: 0,
-    // limitAmount: 0,
-    // premiumRate: 0,
-    // premiumAmount: 0,
-    // commissionAmount: 0,
-    // rateDivisionFactor: 0,
-    // riskSectionCode: 0,
+    qrlCode: 0,
+    qrlClntCode: 0,
+    qrlLimitAmt: 0,
+    qrlPremRate: 0,
+    qrlPremAmt: 0,
+    qrlQpCode: 0,
+    qrlQrQuotCode: 0,
+    qrlRateDivFactor: 0,
+    qrlSectCode:0
   };
 
 
@@ -54,13 +52,10 @@ export class QuoteRiskLimitsEditComponent implements OnInit {
   ngOnInit() {
     // Get id from url and fetch quotation 
     this.id = this.route.snapshot.params['id']; 
-    this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
+    // this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
     this.quotationService.getQuoteRiskLimit(this.id).subscribe(quoteRiskLimit => {
-      // this.quoteRiskLimit = quoteRiskLimit;
-      // this.limitAmount = quoteRiskLimit.limitAmount;
-      // this.premiumRate = quoteRiskLimit.premiumRate;
-      // this.rateDivisionFactor = quoteRiskLimit.rateDivisionFactor;
-      // this.premiumAmount = this.quoteRiskLimit.premiumAmount;
+      this.quoteRiskLimit = quoteRiskLimit; 
+      console.log(this.quoteRiskLimit);
     });
 
     // this.riskSectionCode = this.quoteRiskLimit.riskSectionCode;
@@ -72,27 +67,28 @@ export class QuoteRiskLimitsEditComponent implements OnInit {
 
    //****PREMIUM COMPUTATION ****/
    getLimitAmount(event) {
-    this.limitAmount = parseFloat(event.target.value);
+     console.log(event);
+    this.quoteRiskLimit.qrlLimitAmt = parseFloat(event.target.value);
     this.computePremium()
   };
 
   getPremiumRate(event) {
-    this.premiumRate = event;
+    this.quoteRiskLimit.qrlPremRate = event;
     this.computePremium()
   };
 
   getRateDivisionFactor(event) {
-    this.rateDivisionFactor = event;
+    this.quoteRiskLimit.qrlRateDivFactor = event;
     this.computePremium()
   };
 
   computePremium() {
-    this.premiumAmount = this.limitAmount * this.premiumRate / this.rateDivisionFactor; 
+    this.quoteRiskLimit.qrlPremAmt = this.quoteRiskLimit.qrlLimitAmt * this.quoteRiskLimit.qrlPremRate / this.quoteRiskLimit.qrlRateDivFactor; 
     this.computeCommission(); 
   }  
 
   computeCommission(){
-    this.commissionAmount = this.premiumAmount * 0.25;
+    this.commissionAmount = this.quoteRiskLimit.qrlPremAmt * 0.25;
   }
   //****PREMIUM COMPUTATION ENDS ****/
 
@@ -102,23 +98,24 @@ export class QuoteRiskLimitsEditComponent implements OnInit {
       this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
     } else {
       // Add id to Quote and Update Quote
-      // value.id = this.id
-      // value.premiumAmount = this.premiumAmount;
-      // value.commissionAmount = this.commissionAmount;
-      this.quotationService.updateQuoteRiskLimit(value);
+      value.qrlCode = this.id; 
+      this.quotationService.updateQuoteRiskLimit(value)
+      .subscribe(response => 
+        // console.log(response), 
+        err => console.log(err));
 
       // update quotation information 
-      var postData = {
-        id: this.quoteId,
-        premiumAmount: this.premiumAmount,
-        totalPropertyValue: this.limitAmount,
-        commissionAmount: this.commissionAmount
-      };
+      // var postData = {
+      //   id: this.quoteId,
+      //   premiumAmount: this.premiumAmount,
+      //   totalPropertyValue: this.limitAmount,
+      //   commissionAmount: this.commissionAmount
+      // };
       // console.log(postData)
       // this.quotationService.updateQuotation(postData);
 
-      // this.flashMessage.show('Quote Risk Limit updated Successfully!', {cssClass: 'alert-success', timeout:4000});
-      // this.router.navigate([`/quotation-details/${this.quoteId}`]);
+      this.flashMessage.show('Quote Risk Limit updated Successfully!', {cssClass: 'alert-success', timeout:4000});
+      this.router.navigate([`/quotation-details/${this.quoteId}`]);
     }
   }
 

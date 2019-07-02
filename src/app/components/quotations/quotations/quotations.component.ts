@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { QuotationService} from '../../../services/quotation.service'; 
 
 import { Quotation } from '../../../models/Quotation';
-import { defineBase, element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-quotations',

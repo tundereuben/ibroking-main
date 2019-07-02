@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { QuotationService } from '../../../services/quotation.service';
+import { SetupService } from '../../../services/setup.service';
 import { Router, RouterStateSnapshot } from '@angular/router';
 // import { MomentModule } from 'angular2-moment';
 
 import { Quotation } from '../../../models/Quotation'; 
-import { stringify } from '@angular/core/src/render3/util';
+// import { stringify } from '@angular/core/src/render3/util';
 
 @Component({
   selector: 'app-quotation-add',
@@ -19,37 +20,37 @@ export class QuotationAddComponent implements OnInit {
   quotCoverTo: any;
   back: boolean  // Check when back button is clicked.
 
-  // quotation: Quotation = {
-  //   quotAuthorisedBy: '',
-  //   quotAgntAgentCode: 0,
-  //   quotAuthorisedDt: null,
-  //   quotBrnCode: 0,
-  //   quotBranch: '',
-  //   quotCancelReason: '',
-  //   quotClntCode: 0,
-  //   quotClntType: '',
-  //   quotCode: 0,
-  //   quotCommAmt: 0,
-  //   quotConfirmed: '',
-  //   quotConfirmedBy: '',
-  //   quotConfirmedDt: null,
-  //   quotCoverFrom: null,
-  //   quotCoverTo: null,
-  //   quotCurCode: 0,
-  //   quotCurSymbol: '',
-  //   quotDate: null,
-  //   quotExpiryDate: null,
-  //   quotPaymentFrequency: '',
-  //   quotNo: '',
-  //   quotPremium: 0,
-  //   quotPreparedBy: '',
-  //   quotPreparedDt: null,
-  //   quotReadyBy: '',
-  //   quotReadyDate: null,
-  //   quotRevised: '',
-  //   quotStatus: '',
-  //   quotTotPropertyVal: 0
-  // };
+  quotation: Quotation = {
+    quotAuthorisedBy: '',
+    quotAgntAgentCode: 0,
+    quotAuthorisedDt: null,
+    quotBrnCode: 0,
+    quotBranch: '',
+    quotCancelReason: '',
+    quotClntCode: 0,
+    quotClntType: '',
+    quotCode: 0,
+    quotCommAmt: 0,
+    quotConfirmed: '',
+    quotConfirmedBy: '',
+    quotConfirmedDt: null,
+    quotCoverFrom: null,
+    quotCoverTo: null,
+    quotCurCode: 0,
+    quotCurSymbol: '',
+    quotDate: null,
+    quotExpiryDate: null,
+    quotPaymentFrequency: '',
+    quotNo: '',
+    quotPremium: 0,
+    quotPreparedBy: '',
+    quotPreparedDt: null,
+    quotReadyBy: '',
+    quotReadyDate: null,
+    quotRevised: '',
+    quotStatus: '',
+    quotTotPropertyVal: 0
+  };
 
   clients: any[]  = [];  client = null
   agent = null; 
@@ -57,8 +58,8 @@ export class QuotationAddComponent implements OnInit {
   source = null; 
   sources: any[] = ['Direct', 'Walk-In', 'Referred']; 
 
-  branch = null;
-  branches: any[] = ['LAG', 'ABJ', 'KAD', 'KAN' ]; 
+  quotBranch = null;
+  quotBranches: any[] = ['LAG', 'ABJ', 'KAD', 'KAN' ]; 
 
   currencies: any[] = [];      currency = null;
   quotPaymentFrequencies: string[] = ['Anually', 'Semi-anually', 'Quarterly'];   quotPaymentFrequency = null;
@@ -66,15 +67,30 @@ export class QuotationAddComponent implements OnInit {
   usersUrl = 'https://jsonplaceholder.typicode.com/users';
   currencyUrl = 'https://restcountries.eu/rest/v2/currency/cop';
 
-  @ViewChild('quotationForm') form: any;
+  @ViewChild('quotationForm', {static: false}) form: any;
 
   constructor(
     private flashMessage: FlashMessagesService,
     private quotationService: QuotationService, 
+    private setupService: SetupService,
     private router: Router
   ) { }
 
   ngOnInit() {
+
+     // Fetch existing quotes, get last quote number, then generate new quote number
+     this.quotationService.getQuotations().subscribe(quotations => {
+      this.quotations = quotations;
+      this.quoteCode = quotations[0].quotCode + 1 ;
+    });  
+
+    // Fetch existing clients
+    this.setupService.getClients().subscribe(clients => {
+      this.clients = clients;
+      // this.quoteCode = quotations[0].quotCode + 1 ;
+      console.log(this.clients);
+    }); 
+
 
     // fetch clients from API
     var users = [];
@@ -104,26 +120,20 @@ export class QuotationAddComponent implements OnInit {
       });
     }
 
-    // Fetch existing quotes, get last quote number, then generate new quote number
-    this.quotationService.getQuotations().subscribe(quotations => {
-      this.quotations = quotations;
-      // console.log(this.quotations[0]);
-      // for(var i=0; i < quotations.length; i++){
-      //   if(quotations[i].code > this.code ) this.code = quotations[i].code;
-      // }
-      this.quoteCode = quotations[0].quotCode + 1 ;
-    });   
+    
 
     //  If the back button was clicked.
-    this.back = JSON.parse(sessionStorage.getItem("back"));
+    // this.back = JSON.parse(sessionStorage.getItem("back"));
     if(this.back) {
-      // this.quotation = JSON.parse(sessionStorage.getItem("quoteInfo"));
-      // this.client = this.quotation.client;
+      this.quotation = JSON.parse(sessionStorage.getItem("quotation"));
+      console.log(this.quotation);
+      var quotClntCode = this.quotation.quotClntCode;
+      // this.client = this.clients[clntCode];
       // this.agent = this.quotation.agent;
       // this.source = this.quotation.source;
-      // this.branch = this.quotation.branch;
+      // this.quotBranch = this.quotation.quotBranch; 
       // this.currency = this.quotation.currency;
-      // this.coverFrom = this.quotation.coverFrom;
+      // this.quotCoverFrom = this.quotation.quotCoverFrom;
       // this.coverTo = this.quotation.coverTo;
       // this.paymentFrequency = this.quotation.paymentFrequency;
       // console.log(this.quotation, this.quotation.id);
@@ -149,7 +159,7 @@ export class QuotationAddComponent implements OnInit {
       this.flashMessage.show('Please fill out the form correctly', {cssClass: 'alert-danger', timeout: 5000});
     } else {
 
-      // Add New Quote
+      // Add New Quote number
       var randomNumber = Math.floor(Math.random() * 1000000000); // Generate a random number for quote_number btw 0 and 1,000,000,000
       value.quotNo = `QT19${randomNumber}${value.quotBranch}`;
       value.quotCode = this.quoteCode;

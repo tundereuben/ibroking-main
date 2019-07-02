@@ -1,7 +1,7 @@
 
 <div id="content-area">
   <div id="container">
-  <h1 class="page-title"> QUOTE DETAILS <small>(xxx-xxxx-{{ quotation.code }})</small></h1>
+  <h1 class="page-title"> QUOTE DETAILS <small>({{ quotation.quotNo }})</small></h1>
   <div id="main-content">
    <div class="row">
   
@@ -11,35 +11,35 @@
       <label for="client">Client</label>
       <select 
         class="form-control"
-        name="client"
-        [(ngModel)]="quotation.client" 
+        name="quotClntCode"
+        [(ngModel)]="quotation.quotClntCode" 
         required
       >
-      <option [ngValue]="quotation.client">{{ quotation.client.code }} | {{ quotation.client.name }} ({{ quotation.client.email }})</option>
-      <option *ngFor="let client of clients" [ngValue]="client">{{ client.code }} | {{ client.name }} ({{ client.email }}) </option>
+      <option [ngValue]="quotation.quotClntCode">{{ quotation.quotClntCode }}</option>
+      <option *ngFor="let q of quotClntCodes" [ngValue]="q.code">{{ q.code }} | {{ q.name }} ({{ q.email }}) </option>
       </select>
     </div>
     <div class="form-group">
       <label for="agent">Agent</label>
       <select 
         class="form-control"
-        name="agent"
-        [(ngModel)]="quotation.agent" 
+        name="quotAgntCode"
+        [(ngModel)]="quotation.quotAgntCode" 
         required
       >
-      <option [ngValue]="quotation.agentCode">{{ quotation.agentCode }}</option>
-      <option *ngFor="let c of clients" [ngValue]="c.code">{{ c.name }} </option>
+      <option [ngValue]="quotation.quotAgntCode">{{ quotation.quotAgntCode }}</option>
+      <option *ngFor="let c of quotClntCodes" [ngValue]="c.code">{{ c.name }} </option>
       </select>
     </div>
     <div class="form-group">
       <label for="source">Source</label>
       <select 
         class="form-control"
-        name="source"
-        [(ngModel)]="quotation.source" 
+        name="quotSource"
+        [(ngModel)]="quotation.quotSource" 
         required
       >
-        <option [ngValue]="quotation.source">{{ quotation.source }}</option>
+        <option [ngValue]="quotation.quotSource">{{ quotation.quotSource }}</option>
         <option *ngFor="let s of sources" [ngValue]="s">{{ s }}</option>
       </select>
     </div>
@@ -47,11 +47,11 @@
       <label for="branch">Branch</label>
       <select 
         class="form-control"
-        name="branch"
-        [(ngModel)]="quotation.branch" 
+        name="quotBranch"
+        [(ngModel)]="quotation.quotBranch" 
         required
       >
-      <option [ngValue]="quotation.branch">{{ quotation.branch }}</option>
+      <option [ngValue]="quotation.quotBranch">{{ quotation.quotBranch }}</option>
       <option *ngFor="let b of branches" [ngValue]="b">{{ b }}</option>
       </select>
     </div>  
@@ -62,12 +62,12 @@
         <label for="currency">Currency</label>
         <select 
           class="form-control"
-          name="currency"
-          [(ngModel)]="quotation.currency" 
+          name="quotCurSymbol"
+          [(ngModel)]="quotation.quotCurSymbol" 
           required
         >
-          <option [ngValue]="quotation.currency"> {{ quotation.currency.symbol + ' | ' + quotation.currency.name }} </option>
-          <option *ngFor="let c of currencies" [ngValue]="c">{{ c.symbol + ' | ' + c.name  }}</option>
+          <option [ngValue]="quotation.quotCurSymbol"> {{ quotation.quotCurSymbol }} </option>
+          <option *ngFor="let c of currencies" [ngValue]="c.shtDesc">{{ c.symbol + ' | ' + c.name + ' | ' + c.shtDesc }}</option>
         </select>
       </div>
       <div class="form-group">
@@ -75,9 +75,9 @@
         <input 
           type="date" 
           class="form-control"
-          name="coverFrom"
+          name="quotCoverFrom"
           #quotationCoverFrom="ngModel"
-          [(ngModel)]="quotation.coverFrom" 
+          [(ngModel)]="quotation.quotCoverFrom" 
           required
         >
       </div>
@@ -86,9 +86,9 @@
           <input 
             type="date" 
             class="form-control"
-            name="coverTo"
+            name="quotCoverTo"
             #quotationCoverTo="ngModel"
-            [(ngModel)]="quotation.coverTo" 
+            [(ngModel)]="quotation.quotCoverTo" 
             required
           >
         </div>
@@ -96,14 +96,14 @@
         <label for="paymentFrequency">Payment Frequency</label>
         <select 
           class="form-control"
-          name="paymentFrequency"
-          [(ngModel)]="quotation.paymentFrequency" 
+          name="quotPaymentFrequency"
+          [(ngModel)]="quotation.quotPaymentFrequency" 
           required
         >
-          <option [ngValue]="quotation.paymentFrequency"> {{ quotation.paymentFrequency }} </option>
+          <option [ngValue]="quotation.quotPaymentFrequency"> {{ quotation.quotPaymentFrequency }} </option>
           <option *ngFor="let p of paymentFrequencies" [ngValue]="p">{{ p }}</option>
         </select>
-      </div>
+      </div> 
       </div> 
     
     <div id="rule"></div>      

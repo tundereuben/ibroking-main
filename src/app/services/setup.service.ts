@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+// import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
@@ -11,51 +11,54 @@ import { Product } from '../models/Product';
 import { Clause } from '../models/Clause';
 import { Section } from '../models/Section';
 import { Covertype } from '../models/Covertype';
+
+import { Client } from '../models/Client';
+
 import { DEFAULT_HEADERS } from '../models/authorization';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SetupService {
-  classesCollection: AngularFirestoreCollection<setupClass>;
-  classDoc: AngularFirestoreDocument<setupClass>;
+  // classesCollection: AngularFirestoreCollection<setupClass>;
+  // classDoc: AngularFirestoreDocument<setupClass>;
   classes: Observable<setupClass[]>;
   class: Observable<setupClass>; 
 
-  subclassesCollection: AngularFirestoreCollection<Subclass>;
-  subclassDoc: AngularFirestoreDocument<Subclass>;
+  // subclassesCollection: AngularFirestoreCollection<Subclass>;
+  // subclassDoc: AngularFirestoreDocument<Subclass>;
   subclasses: Observable<Subclass[]>;
   subclass: Observable<Subclass>;
 
-  productsCollection: AngularFirestoreCollection<Product>;
-  productDoc: AngularFirestoreDocument<Product>;
+  // productsCollection: AngularFirestoreCollection<Product>;
+  // productDoc: AngularFirestoreDocument<Product>;
   products: Observable<Product[]>;
   product: Observable<Product>;
 
-  clausesCollection: AngularFirestoreCollection<Clause>;
-  clauseDoc: AngularFirestoreDocument<Clause>;
+  // clausesCollection: AngularFirestoreCollection<Clause>;
+  // clauseDoc: AngularFirestoreDocument<Clause>;
   clauses: Observable<Clause[]>;
   clause: Observable<Clause>;
 
-  sectionsCollection: AngularFirestoreCollection<Section>;
-  sectionDoc: AngularFirestoreDocument<Section>;
+  // sectionsCollection: AngularFirestoreCollection<Section>;
+  // sectionDoc: AngularFirestoreDocument<Section>;
   sections: Observable<Section[]>;
   section: Observable<Section>;
 
-  covertypesCollection: AngularFirestoreCollection<Covertype>;
-  covertypeDoc: AngularFirestoreDocument<Covertype>;
+  // covertypesCollection: AngularFirestoreCollection<Covertype>;
+  // covertypeDoc: AngularFirestoreDocument<Covertype>;
   covertypes: Observable<Covertype[]>;
   covertype: Observable<Covertype>;
 
   constructor(
-    private afs: AngularFirestore,
+    // private afs: AngularFirestore,
     private http: HttpClient ) { 
     // this.classesCollection = this.afs.collection('classes', ref => ref.orderBy('code','asc'));
-    this.subclassesCollection = this.afs.collection('subclass', ref => ref.orderBy('code','asc'));
-    this.productsCollection = this.afs.collection('product',  ref => ref.orderBy('code','asc'));
-    this.clausesCollection = this.afs.collection('clause',  ref => ref.orderBy('code','asc'));
-    this.sectionsCollection = this.afs.collection('section',  ref => ref.orderBy('code','asc'));
-    this.covertypesCollection = this.afs.collection('covertype',  ref => ref.orderBy('code','asc'));
+    // this.subclassesCollection = this.afs.collection('subclass', ref => ref.orderBy('code','asc'));
+    // this.productsCollection = this.afs.collection('product',  ref => ref.orderBy('code','asc'));
+    // this.clausesCollection = this.afs.collection('clause',  ref => ref.orderBy('code','asc'));
+    // this.sectionsCollection = this.afs.collection('section',  ref => ref.orderBy('code','asc'));
+    // this.covertypesCollection = this.afs.collection('covertype',  ref => ref.orderBy('code','asc'));
   };
 
   // API CALLS & httpOptions
@@ -72,6 +75,7 @@ export class SetupService {
   covertypesUrl = 'http://localhost:8080/api/covertypes';
   sectionsUrl = 'http://localhost:8080/api/sections';
   clausesUrl = 'http://localhost:8080/api/clauses';
+  clientsUrl = 'http://localhost:8080/api/clients';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -289,4 +293,35 @@ export class SetupService {
     return this.http.delete(this.covertypesUrl + "/" + covertype.covtCode);
   }
   // +++++++ COVERTYPES FUNCTIONS ENDS ++++++++ //
+
+
+  // =========================== //
+  // ==== CLIENT FUNCTIONS ====== //
+  // =========================== //
+
+  getClients(): Observable<Client[]> {
+    return this.http.get<Client[]>(this.clientsUrl);
+  }
+  
+  getClient(id: number): Observable<Client> {
+    const url = `${this.clientsUrl}/${id}`;
+    return this.http.get<Client>(url);
+  }
+
+  addClient(newClient: Client): Observable<Client> {
+    return this.http.post<Client>(this.clientsUrl, JSON.stringify(newClient), {headers: DEFAULT_HEADERS});
+  }
+
+  updateClient(updatedClient: Client): Observable<Client> {
+    const url = `${this.clientsUrl}/${updatedClient.clntCode}`;
+    return this.http.put(url, updatedClient, this.httpOptions).pipe(
+      tap(_ => console.log(`updated client code = ${updatedClient.clntCode}`)),
+      catchError(this.handleError<any>('updatedClient'))
+    );
+  }
+
+  deleteClient(client: Client) {
+    return this.http.delete(this.clientsUrl + "/" + client.clntCode);
+  }
+  // +++++++ CLIENT FUNCTIONS ENDS ++++++++ //
 }

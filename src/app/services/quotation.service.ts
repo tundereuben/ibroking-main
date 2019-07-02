@@ -1,52 +1,36 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+// import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap, retry } from 'rxjs/operators';
-
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'; 
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { Quotation } from '../models/Quotation';
 import { QuoteProduct } from '../models/QuoteProduct';
 import { QuoteRisk } from '../models/QuoteRisk';
 import { QuoteRiskLimit } from '../models/QuoteRiskLimit';
 import { DEFAULT_HEADERS } from '../models/authorization';
-import { pipe } from '@angular/core/src/render3';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuotationService {
-//   quotationsCollection: AngularFirestoreCollection<Quotation>;
-//   quotationDoc: AngularFirestoreDocument<Quotation>;
   quotations: Observable<Quotation[]>;
   quotation: Observable<Quotation>;
   
-//   quoteProductsCollection: AngularFirestoreCollection<QuoteProduct>;
-//   quoteProductDoc: AngularFirestoreDocument<QuoteProduct>;
   quoteProducts: Observable<QuoteProduct[]>;
   quoteProduct: Observable<QuoteProduct>;
 
-//   productsCollection: AngularFirestoreCollection<QuoteProduct> // Fetch already setup products
-//   productDoc: AngularFirestoreDocument<QuoteProduct>;
   products: Observable<QuoteProduct[]>;
   product: Observable<QuoteProduct>;
 
-//   quoteRisksCollection: AngularFirestoreCollection<QuoteRisk> 
-//   quoteRiskDoc: AngularFirestoreDocument<QuoteRisk>;
   quoteRisks: Observable<QuoteRisk[]>; 
   quoteRisk: Observable<QuoteRisk>;
 
-//   quoteRiskLimitsCollection: AngularFirestoreCollection<QuoteRiskLimit> 
-//   quoteRiskLimitDoc: AngularFirestoreDocument<QuoteRiskLimit>;
   quoteRiskLimits: Observable<QuoteRiskLimit[]>;
   quoteRiskLimit: Observable<QuoteRiskLimit>;
   
-  constructor(private afs: AngularFirestore, private http: HttpClient) { 
-    // this.quotationsCollection = this.afs.collection('quotations', ref => ref.orderBy('code','desc'));
-    // this.quoteProductsCollection = this.afs.collection('quote_products', ref => ref.orderBy('code','asc'));
-    // this.productsCollection = this.afs.collection('product', ref => ref.orderBy('code','asc'));
-    // this.quoteRisksCollection = this.afs.collection('quote_risks', ref => ref.orderBy('code','asc'));
-    // this.quoteRiskLimitsCollection = this.afs.collection('quote_risk_limits', ref => ref.orderBy('code','asc'));
+  constructor(private http: HttpClient) { 
+
   }
 
   // API CALLS & httpOptions
@@ -61,14 +45,6 @@ httpOptions = {
     })
   };
 
-  // Error handler
-//   private handleError<T> (operation = 'operation', result?: T) {
-//     return (error: any): Observable<T> =>  {
-//     //   console.error(error);
-//       console.log(`${operation} failed: ${error.message}`);
-//       return of(result as T);
-//     };
-//   }
   private handleError(error: HttpErrorResponse) {
       if(error.error instanceof ErrorEvent) {
           console.log('An error occured:', error.error.message);
@@ -142,7 +118,7 @@ httpOptions = {
 
    /** GET quote product by id. Will 404 if id not found */
    getQuoteProduct(id: number): Observable<QuoteProduct> {
-    const url = `${this.quotationUrl}/${id}`;
+    const url = `${this.quoteProductUrl}/${id}`;
     return this.http.get<QuoteProduct>(url);
   }
 
@@ -156,7 +132,8 @@ httpOptions = {
 
   /** PUT:  */
   updateQuoteProduct(updatedQuoteProduct: QuoteProduct): Observable<QuoteProduct> {
-    const url = `${this.quotationUrl}/${updatedQuoteProduct.qpCode}`;
+    const url = `${this.quoteProductUrl}/${updatedQuoteProduct.qpCode}`;
+    console.log(url);
     return this.http.put(url, updatedQuoteProduct, this.httpOptions);
   }
 
@@ -169,49 +146,6 @@ httpOptions = {
     );
   }
 
-//   getQuoteProducts(): Observable<QuoteProduct[]> {
-//     // Get quotationses with the id
-//    this.quoteProducts = this.quoteProductsCollection.snapshotChanges().pipe(
-//      map(actions => actions.map(a => {
-//        const data = a.payload.doc.data() as QuoteProduct;
-//        data.id = a.payload.doc.id; 
-//        return data; 
-//       //  console.log(data);
-//      }))
-//    )
-//     return this.quoteProducts;
-//   }
-
-//   newQuoteProduct(newQuoteProduct: QuoteProduct) {
-//     this.quoteProductsCollection.add(newQuoteProduct);
-//   }
-
-//   getQuoteProduct(id: string): Observable<QuoteProduct> {
-//     this.quoteProductDoc = this.afs.doc<QuoteProduct>(`quote_products/${id}`);
-//     this.quoteProduct = this.quoteProductDoc.snapshotChanges().pipe(
-//       map(action => {
-//         if (action.payload.exists === false ) {
-//           return null;
-//         } else {
-//           const data = action.payload.data() as QuoteProduct;
-//           data.id = action.payload.id;
-//           // console.log(data);
-//           return data;
-//         }
-//       })
-//     )
-//     return this.quoteProduct;
-//   }
-  
-//   updateQuoteProduct(updateQuoteProduct: QuoteProduct){
-//     this.quoteProductDoc = this.afs.doc(`quote_products/${updateQuoteProduct.id}`);
-//     this.quoteProductDoc.update(updateQuoteProduct);
-//   }
-
-//   deleteQuoteProduct(deleteQuoteProduct: QuoteProduct) {
-//       this.quoteProductDoc = this.afs.doc(`quote_product/${deleteQuoteProduct.id}`);
-//       this.quoteProductDoc.delete();
-//   }
   // ++++++++++ QUOTE PRODUCTS FUNCTIONS ENDS ++++++++++ //
 
 
@@ -226,7 +160,7 @@ httpOptions = {
 
    /** GET quote Risk by id. Will 404 if id not found */
    getQuoteRisk(id: number): Observable<QuoteRisk> {
-    const url = `${this.quotationUrl}/${id}`;
+    const url = `${this.quoteRiskUrl}/${id}`;
     return this.http.get<QuoteRisk>(url);
   }
 
@@ -238,6 +172,7 @@ httpOptions = {
    /** PUT:  */
    updateQuoteRisk(updatedQuoteRisk: QuoteRisk): Observable<QuoteRisk> {
     const url = `${this.quoteRiskUrl}/${updatedQuoteRisk.qrCode}`; 
+    console.log(url);
     return this.http.put(url, updatedQuoteRisk, this.httpOptions);
   }
 
@@ -315,7 +250,7 @@ httpOptions = {
 
    /** GET quote RiskLimit by id. Will 404 if id not found */
    getQuoteRiskLimit(id: number): Observable<QuoteRiskLimit> {
-    const url = `${this.quotationUrl}/${id}`;
+    const url = `${this.quoteRiskLimitUrl}/${id}`;
     return this.http.get<QuoteRiskLimit>(url);
   }
 
@@ -327,7 +262,10 @@ httpOptions = {
    /** PUT:  */
    updateQuoteRiskLimit(updatedQuoteRiskLimit: QuoteRiskLimit): Observable<QuoteRiskLimit> {
     const url = `${this.quoteRiskLimitUrl}/${updatedQuoteRiskLimit.qrlCode}`;
-    return this.http.put(url, updatedQuoteRiskLimit, this.httpOptions);
+    return this.http.put<QuoteRiskLimit>(url, updatedQuoteRiskLimit, this.httpOptions)
+    .pipe(
+        catchError(this.handleError)
+    );
   }
 
   /** DELETE:  */

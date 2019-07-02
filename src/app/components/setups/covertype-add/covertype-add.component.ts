@@ -22,7 +22,7 @@ export class CovertypeAddComponent implements OnInit {
  
   covertype: Covertype = {};
 
-  @ViewChild('covertypeForm') form: any;
+  @ViewChild('covertypeForm', {static: false}) form: any;
 
   constructor(
     private flashMessage: FlashMessagesService,
