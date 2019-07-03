@@ -54,6 +54,7 @@ import { QuoteRiskLimitsDetailsComponent } from './components/quotations/quote-r
 import { QuoteRiskLimitsEditComponent } from './components/quotations/quote-risk-limits-edit/quote-risk-limits-edit.component';
 
 import { IdsComponent } from './components/setups/ids/ids.component';
+import { BenefitsComponent } from './components/setups/benefits/benefits.component';
 
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
@@ -112,6 +113,7 @@ const routes: Routes = [
   {path: 'quote-risk-limits-edit/:id', component: QuoteRiskLimitsEditComponent},
 
   {path: 'ids', component: IdsComponent},
+  {path: 'benefits', component: BenefitsComponent},
 
   {path: '**', component: NotFoundComponent},
 ];
