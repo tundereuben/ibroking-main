@@ -60,6 +60,12 @@ import { QuoteRiskLimitsDetailsComponent } from './components/quotations/quote-r
 import { MomentModule } from 'angular2-moment';
 import { IdsComponent } from './components/setups/ids/ids.component';
 import { BenefitsComponent } from './components/setups/benefits/benefits.component';
+import { DiscountComponent } from './components/setups/discount/discount.component';
+import { LoadingsComponent } from './components/setups/loadings/loadings.component';
+import { CommissionsComponent } from './components/setups/commissions/commissions.component';
+import { TaxesComponent } from './components/setups/taxes/taxes.component';
+import { PoliciesComponent } from './components/setups/policies/policies.component';
+import { PolicyAddComponent } from './components/setups/policy-add/policy-add.component';
 
 
 @NgModule({
@@ -111,6 +117,12 @@ import { BenefitsComponent } from './components/setups/benefits/benefits.compone
     QuoteRiskLimitsDetailsComponent,
     IdsComponent,
     BenefitsComponent,
+    DiscountComponent,
+    LoadingsComponent,
+    CommissionsComponent,
+    TaxesComponent,
+    PoliciesComponent,
+    PolicyAddComponent,
   ],
   imports: [
     BrowserModule,

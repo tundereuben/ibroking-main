@@ -55,6 +55,11 @@ import { QuoteRiskLimitsEditComponent } from './components/quotations/quote-risk
 
 import { IdsComponent } from './components/setups/ids/ids.component';
 import { BenefitsComponent } from './components/setups/benefits/benefits.component';
+import { DiscountComponent } from './components/setups/discount/discount.component';
+import { LoadingsComponent } from './components/setups/loadings/loadings.component';
+import { CommissionsComponent } from './components/setups/commissions/commissions.component';
+import { PoliciesComponent } from './components/setups/policies/policies.component';
+import { PolicyAddComponent } from './components/setups/policy-add/policy-add.component';
 
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
@@ -114,6 +119,11 @@ const routes: Routes = [
 
   {path: 'ids', component: IdsComponent},
   {path: 'benefits', component: BenefitsComponent},
+  {path: 'discount', component: DiscountComponent},
+  {path: 'loadings', component: LoadingsComponent},
+  {path: 'commissions', component: CommissionsComponent},
+  {path: 'policies', component: PoliciesComponent},
+  {path: 'policy-add', component: PolicyAddComponent},
 
   {path: '**', component: NotFoundComponent},
 ];

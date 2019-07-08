@@ -218,7 +218,6 @@ export class SetupService {
   }
 
   addClause(newClause: Clause): Observable<Clause> {
-    console.log(newClause);
     return this.http.post<Clause>(this.clausesUrl, JSON.stringify(newClause), {headers: DEFAULT_HEADERS});
   }
 
