@@ -12,6 +12,12 @@ import { Clause } from '../models/Clause';
 import { Section } from '../models/Section';
 import { Covertype } from '../models/Covertype';
 import { Id } from '../models/Id';
+import { Policy } from '../models/Policy';
+import { Loading } from '../models/Loading';
+import { Commission } from '../models/Commission';
+import { Extension } from '../models/Extension';
+import { Benefit } from '../models/Benefit';
+import { Discount } from '../models/Discount';
 
 import { Client } from '../models/Client';
 
@@ -81,6 +87,12 @@ export class SetupService {
   clausesUrl = 'http://localhost:8080/api/clauses';
   clientsUrl = 'http://localhost:8080/api/clients';
   idsUrl = 'http://localhost:8080/api/ids';
+  policiesUrl = 'http://localhost:8080/api/policies';
+  discountsUrl = 'http://localhost:8080/api/discounts';
+  loadingsUrl = 'http://localhost:8080/api/loadings';
+  commissionsUrl = 'http://localhost:8080/api/commissions';
+  extensionsUrl = 'http://localhost:8080/api/extensions';
+  benefitsUrl = 'http://localhost:8080/api/benefits';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -298,6 +310,36 @@ export class SetupService {
   }
   // +++++++ COVERTYPES FUNCTIONS ENDS ++++++++ //
 
+// =========================== //
+  // ==== POLICY FUNCTIONS ====== //
+  // =========================== //
+
+  getPolicies(): Observable<Policy[]> {
+    return this.http.get<Policy[]>(this.policiesUrl);
+  }
+  
+  getPolicy(id: number): Observable<Policy> {
+    const url = `${this.policiesUrl}/${id}`;
+    return this.http.get<Policy>(url);
+  }
+
+  addPolicy(newPolicy: Policy): Observable<Policy> {
+    return this.http.post<Policy>(this.policiesUrl, JSON.stringify(newPolicy), {headers: DEFAULT_HEADERS});
+  }
+
+  updatePolicy(updatedPolicy: Policy): Observable<Policy> {
+    const url = `${this.policiesUrl}/${updatedPolicy.polCode}`;
+    return this.http.put(url, updatedPolicy, this.httpOptions).pipe(
+      tap(_ => console.log(`updated policy code = ${updatedPolicy.polCode}`)),
+      catchError(this.handleError<any>('updatePolicy'))
+    );
+  }
+
+  deletePolicy(policy: Policy) {
+    return this.http.delete(this.policiesUrl + "/" + policy.polCode);
+  }
+  // +++++++ POLICY FUNCTIONS ENDS ++++++++ //
+
 
   // =========================== //
   // ==== CLIENT FUNCTIONS ====== //
@@ -357,8 +399,152 @@ export class SetupService {
   deleteId(id: Id) {
     return this.http.delete(this.idsUrl + "/" + id.idCode);
   }
- 
   // +++++++ IDs FUNCTIONS ENDS ++++++++ //
+
+  // =========================== //
+  // ==== DISCOUNTS FUNCTIONS ====== //
+  // =========================== //
+  getDiscounts(): Observable<Discount[]> {
+    return this.http.get<Discount[]>(this.discountsUrl);
+  }
+    
+  getDiscount(id: number): Observable<Id> {
+    const url = `${this.discountsUrl}/${id}`;
+    return this.http.get<Id>(url);
+  }
+
+  addDiscount(newDiscount: Discount): Observable<Discount> {
+    return this.http.post<Discount>(this.discountsUrl, JSON.stringify(newDiscount), {headers: DEFAULT_HEADERS});
+  }
+
+  updateDiscount(updatedDiscount: Discount): Observable<Discount> {
+    const url = `${this.discountsUrl}/${updatedDiscount.dsctCode}`;
+    return this.http.put(url, updatedDiscount, this.httpOptions).pipe(
+      tap(_ => console.log(`updated discounts code = ${updatedDiscount.dsctCode}`)),
+      catchError(this.handleError<any>('updateDiscount'))
+    );
+  }
+
+  deleteDiscount(discount: Discount) {
+    return this.http.delete(this.discountsUrl + "/" + discount.dsctCode);
+  }
+  // +++++++ DISCOUNTS FUNCTIONS ENDS ++++++++ //
+
+  // =========================== //
+  // ==== LOADING FUNCTIONS ====== //
+  // =========================== //
+  getLoadings(): Observable<Loading[]> {
+    return this.http.get<Loading[]>(this.loadingsUrl);
+  }
+    
+  getLoading(id: number): Observable<Loading> {
+    const url = `${this.loadingsUrl}/${id}`;
+    return this.http.get<Loading>(url);
+  }
+
+  addLoading(newLoading: Loading): Observable<Loading> {
+    return this.http.post<Loading>(this.loadingsUrl, JSON.stringify(newLoading), {headers: DEFAULT_HEADERS});
+  }
+
+  updateLoading(updatedLoading: Loading): Observable<Loading> {
+    const url = `${this.loadingsUrl}/${updatedLoading.loadCode}`;
+    return this.http.put(url, updatedLoading, this.httpOptions).pipe(
+      tap(_ => console.log(`updated loadings code = ${updatedLoading.loadCode}`)),
+      catchError(this.handleError<any>('updateLoading'))
+    );
+  }
+
+  deleteLoading(loading: Loading) {
+    return this.http.delete(this.loadingsUrl + "/" + loading.loadCode);
+  }
+  // +++++++ LOADING FUNCTIONS ENDS ++++++++ //
+
+  // =========================== //
+  // ==== COMMISSION FUNCTIONS ====== //
+  // =========================== //
+  getCommissions(): Observable<Commission[]> {
+    return this.http.get<Commission[]>(this.commissionsUrl);
+  }
+    
+  getCommission(id: number): Observable<Commission> {
+    const url = `${this.commissionsUrl}/${id}`;
+    return this.http.get<Commission>(url);
+  }
+
+  addCommission(newCommission: Commission): Observable<Commission> {
+    return this.http.post<Commission>(this.commissionsUrl, JSON.stringify(newCommission), {headers: DEFAULT_HEADERS});
+  }
+
+  updateCommission(updatedCommission: Commission): Observable<Commission> {
+    const url = `${this.commissionsUrl}/${updatedCommission.commCode}`;
+    return this.http.put(url, updatedCommission, this.httpOptions).pipe(
+      tap(_ => console.log(`updated Commissions code = ${updatedCommission.commCode}`)),
+      catchError(this.handleError<any>('updateCommission'))
+    );
+  }
+
+  deleteCommission(commission: Commission) {
+    return this.http.delete(this.commissionsUrl + "/" + commission.commCode);
+  }
+  // +++++++ COMMISSION FUNCTIONS ENDS ++++++++ //
+
+   // =========================== //
+  // ==== EXTENSION FUNCTIONS ====== //
+  // =========================== //
+  getExtensions(): Observable<Extension[]> {
+    return this.http.get<Extension[]>(this.extensionsUrl);
+  }
+    
+  getExtension(id: number): Observable<Extension> {
+    const url = `${this.extensionsUrl}/${id}`;
+    return this.http.get<Extension>(url);
+  }
+
+  addExtension(newExtension: Extension): Observable<Extension> {
+    return this.http.post<Extension>(this.extensionsUrl, JSON.stringify(newExtension), {headers: DEFAULT_HEADERS});
+  }
+
+  updateExtension(updatedExtension: Extension): Observable<Extension> {
+    const url = `${this.extensionsUrl}/${updatedExtension.extCode}`;
+    return this.http.put(url, updatedExtension, this.httpOptions).pipe(
+      tap(_ => console.log(`updated Extensions code = ${updatedExtension.extCode}`)),
+      catchError(this.handleError<any>('updateExtension'))
+    );
+  }
+
+  deleteExtension(extension: Extension) {
+    return this.http.delete(this.extensionsUrl + "/" + extension.extCode);
+  }
+  // +++++++ EXTENSION FUNCTIONS ENDS ++++++++ //
+
+  // =========================== //
+  // ==== BENEFIT FUNCTIONS ====== //
+  // =========================== //
+  getBenefits(): Observable<Benefit[]> {
+    return this.http.get<Benefit[]>(this.benefitsUrl);
+  }
+    
+  getBenefit(id: number): Observable<Benefit> {
+    const url = `${this.benefitsUrl}/${id}`;
+    return this.http.get<Benefit>(url);
+  }
+
+  addBenefit(newBenefit: Benefit): Observable<Benefit> {
+    return this.http.post<Benefit>(this.benefitsUrl, JSON.stringify(newBenefit), {headers: DEFAULT_HEADERS});
+  }
+
+  updateBenefit(updatedBenefit: Benefit): Observable<Benefit> {
+    const url = `${this.benefitsUrl}/${updatedBenefit.bftCode}`;
+    return this.http.put(url, updatedBenefit, this.httpOptions).pipe(
+      tap(_ => console.log(`updated Benefits code = ${updatedBenefit.bftCode}`)),
+      catchError(this.handleError<any>('updateBenefits'))
+    );
+  }
+
+  deleteBenefit(benefit: Benefit) {
+    return this.http.delete(this.benefitsUrl + "/" + benefit.bftCode);
+  }
+  // +++++++ BENEFIT FUNCTIONS ENDS ++++++++ //
 
 }
 

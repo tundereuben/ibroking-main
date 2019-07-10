@@ -1,4 +1,5 @@
 export interface Clause {
     clsCode?: number,
-    clsName?: String
+    clsName?: String,
+    clsPolCode?: number
 }
