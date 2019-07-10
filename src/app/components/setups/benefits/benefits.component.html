@@ -1,0 +1,80 @@
+<div id="content-area">
+  <div id="container">
+  <h1 class="page-title"> BENEFITS SETUPS</h1>
+  <div id="main-content">
+   <form class="form-inline" #benefitForm="ngForm" (ngSubmit)="onSubmit(benefitForm)">
+    <div class="form-group">
+      <label class="sr-only" for="bftCode">Benefit Code</label>
+      <input 
+        type="number" 
+        class="form-control" 
+        name="bftCode" 
+        placeholder="Benefit Code"
+        [(ngModel)]="bftCode"
+        #code="ngModel"
+        [ngClass]="{'is-invalid': code.errors && code.touched}"
+        required
+      >
+    </div>
+
+    <div class="form-group">
+      <label class="sr-only" for="benefitName">Benefit Name</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        name="bftName" 
+        placeholder="Benefit Name"
+        [(ngModel)]="bftName"
+        #name="ngModel"
+        [ngClass]="{'is-invalid': name.errors && name.touched}"
+        required
+      >
+    </div>
+
+    <div class="form-group">
+      <label class="sr-only" for="idType">Benefit Calculated on </label>
+      <!-- <input type="text" class="form-control" name="idType" placeholder="ID Type"> -->
+      <select 
+          class="form-control"
+          name="bftCalcOn"
+          placeholder="Calculated On"
+          [(ngModel)] = "calcOn"
+          #calc = "ngModel"
+          [ngClass]="{'is-invalid': calc.errors && calc.touched}"
+          required
+        >
+          <option [ngValue]="null">Calculated On</option>
+          <option *ngFor="let calcOn of calcOns" [ngValue]="calcOn">{{ calcOn }}</option>
+        </select>
+    </div>    
+    
+    <!-- <button type="submit" class="btn btn-primary">Search</button> -->
+    <button type="submit" class="btn btn-success">Add Benefit</button>
+    
+    <div class="table-responsive" style="margin-top:30px;">
+    <table *ngIf='benefits?.length > 0 ; else noBenefits' class="table table-hover">
+      <tr>
+        <th>Benefit Code</th>
+        <th>Benefit Name</th>
+        <th>Benefit Calculate On</th>
+      </tr>
+      <tr *ngFor="let id of ids">
+        <td>{{ benefit.bftCode }}</td>
+        <td>{{ benefit.bftName }}</td>
+        <td>{{ benefit.bftCalcOn }}</td>
+        <td><a (click)="delete(benefit)" class="btn btn-secondary"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></td>
+      </tr>
+    </table>
+
+    <ng-template #noBenefits>
+      <h5>There are no benefits in the system</h5> 
+    </ng-template>
+
+  </div>
+  </form>
+  
+  
+  
+  </div> <!---- end of <div id="main-content">---->
+  </div> <!----end of <div id="container">---->
+  </div>  <!----end of <div id="content-area">---->

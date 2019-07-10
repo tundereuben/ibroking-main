@@ -1,0 +1,14 @@
+.form-group {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.new-policy {
+  /* margin-left: 20px; */
+  float: right;
+}
+
+.label {
+  padding: 5px 10px;
+  margin: 5px 1px;
+}

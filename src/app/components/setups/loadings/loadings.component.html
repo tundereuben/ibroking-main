@@ -1,0 +1,97 @@
+<div id="content-area">
+  <div id="container">
+  <h1 class="page-title"> LOADINGS SETUPS</h1>
+  <div id="main-content">
+   <form class="form-inline" #loadingForm="ngForm" (ngSubmit)="onSubmit(loadingForm)">
+    <div class="form-group">
+      <label class="sr-only" for="loadCode">Loading Code</label>
+      <input 
+        type="number" 
+        class="form-control" 
+        name="loadCode" 
+        placeholder="Loading Code"
+        [(ngModel)]="loadCode"
+        #code="ngModel"
+        [ngClass]="{'is-invalid': code.errors && code.touched}"
+        required
+      >
+    </div>
+
+    <div class="form-group">
+      <label class="sr-only" for="loadName">Loading Name</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        name="loadName" 
+        placeholder="Loading Name"
+        [(ngModel)]="loadName"
+        #name="ngModel"
+        [ngClass]="{'is-invalid': name.errors && name.touched}"
+        required
+      >
+    </div>
+
+    <div class="form-group">
+      <label class="sr-only" for="idType">Loading Type </label>
+      <!-- <input type="text" class="form-control" name="idType" placeholder="ID Type"> -->
+      <select 
+        class="form-control"
+        name="loadType"
+        placeholder="Loading Type"
+        [(ngModel)] = "loadType"
+        #load = "ngModel"
+        [ngClass]="{'is-invalid': load.errors && load.touched}"
+        required
+      >
+        <option [ngValue]="null">Loading Type</option>
+        <option *ngFor="let loadType of loadTypes" [ngValue]="loadType">{{ loadType }}</option>
+      </select>
+    </div>    
+
+    <div class="form-group">
+      <label class="sr-only" for="loadCalcOn">Loading Calculated on </label>
+      <!-- <input type="text" class="form-control" name="idType" placeholder="ID Type"> -->
+      <select 
+          class="form-control"
+          name="loadCalcOn"
+          placeholder="Calculated On"
+          [(ngModel)] = "calcOn"
+          #calc = "ngModel"
+          [ngClass]="{'is-invalid': calc.errors && calc.touched}"
+          required
+        >
+          <option [ngValue]="null">Calculated On</option>
+          <option *ngFor="let calcOn of calcOns" [ngValue]="calcOn">{{ calcOn }}</option>
+        </select>
+    </div>    
+    
+    <!-- <button type="submit" class="btn btn-primary">Search</button> -->
+    <button type="submit" class="btn btn-success">Add Loading</button>
+    
+    <div class="table-responsive" style="margin-top:30px;">
+    <table *ngIf='loadings?.length > 0 ; else noLoadings' class="table table-hover">
+      <tr>
+        <th>Benefit Code</th>
+        <th>Benefit Name</th>
+        <th>Benefit Calculate On</th>
+      </tr>
+      <tr *ngFor="let discount of discounts">
+        <td>{{ loading.loadCode }}</td>
+        <td>{{ loading.loadName }}</td>
+        <td>{{ loading.loadCalcOn }}</td>
+        <td><a (click)="delete(discount)" class="btn btn-secondary"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></td>
+      </tr>
+    </table>
+
+    <ng-template #noLoadings>
+      <h5>There are no LOADINGS in the system</h5> 
+    </ng-template>
+
+  </div>
+  </form>
+  
+  
+  
+  </div> <!---- end of <div id="main-content">---->
+  </div> <!----end of <div id="container">---->
+  </div>  <!----end of <div id="content-area">---->

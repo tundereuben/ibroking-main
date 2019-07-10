@@ -1,0 +1,419 @@
+<div id="content-area">
+  <div id="container">
+    <div class="col-md-12">
+      <h3 class="text-center">SETUP A NEW POLICY</h3>
+
+      <!-- Class Setup -->
+      <div class="panel panel-default">
+        <div class="panel-heading panel-grey-head">
+          <h3 class="panel-title panel-grey-title text-bold"><strong>POLICY INFO</strong></h3>
+        </div>
+        <div class="panel-body">
+            <form #policyForm="ngForm" (submit)="addPolicy()" class="form-inline" id="policyForm">
+              <div class="form-group">
+                <input 
+                type="text" 
+                class="form-control" 
+                name="polName" 
+                id ="polName"
+                placeholder="Policy Name"
+                [attr.disabled]="disabled ? '' : policy.polName"
+                >
+              </div>
+              <div class="form-group">
+                <input 
+                type="text" 
+                class="form-control" 
+                name="polClaName" 
+                id ="polClaName"
+                placeholder="Class Name"
+                [attr.disabled]="disabled ? '' : policy.polName"
+                >
+              </div>  
+              <div class="form-group">
+                <input 
+                type="text" 
+                class="form-control" 
+                name="polSclName" 
+                id ="polSclName"
+                placeholder="Subclass Name"
+                [attr.disabled]="disabled ? '' : policy.polName"
+                >
+              </div>
+              <span id="policyMessage"></span>
+              <button type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              </form>
+        </div><!-- Pn3 Bdy --> 
+        <div></div>
+      </div><!-- Pn3 Content  -->
+
+      <!-- Subclass Setup -->
+      <!-- <div class="panel panel-default">
+        <div class="panel-heading panel-grey-head">
+          <h3 class="panel-title panel-grey-title text-bold"><strong>SUBCLASS SETUP</strong></h3>
+        </div>
+        <div class="panel-body">
+          <form class="form-inline">
+            <div class="form-group">
+              <label class="sr-only" for="class">Class </label>
+              <input type="text" class="form-control" id="class" placeholder="Class Name">
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="subclassName">Class </label>
+              <input type="text" class="form-control" id="subclassName" placeholder="Subclass Name">
+            </div>      
+            <button type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+          </form>
+        </div>
+      </div> -->
+
+      <!-- Clauses Setup -->
+      <div class="panel panel-default">
+          <div class="panel-heading panel-grey-head">
+            <h3 class="panel-title panel-grey-title text-bold"><strong>CLAUSE SETUP</strong></h3>
+          </div>
+          <div class="panel-body">
+            <form class="form-inline">
+              <div class="form-group">
+                <input 
+                type="text" 
+                class="form-control" 
+                name="clsName" 
+                id ="clsName"
+                placeholder="Clause Name"
+                >
+              </div>
+              <span id="clauseMessage"></span>
+              <button (click)="addClause($event)" type="submit"  class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <div class="list">
+                    <span *ngIf="clauses?.length > 0;" >
+                        <span *ngFor="let clause of clauses" class="label label-primary"> 
+                          {{ clause.clsName }} 
+                          <span (click)="deleteClause(clause)" class="glyphicon glyphicon-remove delete" id="{{ clause.clsCode }}"></span>
+                        </span> 
+                      
+                    </span>  
+                </div>  
+            </form>
+          </div><!-- Pn3 Bdy -->
+        </div><!-- Pn3 Content  -->
+
+        <!-- ID Setup -->
+      <div class="panel panel-default">
+          <div class="panel-heading panel-grey-head">
+            <h3 class="panel-title panel-grey-title text-bold"><strong>ID SETUP</strong></h3>
+          </div>
+          <div class="panel-body">
+            <form class="form-inline">
+              <div class="form-group">
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    name="idName" 
+                    id="idName"
+                    placeholder="ID Name"
+                  >
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="idType">ID Type</label>
+                <select 
+                    class="form-control"
+                    name="idType"
+                    id="idType"
+                    placeholder="ID Type"
+                  >
+                    <option [ngValue]="null">Select</option>
+                    <option *ngFor="let idType of idTypes" [ngValue]="idType">{{ idType }}</option>
+                  </select>
+              </div> 
+              <span id="idMessage"></span>  
+              <button (click)="addId()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <div class="list">
+                <span *ngIf="ids?.length > 0;" >
+                    <span *ngFor="let id of ids" class="label label-primary"> 
+                      {{ id.idName }} - {{id.idType}} 
+                      <span (click)="deleteId(id)" class="glyphicon glyphicon-remove delete" id="{{ id.idCode }}"></span>
+                    </span> 
+                </span>  
+            </div>  
+            </form>
+          </div><!-- Pn3 Bdy -->
+        </div><!-- Pn3 Content  -->
+
+      <!-- Discounts Setup -->
+      <div class="panel panel-default">
+          <div class="panel-heading panel-grey-head">
+            <h3 class="panel-title panel-grey-title text-bold"><strong>DISCOUNT SETUP</strong></h3>
+          </div>
+          <div class="panel-body">
+            <form class="form-inline">
+              <div class="form-group">
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  name="dsctName" 
+                  id="dsctName"
+                  placeholder="Discount Name"
+                >
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="dsctType">Discount Calculated on </label>
+                <select 
+                    class="form-control"
+                    name="dsctType"
+                    id="dsctType"
+                    placeholder="Discount Type"
+                  >
+                    <option [ngValue]="null">Discount Type</option>
+                    <option *ngFor="let dsctType of types" [ngValue]="dsctType">{{ dsctType }}</option>
+                  </select>
+              </div> 
+              <div class="form-group">
+                <label class="sr-only" for="dsctCalcOn">Discount Calculated on </label>
+                <select 
+                    class="form-control"
+                    name="dsctCalcOn"
+                    id="dsctCalcOn"
+                    placeholder="Calculated On"
+                  >
+                    <option [ngValue]="null">Calculated On</option>
+                    <option *ngFor="let calcOn of calcOns" [ngValue]="calcOn">{{ calcOn }}</option>
+                  </select>
+              </div> 
+              <div class="form-group">
+                  <input 
+                    type="number" 
+                    class="form-control" 
+                    name="dsctDefaultValue" 
+                    id="dsctDefaultValue"
+                    placeholder="Default Value"
+                  >
+                </div>      
+                <span id="discountMessage"></span>  
+              <button (click)="addDiscount()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <span *ngIf="discounts?.length > 0;" >
+                <span *ngFor="let discount of discounts" class="label label-primary"> 
+                  {{ discount.dsctName }} - {{ discount.dsctType }} {{ discount.dsctCalcOn }} {{ discount.defaultValue }}
+                  <span (click)="deleteDiscount(discount)" class="glyphicon glyphicon-remove delete" id="{{ discount.dsctCode }}"></span>
+                </span> 
+              </span> 
+            </form>
+          </div>
+        </div>
+
+      <!-- Loadings Setup -->
+      <div class="panel panel-default">
+          <div class="panel-heading panel-grey-head">
+            <h3 class="panel-title panel-grey-title text-bold"><strong>LOADING SETUP</strong></h3>
+          </div>
+          <div class="panel-body">
+            <form class="form-inline">
+              <div class="form-group">
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  name="loadName" 
+                  id="loadName"
+                  placeholder="Loading Name"
+                  required
+                >
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="idType">Discount Calculated on </label>
+                <select 
+                  class="form-control"
+                  name="loadType"
+                  id="loadType"
+                  placeholder="Loading Type"
+                  required
+                >
+                  <option [ngValue]="null">Loading Type</option>
+                  <option *ngFor="let loadType of types" [ngValue]="loadType">{{ loadType }}</option>
+                </select>
+              </div> 
+              <div class="form-group">
+                <label class="sr-only" for="idType">Loading Calculated on </label>
+                <select 
+                  class="form-control"
+                  name="loadCalcOn"
+                  id="loadCalcOn"
+                  placeholder="Calculated On"
+                >
+                  <option [ngValue]="null">Calculated On</option>
+                  <option *ngFor="let calcOn of calcOns" [ngValue]="calcOn">{{ calcOn }}</option>
+                </select>
+              </div> 
+              <div class="form-group">
+                  <input 
+                    type="number" 
+                    class="form-control" 
+                    name="loadDefaultValue" 
+                    id="loadDefaultValue"
+                    placeholder="Default Value"
+                  >
+                </div>  
+                <span id="loadingMessage"></span>      
+              <button (click)="addLoading()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <span *ngIf="loadings?.length > 0;" >
+                <span *ngFor="let loading of loadings" class="label label-primary"> 
+                  {{ loading.loadName }} - {{ loading.loadType }} {{ loading.loadCalcOn }} {{ loading.loadDefaultValue }}
+                  <span (click)="deleteLoading(loading)" class="glyphicon glyphicon-remove delete" id="{{ loading.loadCode }}"></span>
+                </span> 
+              </span> 
+            </form>
+          </div><!-- Pn3 Bdy -->
+        </div><!-- Pn3 Content  -->
+
+         <!-- Commissions Setup -->
+      <div class="panel panel-default">
+          <div class="panel-heading panel-grey-head">
+            <h3 class="panel-title panel-grey-title text-bold"><strong>COMMISSIONS SETUP</strong></h3>
+          </div>
+          <div class="panel-body">
+            <form class="form-inline">
+              <div class="form-group">
+                <input 
+                type="text" 
+                class="form-control" 
+                name="commName" 
+                id="commName"
+                placeholder="Commission Name"
+              >
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="idType">Commission Calculated on </label>
+                <select 
+                  class="form-control"
+                  name="commType"
+                  id="commType"
+                  placeholder="Commission Type"
+                >
+                  <option [ngValue]="null">Commission Type</option>
+                  <option *ngFor="let commType of types" [ngValue]="commType">{{ commType }}</option>
+                </select>
+              </div> 
+              <div class="form-group">
+                <label class="sr-only" for="commCalcOn">Commission Calculated on </label>
+                <select 
+                  class="form-control"
+                  name="commCalcOn"
+                  id="commCalcOn"
+                  placeholder="Calculated On"
+                >
+                  <option [ngValue]="null">Calculated On</option>
+                  <option *ngFor="let calcOn of calcOns" [ngValue]="calcOn">{{ calcOn }}</option>
+                </select>
+              </div> 
+              <div class="form-group">
+                  <input 
+                    type="number" 
+                    class="form-control" 
+                    name="commDefaultValue" 
+                    id="commDefaultValue"
+                    placeholder="Default Value"
+                  >
+                </div>      
+                <span id="commissionMessage"></span>
+              <button (click)="addCommission()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <span *ngIf="commissions?.length > 0;" >
+                <span *ngFor="let commission of commissions" class="label label-primary"> 
+                  {{ commission.commName }} - {{ commission.commType }} {{ commission.commCalcOn }} {{ commission.commDefaultValue }}
+                  <span (click)="deleteCommission(commission)" class="glyphicon glyphicon-remove delete" id="{{ commission.commCode }}"></span>
+                </span> 
+              </span> 
+            </form>
+          </div><!-- Pn3 Bdy -->
+        </div><!-- Pn3 Content  -->
+
+      <!-- Extensions Setup -->
+      <div class="panel panel-default">
+          <div class="panel-heading panel-grey-head">
+            <h3 class="panel-title panel-grey-title text-bold"><strong>EXTENSION SETUP</strong></h3>
+          </div>
+          <div class="panel-body">
+            <form class="form-inline">
+              <div class="form-group">
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  name="extName" 
+                  id="extName"
+                  placeholder="Extension Name"
+                >
+              </div>
+              <span id="extensionMessage"></span>
+              <button (click)="addExtension()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <span *ngIf="extensions?.length > 0;" >
+                <span *ngFor="let extension of extensions" class="label label-primary"> 
+                  {{ extension.extName }} - {{ extension.extType }} {{ extension.extCalcOn }} {{ extension.extDefaultValue }}
+                  <span (click)="deleteExtension(extension)" class="glyphicon glyphicon-remove delete"></span>
+                </span> 
+              </span> 
+            </form>
+          </div><!-- Pn3 Bdy -->
+        </div><!-- Pn3 Content  -->
+
+      <!-- Benefits Setup -->
+      <div class="panel panel-default">
+          <div class="panel-heading panel-grey-head">
+            <h3 class="panel-title panel-grey-title text-bold"><strong>BENEFIT SETUP</strong></h3>
+          </div>
+          <div class="panel-body">
+            <form class="form-inline">
+              <div class="form-group">
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  name="bftName" 
+                  id="bftName"
+                  placeholder="Benefit Name"
+                >
+              </div>
+              <div class="form-group">
+                  <input 
+                  type="number" 
+                  class="form-control" 
+                  name="bftRate" 
+                  id="bftRate"
+                  placeholder="Default Rate"
+                >
+              </div>
+              <div class="form-group">
+                  <input 
+                  type="number" 
+                  class="form-control" 
+                  name="bftNo" 
+                  id="bftNo"
+                  placeholder="Default No. of Emps"
+                >
+              </div>
+              <div class="form-group">
+                  <input 
+                  type="number" 
+                  class="form-control" 
+                  name="bftMultBy" 
+                  id="bftMultBy"
+                  placeholder="Multiplying Factor"
+                >
+              </div>
+              <span id="benefitMessage"></span>
+              <button (click)="addBenefit()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <span *ngIf="benefits?.length > 0;" >
+                <span *ngFor="let benefit of benefits" class="label label-primary"> 
+                  {{ benefit.bftName }} - {{ benefit.bftRate }} {{ benefit.bftNo }} {{ benefit.bftMultBy }}
+                  <span (click)="deleteBenefit(benefit)" class="glyphicon glyphicon-remove delete"></span>
+                </span> 
+              </span> 
+            </form>
+          </div><!-- Pn3 Bdy -->
+        </div><!-- Pn3 Content  -->
+
+
+    </div><!-- Quote Head 2 -->
+
+    
+    <!---- end of <div id="main-content">---->
+  </div>
+  <!----end of <div id="container">---->
+</div>
+<!----end of <div id="content-area">---->

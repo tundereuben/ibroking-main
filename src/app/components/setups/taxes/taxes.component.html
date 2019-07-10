@@ -1,0 +1,74 @@
+<div id="content-area">
+  <div id="container">
+  <h1 class="page-title"> TAXES SETUP</h1>
+  <div id="main-content">
+
+   <form class="form-inline"  #taxForm="ngForm" (ngSubmit)="onSubmit(taxForm)">
+
+    <div class="form-group">
+      <label class="sr-only" for="taxCode">Tax Code</label>
+      <div >
+          <input 
+            type="text" 
+            class="form-control" 
+            name="taxCode" 
+            [(ngModel)]="taxCode"
+            placeholder="Tax Code"
+            #code="ngModel"
+            [ngClass]="{'is-invalid': code.errors && code.touched}"
+            required
+          >
+          <!-- <div [hidden]="!clsCode.errors?.required" class="invalid-feedback">
+              Clause Code required
+          </div> -->
+        </div>
+    </div>
+
+    <div class="form-group" >
+      <label class="sr-only" for="taxName">Tax Name</label>
+      <div >
+          <input 
+            type="text" 
+            class="form-control" 
+            name="taxName" 
+            [(ngModel)]="taxName"
+            placeholder="Tax Name"
+            #name="ngModel"
+            [ngClass]="{'is-invalid': name.errors && name.touched}"
+            required
+          >
+          <!-- <div [hidden]="!clsName.errors?.required" class="invalid-feedback">
+              Clause Name required
+          </div> -->
+        </div>
+    </div>
+    
+    <!-- <button type="submit" class="btn btn-primary">Search</button> -->
+    <button type="submit" class="btn btn-success">Add Tax</button>
+    <!-- <a class="btn btn-success" id="new-class" href="/clause-add">New Clause</a> -->
+  </form>
+  
+  <div class="table-responsive" style="margin-top:30px;">
+      <table *ngIf="taxes?.length > 0; else noTaxes" class="table table-hover">
+      <!-- <table class="table table-hover"> -->
+        <tr>
+          <th> Clause Code</th>
+          <th>Clause Name</th>
+          <th></th>
+        </tr>
+
+        <tr *ngFor="let clause of clauses" class="clause-values">
+        <td>{{ clause.clsCode }}</td>
+        <td>{{ clause.clsName }}</td>
+        <td> <a (click)="delete(clause)" class="btn btn-secondary"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a> </td>
+        </tr>
+      </table>
+      <ng-template #noTaxes>
+        <h5>There are no TAXES in the system</h5>
+      </ng-template>
+    </div>
+  
+  
+  </div> <!---- end of <div id="main-content">---->
+  </div> <!----end of <div id="container">---->
+  </div>  <!----end of <div id="content-area">---->
