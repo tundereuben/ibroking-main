@@ -1,7 +1,7 @@
 <div id="content-area">
   <div id="container">
     <div class="col-md-12">
-      <h3 class="text-center">SETUP A NEW POLICY</h3>
+      <h3 class="text-center">EDIT POLICY</h3>
 
       <!-- Class Setup -->
       <div class="panel panel-default">
@@ -17,7 +17,7 @@
                 name="polName" 
                 id ="polName"
                 placeholder="Policy Name"
-                [attr.disabled]="disabled ? '' : policy.polName"
+                [(ngModel)]="policy.polName"
                 >
               </div>
               <div class="form-group">
@@ -27,7 +27,7 @@
                 name="polClaName" 
                 id ="polClaName"
                 placeholder="Class Name"
-                [attr.disabled]="disabled ? '' : policy.polName"
+                [(ngModel)]="policy.polClaName"
                 >
               </div>  
               <div class="form-group">
@@ -37,7 +37,7 @@
                 name="polSclName" 
                 id ="polSclName"
                 placeholder="Subclass Name"
-                [attr.disabled]="disabled ? '' : policy.polName"
+                [(ngModel)]="policy.polSclName"
                 >
               </div>
               <span id="policyMessage"></span>
@@ -88,7 +88,7 @@
               <div class="list">
                     <span *ngIf="clauses?.length > 0;" >
                         <span *ngFor="let clause of clauses" class="label label-primary"> 
-                          {{ clause.clsCode }} {{ clause.clsName }} {{ clause.clsPolCode }} 
+                          {{ clause.clsName }} 
                           <span (click)="deleteClause(clause)" class="glyphicon glyphicon-remove delete" id="{{ clause.clsCode }}"></span>
                         </span> 
                       
@@ -118,7 +118,7 @@
               <button (click)="addExtension()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
               <span *ngIf="extensions?.length > 0;" >
                 <span *ngFor="let extension of extensions" class="label label-primary"> 
-                  {{ extension.extName }} - {{ extension.extType }} {{ extension.extCalcOn }} {{ extension.extDefaultValue }}
+                  {{ extension.extName }} 
                   <span (click)="deleteExtension(extension)" class="glyphicon glyphicon-remove delete"></span>
                 </span> 
               </span> 

@@ -224,6 +224,11 @@ export class SetupService {
     return this.http.get<Clause[]>(this.clausesUrl);
   }
 
+  getClausesByPolCode(id: number):Observable<Clause[]>{
+    const url = `${this.clausesUrl}/polCode?polCode=${id}`;
+    return this.http.get<Clause[]>(url);
+  }
+
   getClause(id: number): Observable<Clause> {
     const url = `${this.clausesUrl}/${id}`;
     return this.http.get<Clause>(url);
@@ -378,6 +383,11 @@ export class SetupService {
   getIds(): Observable<Id[]> {
     return this.http.get<Id[]>(this.idsUrl);
   }
+
+  getIdsByPolCode(id: number):Observable<Id[]>{
+    const url = `${this.idsUrl}/polCode?polCode=${id}`;
+    return this.http.get<Id[]>(url);
+  }
     
   getId(id: number): Observable<Id> {
     const url = `${this.idsUrl}/${id}`;
@@ -406,6 +416,11 @@ export class SetupService {
   // =========================== //
   getDiscounts(): Observable<Discount[]> {
     return this.http.get<Discount[]>(this.discountsUrl);
+  }
+
+  getDiscountsByPolCode(id: number):Observable<Discount[]>{
+    const url = `${this.discountsUrl}/polCode?polCode=${id}`;
+    return this.http.get<Discount[]>(url);
   }
     
   getDiscount(id: number): Observable<Id> {
@@ -436,6 +451,11 @@ export class SetupService {
   getLoadings(): Observable<Loading[]> {
     return this.http.get<Loading[]>(this.loadingsUrl);
   }
+
+  getLoadingsByPolCode(id: number):Observable<Loading[]>{
+    const url = `${this.loadingsUrl}/polCode?polCode=${id}`;
+    return this.http.get<Loading[]>(url);
+  }
     
   getLoading(id: number): Observable<Loading> {
     const url = `${this.loadingsUrl}/${id}`;
@@ -464,6 +484,11 @@ export class SetupService {
   // =========================== //
   getCommissions(): Observable<Commission[]> {
     return this.http.get<Commission[]>(this.commissionsUrl);
+  }
+
+  getCommissionsByPolCode(id: number):Observable<Commission[]>{
+    const url = `${this.commissionsUrl}/polCode?polCode=${id}`;
+    return this.http.get<Commission[]>(url);
   }
     
   getCommission(id: number): Observable<Commission> {
@@ -494,6 +519,11 @@ export class SetupService {
   getExtensions(): Observable<Extension[]> {
     return this.http.get<Extension[]>(this.extensionsUrl);
   }
+
+  getExtensionsByPolCode(id: number):Observable<Extension[]>{
+    const url = `${this.extensionsUrl}/polCode?polCode=${id}`;
+    return this.http.get<Extension[]>(url);
+  }
     
   getExtension(id: number): Observable<Extension> {
     const url = `${this.extensionsUrl}/${id}`;
@@ -522,6 +552,11 @@ export class SetupService {
   // =========================== //
   getBenefits(): Observable<Benefit[]> {
     return this.http.get<Benefit[]>(this.benefitsUrl);
+  }
+
+  getBenefitsByPolCode(id: number):Observable<Benefit[]>{
+    const url = `${this.benefitsUrl}/polCode?polCode=${id}`;
+    return this.http.get<Benefit[]>(url);
   }
     
   getBenefit(id: number): Observable<Benefit> {

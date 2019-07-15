@@ -1,6 +1,6 @@
 <div id="content-area">
     <div id="container">
-    <h1 class="page-title"> POLICIES SETUPS</h1>
+    <h1 class="page-title"> POLICIES SETUP</h1>
     <div id="main-content">
      <form class="form-inline">
       <!-- <div class="form-group">
@@ -17,28 +17,33 @@
       </div>    
       
       <button type="submit" class="btn btn-primary">Search</button>
+      
       <a class="btn btn-success" id="new-policy" href="/policy-add">New Policy</a>
+      <a class="btn btn-success" id="new-policy" href="/#">Package Policy</a>
       
       <div class="table-responsive" style="margin-top:30px;">
-      <table *ngIf='classes?.length > 0 ; else noClasses' class="table table-hover">
+      <table *ngIf='policies?.length > 0 ; else noPolicies' class="table table-hover">
         <tr>
-        <th>Class Code</th>
-        <th>Short Description</th>
-        <th>Description</th>
+        <th>Code</th>
+        <th>Policy Name</th>
+        <th>Policy Class</th>
+        <th>Policy Subclass</th>
+        <th></th>
+        <th></th>
         </tr>
-        <tr *ngFor="let class of classes">
-        <td>{{ class.claCode }}</td>
-        <td>{{ class.claShtDesc }}</td>
-        <td>{{ class.claDesc }}</td>
-        <td><a routerLink="/class-edit/{{ class.claCode }}" class="btn btn-secondary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a></td>
-        <td><a (click)="delete(class)" class="btn btn-secondary"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></td>
+        <tr *ngFor="let policy of policies">
+        <td>{{ policy.polCode }}</td>
+        <td><b>{{ policy.polName }}</b></td>
+        <td>{{ policy.polClaName }}</td>
+        <td>{{ policy.polSclName }}</td>
+        <td><a routerLink="/policy-edit/{{ policy.polCode  }}" class="btn btn-secondary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a></td>
+        <td><a (click)="delete(policy)" class="btn btn-secondary"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></td>
         </tr>
       </table>
 
       <ng-template #noClasses>
         <h5>There are no POLICIES  in the system</h5> 
       </ng-template>
-
     </div>
     </form>
     

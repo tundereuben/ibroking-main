@@ -66,6 +66,7 @@ import { CommissionsComponent } from './components/setups/commissions/commission
 import { TaxesComponent } from './components/setups/taxes/taxes.component';
 import { PoliciesComponent } from './components/setups/policies/policies.component';
 import { PolicyAddComponent } from './components/setups/policy-add/policy-add.component';
+import { PolicyEditComponent } from './components/setups/policy-edit/policy-edit.component';
 
 
 @NgModule({
@@ -123,6 +124,7 @@ import { PolicyAddComponent } from './components/setups/policy-add/policy-add.co
     TaxesComponent,
     PoliciesComponent,
     PolicyAddComponent,
+    PolicyEditComponent,
   ],
   imports: [
     BrowserModule,

@@ -66,40 +66,6 @@ export class PolicyAddComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-
-    this.setupService.getPolicies().subscribe(policies => {
-      this.policies = policies;
-      this.policy.polCode = policies[0].polCode + 1;
-    }); 
-
-    this.setupService.getClauses().subscribe(clauses => {
-      this.clauses = clauses;
-    }); 
-
-    this.setupService.getIds().subscribe(ids => {
-      this.ids = ids;
-    });
-
-    this.setupService.getDiscounts().subscribe(discounts => {
-      this.discounts = discounts;
-    });
-
-    this.setupService.getLoadings().subscribe(loadings => {
-      this.loadings = loadings;
-    });
-
-    this.setupService.getCommissions().subscribe(commissions => {
-      this.commissions = commissions;
-    });
-
-    this.setupService.getExtensions().subscribe(extensions => {
-      this.extensions = extensions;
-    });
-
-
-    this.setupService.getBenefits().subscribe(benefits => {
-      this.benefits = benefits;
-    });
     // IDs
     this.idTypes = ['Text', 'Number', 'Date', 'Boolean'];
 
@@ -108,6 +74,8 @@ export class PolicyAddComponent implements OnInit {
     this.calcOns = ['Premium', 'Sum Insured'];
   }
 
+
+// ========== CLICK FUNCTIONS ==========//
   // When a class is added
   addPolicy(){
     // Collect form inputs
@@ -119,17 +87,20 @@ export class PolicyAddComponent implements OnInit {
     if(!this.policy.polName) {
       this.showAlert('policyMessage')
     } else {
-      // if not empty, populate db and clear from
-      let showClass = `
-      <span  class="label label-primary"> Product: ${this.policy.polName} 
-        <span class="glyphicon glyphicon-remove delete"></span>
-      </span>
-      `;
-      // (<HTMLInputElement>document.getElementById('polName')).value='';
-      // (<HTMLInputElement>document.getElementById('polClaName')).value='';
-      // (<HTMLInputElement>document.getElementById('polSclName')).value='';
+      // if not empty, fetch most recent and clear db
+     
       const sub =  this.setupService.addPolicy(this.policy)
       .subscribe(policy => {
+          this.setupService.getPolicies().subscribe(policies => {
+            this.policies = policies;
+            this.policy = this.policies[0];
+          }); 
+
+          let showClass = `
+          <span  class="label label-primary"> Product: ${this.policy.polName} 
+            <span class="glyphicon glyphicon-remove delete"></span>
+          </span>
+          `;
         (<HTMLInputElement>document.getElementById('policyMessage')).innerHTML = showClass;
       });
     }
@@ -144,12 +115,17 @@ export class PolicyAddComponent implements OnInit {
       this.showAlert('clauseMessage'); 
     } else {
       this.clause.clsName = this.clsName;
-      this.clause.clsPolCode = this.policy.polCode; console.log(this.clause);
+      this.clause.clsPolCode = this.policy.polCode;
       const sub =  this.setupService.addClause(this.clause)
       .subscribe(clause => {
         this.clauses.push(clause); 
+        //  Fetch Clauses
+          this.setupService.getClausesByPolCode(this.policy.polCode).subscribe(clauses => {
+            this.clauses = clauses;
+            console.log(this.clauses);
+        });
         (<HTMLInputElement>document.getElementById('clsName')).value='';
-      });
+      });     
     }
   }
 
@@ -161,13 +137,41 @@ export class PolicyAddComponent implements OnInit {
     })
   }
 
+   // When an Extension is added
+  addExtension(event: any){
+    this.extension.extName = (<HTMLInputElement>document.getElementById('extName')).value;
+    if(!this.extension.extName) {
+      // Show Error Message 
+      this.showAlert('extensionMessage'); 
+    } else {
+      this.extension.extPolCode = this.policy.polCode;
+      const sub =  this.setupService.addExtension(this.extension)
+      .subscribe(extension => {
+        this.extensions.push(extension); 
+        // Fetch Extensions
+        this.setupService.getExtensionsByPolCode(this.policy.polCode).subscribe(extensions => {
+          this.extensions = extensions;
+          // console.log(this.extensions);
+        });
+        (<HTMLInputElement>document.getElementById('extName')).value='';
+      });
+    }
+  }
+
+  // Delete a Commission => make this a function that other modules can call
+  deleteExtension(extension: Extension)  : void {
+    this.setupService.deleteExtension(extension)
+    .subscribe(data => {
+      this.extensions = this.extensions.filter(c => c !== extension);
+    })
+  }
 
   // When An ID is added
   addId(event: any){
     this.id.idName = (<HTMLInputElement>document.getElementById('idName')).value;
     this.id.idType = (<HTMLInputElement>document.getElementById('idType')).value;
     this.id.idPolCode = this.policy.polCode; 
-    if(!this.id.idName) {
+    if(!this.id.idPolCode) {
       // Show Error Message 
       this.showAlert('idMessage'); 
     } else {
@@ -176,6 +180,10 @@ export class PolicyAddComponent implements OnInit {
       const sub =  this.setupService.addId(this.id)
       .subscribe(id => {
         this.ids.push(id); 
+        // Fetch IDs
+        this.setupService.getIdsByPolCode(this.policy.polCode).subscribe(ids => {
+          this.ids = ids;
+        });
         (<HTMLInputElement>document.getElementById('idName')).value='';
       });
     }
@@ -197,6 +205,7 @@ export class PolicyAddComponent implements OnInit {
     this.discount.dsctCalcOn = (<HTMLInputElement>document.getElementById('dsctCalcOn')).value;
     this.discount.dsctDefaultValue = parseFloat((<HTMLInputElement>document.getElementById('dsctDefaultValue')).value);
     this.discount.dsctPolCode = this.policy.polCode; 
+    // console.log(this.discount);
 
     if(!this.discount.dsctName) {
       // Show Error Message 
@@ -205,6 +214,10 @@ export class PolicyAddComponent implements OnInit {
       const sub =  this.setupService.addDiscount(this.discount)
       .subscribe(discount => {
         this.discounts.push(discount); 
+        // Fetch DISCOUNTS
+        this.setupService.getDiscountsByPolCode(this.policy.polCode).subscribe(discounts => {
+          this.discounts = discounts;
+        });
         (<HTMLInputElement>document.getElementById('dsctName')).value='';
       });
     }
@@ -233,6 +246,10 @@ export class PolicyAddComponent implements OnInit {
       const sub =  this.setupService.addLoading(this.loading)
       .subscribe(loading => {
         this.loadings.push(loading); 
+        // Fetch Loadings
+        this.setupService.getLoadingsByPolCode(this.policy.polCode).subscribe(loadings => {
+          this.loadings = loadings;
+        });
         (<HTMLInputElement>document.getElementById('loadName')).value='';
       });
     }
@@ -261,6 +278,10 @@ export class PolicyAddComponent implements OnInit {
       const sub =  this.setupService.addCommission(this.commission)
       .subscribe(commission => {
         this.commissions.push(commission); 
+        // Fetch Commissions
+        this.setupService.getCommissionsByPolCode(this.policy.polCode).subscribe(commissions => {
+          this.commissions = commissions;
+        });
         (<HTMLInputElement>document.getElementById('commName')).value='';
       });
     }
@@ -274,30 +295,7 @@ export class PolicyAddComponent implements OnInit {
     })
   }
 
-  // When a Commission is added
-  addExtension(event: any){
-    this.extension.extName = (<HTMLInputElement>document.getElementById('extName')).value;
-
-    if(!this.extension.extName) {
-      // Show Error Message 
-      this.showAlert('extensionMessage'); 
-    } else {
-      const sub =  this.setupService.addExtension(this.extension)
-      .subscribe(extension => {
-        this.extensions.push(extension); 
-        (<HTMLInputElement>document.getElementById('extName')).value='';
-      });
-    }
-  }
-
-  // Delete a Commission => make this a function that other modules can call
-  deleteExtension(extension: Extension)  : void {
-    this.setupService.deleteExtension(extension)
-    .subscribe(data => {
-      this.extensions = this.extensions.filter(c => c !== extension);
-    })
-  }
-
+ 
 
   // When a Benefit is added
   addBenefit(event: any){
@@ -314,6 +312,10 @@ export class PolicyAddComponent implements OnInit {
       const sub =  this.setupService.addBenefit(this.benefit)
       .subscribe(benefit => {
         this.benefits.push(benefit); 
+         // Fetch Benefits
+         this.setupService.getBenefitsByPolCode(this.policy.polCode).subscribe(benefits => {
+          this.benefits = benefits;
+        });
         (<HTMLInputElement>document.getElementById('bftName')).value='';
       });
     }

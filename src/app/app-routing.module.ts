@@ -60,6 +60,7 @@ import { LoadingsComponent } from './components/setups/loadings/loadings.compone
 import { CommissionsComponent } from './components/setups/commissions/commissions.component';
 import { PoliciesComponent } from './components/setups/policies/policies.component';
 import { PolicyAddComponent } from './components/setups/policy-add/policy-add.component';
+import { PolicyEditComponent } from './components/setups/policy-edit/policy-edit.component';
 
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
@@ -124,6 +125,7 @@ const routes: Routes = [
   {path: 'commissions', component: CommissionsComponent},
   {path: 'policies', component: PoliciesComponent},
   {path: 'policy-add', component: PolicyAddComponent},
+  {path: 'policy-edit/:id', component: PolicyEditComponent},
 
   {path: '**', component: NotFoundComponent},
 ];

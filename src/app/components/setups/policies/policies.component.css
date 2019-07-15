@@ -4,5 +4,16 @@
 
 #new-policy {
   float: right;
+  margin: 10px;
 }
 
+.table {
+  width: 80%;
+}
+
+.table td, th {
+  border: solid 1px #fff;
+  background: #eee;
+  /* min-width: 10%; */
+  padding: 10px;
+}
