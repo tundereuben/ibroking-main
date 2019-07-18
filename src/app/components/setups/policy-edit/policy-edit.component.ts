@@ -4,6 +4,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { setupClass } from '../../../models/Class';
+import { Subclass } from '../../../models/Subclass';
 import { Clause } from '../../../models/Clause';
 import { Policy } from '../../../models/Policy';
 import { Id } from '../../../models/Id';

@@ -5,4 +5,6 @@ export class Commission {
   commCalcOn?: string;
   commDefaultValue?:number;
   commPolCode?: number;
+  commSclCode?: number;
+  commVat?: number;
  }

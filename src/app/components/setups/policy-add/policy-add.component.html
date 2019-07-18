@@ -1,10 +1,10 @@
 <div id="content-area">
   <div id="container">
     <div class="col-md-12">
-      <h3 class="text-center">SETUP A NEW POLICY</h3>
+      <h3 class="text-center"><small>Add Subclass to</small> {{ policy.polName }} </h3>
 
       <!-- Class Setup -->
-      <div class="panel panel-default">
+      <!-- <div class="panel panel-default">
         <div class="panel-heading panel-grey-head">
           <h3 class="panel-title panel-grey-title text-bold"><strong>POLICY INFO</strong></h3>
         </div>
@@ -43,29 +43,41 @@
               <span id="policyMessage"></span>
               <button type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
               </form>
-        </div><!-- Pn3 Bdy --> 
+        </div>
         <div></div>
-      </div><!-- Pn3 Content  -->
+      </div> -->
 
       <!-- Subclass Setup -->
-      <!-- <div class="panel panel-default">
+      <div class="panel panel-default">
         <div class="panel-heading panel-grey-head">
           <h3 class="panel-title panel-grey-title text-bold"><strong>SUBCLASS SETUP</strong></h3>
         </div>
         <div class="panel-body">
           <form class="form-inline">
             <div class="form-group">
-              <label class="sr-only" for="class">Class </label>
-              <input type="text" class="form-control" id="class" placeholder="Class Name">
+              <label class="sr-only" for="subclassName">Subclass</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                name="sclName" 
+                id="sclName"
+                placeholder="Subclass Name"
+              >
+            </div>     
+            <span id="subclassMessage"></span> 
+            <button (click)="addSubclass()"  type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+            <div class="list">
+                <span *ngIf="subclasses?.length > 0;" >
+                    <span *ngFor="let subclass of subclasses" class="label label-primary"> 
+                      {{ subclass.sclName }}
+                      <span (click)="deleteSubclass(subclass)" class="glyphicon glyphicon-remove delete" id="{{ subclass.sclCode }}"></span>
+                    </span> 
+                  
+                </span>  
             </div>
-            <div class="form-group">
-              <label class="sr-only" for="subclassName">Class </label>
-              <input type="text" class="form-control" id="subclassName" placeholder="Subclass Name">
-            </div>      
-            <button type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
           </form>
         </div>
-      </div> -->
+      </div>
 
       <!-- Clauses Setup -->
       <div class="panel panel-default">
@@ -98,7 +110,7 @@
           </div><!-- Pn3 Bdy -->
         </div><!-- Pn3 Content  -->
 
-         <!-- Extensions Setup -->
+      <!-- Extensions Setup -->
       <div class="panel panel-default">
           <div class="panel-heading panel-grey-head">
             <h3 class="panel-title panel-grey-title text-bold"><strong>EXTENSION SETUP</strong></h3>

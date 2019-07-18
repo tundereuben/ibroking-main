@@ -18,6 +18,7 @@ import { Commission } from '../models/Commission';
 import { Extension } from '../models/Extension';
 import { Benefit } from '../models/Benefit';
 import { Discount } from '../models/Discount';
+import { Rate } from '../models/Rate';
 
 import { Client } from '../models/Client';
 
@@ -93,6 +94,7 @@ export class SetupService {
   commissionsUrl = 'http://localhost:8080/api/commissions';
   extensionsUrl = 'http://localhost:8080/api/extensions';
   benefitsUrl = 'http://localhost:8080/api/benefits';
+  ratesUrl = 'http://localhost:8080/api/rates';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -162,6 +164,11 @@ export class SetupService {
     return this.http.get<Subclass>(url);
   }
 
+  getSubclassesByPolCode(id: number):Observable<Subclass[]>{
+    const url = `${this.subclassesUrl}/polCode?polCode=${id}`;
+    return this.http.get<Subclass[]>(url);
+  }
+
   addSubclass(newSubclass: Subclass): Observable<Subclass> {
     console.log(newSubclass);
     return this.http.post<Subclass>(this.subclassesUrl, JSON.stringify(newSubclass), {headers: DEFAULT_HEADERS});
@@ -226,6 +233,11 @@ export class SetupService {
 
   getClausesByPolCode(id: number):Observable<Clause[]>{
     const url = `${this.clausesUrl}/polCode?polCode=${id}`;
+    return this.http.get<Clause[]>(url);
+  }
+
+  getClausesBySubclassCode(id: number):Observable<Clause[]>{
+    const url = `${this.clausesUrl}/sclCode?sclCode=${id}`;
     return this.http.get<Clause[]>(url);
   }
 
@@ -317,7 +329,7 @@ export class SetupService {
 
 // =========================== //
   // ==== POLICY FUNCTIONS ====== //
-  // =========================== //
+  // =========================== // 
 
   getPolicies(): Observable<Policy[]> {
     return this.http.get<Policy[]>(this.policiesUrl);
@@ -388,6 +400,11 @@ export class SetupService {
     const url = `${this.idsUrl}/polCode?polCode=${id}`;
     return this.http.get<Id[]>(url);
   }
+
+  getIdsBySubclassCode(id: number):Observable<Id[]>{
+    const url = `${this.idsUrl}/sclCode?sclCode=${id}`;
+    return this.http.get<Id[]>(url);
+  }
     
   getId(id: number): Observable<Id> {
     const url = `${this.idsUrl}/${id}`;
@@ -411,6 +428,46 @@ export class SetupService {
   }
   // +++++++ IDs FUNCTIONS ENDS ++++++++ //
 
+  
+  // =========================== //
+  // ==== RATES FUNCTIONS ====== //
+  // =========================== //
+  getRates(): Observable<Rate[]> {
+    return this.http.get<Rate[]>(this.ratesUrl);
+  }
+
+  getRatesByPolCode(id: number):Observable<Rate[]>{
+    const url = `${this.ratesUrl}/polCode?polCode=${id}`;
+    return this.http.get<Rate[]>(url);
+  }
+
+  getRatesBySubclassCode(id: number):Observable<Rate[]>{
+    const url = `${this.ratesUrl}/sclCode?sclCode=${id}`;
+    return this.http.get<Rate[]>(url);
+  }
+    
+  getRate(id: number): Observable<Rate> {
+    const url = `${this.ratesUrl}/${id}`;
+    return this.http.get<Rate>(url);
+  }
+
+  addRate(newRate: Rate): Observable<Rate> {
+    return this.http.post<Rate>(this.ratesUrl, JSON.stringify(newRate), {headers: DEFAULT_HEADERS});
+  }
+
+  updateRate(updatedRate: Rate): Observable<Rate> {
+    const url = `${this.ratesUrl}/${updatedRate.rateCode}`;
+    return this.http.put(url, updatedRate, this.httpOptions).pipe(
+      tap(_ => console.log(`updated rate code = ${updatedRate.rateCode}`)),
+      catchError(this.handleError<any>('updateRate'))
+    );
+  }
+
+  deleteRate(rate: Rate) {
+    return this.http.delete(this.ratesUrl + "/" + rate.rateCode);
+  }
+  // +++++++ RATES FUNCTIONS ENDS ++++++++ //
+
   // =========================== //
   // ==== DISCOUNTS FUNCTIONS ====== //
   // =========================== //
@@ -420,6 +477,11 @@ export class SetupService {
 
   getDiscountsByPolCode(id: number):Observable<Discount[]>{
     const url = `${this.discountsUrl}/polCode?polCode=${id}`;
+    return this.http.get<Discount[]>(url);
+  }
+
+  getDiscountsBySubclassCode(id: number):Observable<Discount[]>{
+    const url = `${this.discountsUrl}/sclCode?sclCode=${id}`;
     return this.http.get<Discount[]>(url);
   }
     
@@ -456,6 +518,11 @@ export class SetupService {
     const url = `${this.loadingsUrl}/polCode?polCode=${id}`;
     return this.http.get<Loading[]>(url);
   }
+
+  getLoadingsBySubclassCode(id: number):Observable<Loading[]>{
+    const url = `${this.loadingsUrl}/sclCode?sclCode=${id}`;
+    return this.http.get<Loading[]>(url);
+  }
     
   getLoading(id: number): Observable<Loading> {
     const url = `${this.loadingsUrl}/${id}`;
@@ -488,6 +555,11 @@ export class SetupService {
 
   getCommissionsByPolCode(id: number):Observable<Commission[]>{
     const url = `${this.commissionsUrl}/polCode?polCode=${id}`;
+    return this.http.get<Commission[]>(url);
+  }
+
+  getCommissionsBySubclassCode(id: number):Observable<Commission[]>{
+    const url = `${this.commissionsUrl}/sclCode?sclCode=${id}`;
     return this.http.get<Commission[]>(url);
   }
     
@@ -524,6 +596,11 @@ export class SetupService {
     const url = `${this.extensionsUrl}/polCode?polCode=${id}`;
     return this.http.get<Extension[]>(url);
   }
+
+  getExtensionsBySubclassCode(id: number):Observable<Extension[]>{
+    const url = `${this.extensionsUrl}/sclCode?sclCode=${id}`;
+    return this.http.get<Extension[]>(url);
+  }
     
   getExtension(id: number): Observable<Extension> {
     const url = `${this.extensionsUrl}/${id}`;
@@ -556,6 +633,11 @@ export class SetupService {
 
   getBenefitsByPolCode(id: number):Observable<Benefit[]>{
     const url = `${this.benefitsUrl}/polCode?polCode=${id}`;
+    return this.http.get<Benefit[]>(url);
+  }
+
+  getBenefitsBySubclassCode(id: number):Observable<Benefit[]>{
+    const url = `${this.benefitsUrl}/sclCode?sclCode=${id}`;
     return this.http.get<Benefit[]>(url);
   }
     

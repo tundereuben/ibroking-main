@@ -1,7 +1,8 @@
 export interface Subclass {
-    id?: number,
     sclCode?: number,
-    sclClaCode?: string,
-    sclDesc?: string,
-    sclShtDesc?: string   
+    sclName?: string,
+    sclPolCode?: number,
+
+    // REmove all the below
+    sclClaCode?: number;
 }

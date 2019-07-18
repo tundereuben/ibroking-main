@@ -5,4 +5,5 @@ export class Benefit {
   bftNo?: number;
   bftMultBy?: number;
   bftPolCode?: number;
+  bftSclCode?: number;
  }

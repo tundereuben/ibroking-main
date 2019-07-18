@@ -4,48 +4,118 @@
     <div id="main-content">
      <form class="form-inline">
       <!-- <div class="form-group">
-        <label class="sr-only" for="classCode">Class Code</label>
-        <input type="text" class="form-control" id="classCode" placeholder="Class Code">
-      </div> -->
-      <!-- <div class="form-group">
-        <label class="sr-only" for="class_code">Class Code</label>
-        <input type="password" class="form-control" id="className" placeholder="Class Name">
-      </div> -->
-      <div class="form-group">
         <label class="sr-only" for="classDescription">Search Policies</label>
         <input type="text" class="form-control" id="search" placeholder="Search Policies">
       </div>    
+      <button type="submit" class="btn btn-primary">Search</button> -->
       
-      <button type="submit" class="btn btn-primary">Search</button>
-      
-      <a class="btn btn-success" id="new-policy" href="/policy-add">New Policy</a>
+      <!-- <a class="btn btn-success" id="new-policy" href="/policy-add">New Policy</a> -->
+      <button type="button" class="btn btn-success" id="new-policy" data-toggle="modal" data-target="#newPolicyModal">New Policy</button>
       <a class="btn btn-success" id="new-policy" href="/#">Package Policy</a>
       
-      <div class="table-responsive" style="margin-top:30px;">
-      <table *ngIf='policies?.length > 0 ; else noPolicies' class="table table-hover">
-        <tr>
-        <th>Code</th>
-        <th>Policy Name</th>
-        <th>Policy Class</th>
-        <th>Policy Subclass</th>
-        <th></th>
-        <th></th>
-        </tr>
-        <tr *ngFor="let policy of policies">
-        <td>{{ policy.polCode }}</td>
-        <td><b>{{ policy.polName }}</b></td>
-        <td>{{ policy.polClaName }}</td>
-        <td>{{ policy.polSclName }}</td>
-        <td><a routerLink="/policy-edit/{{ policy.polCode  }}" class="btn btn-secondary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a></td>
-        <td><a (click)="delete(policy)" class="btn btn-secondary"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></td>
-        </tr>
-      </table>
+      <div class="row">
 
-      <ng-template #noClasses>
-        <h5>There are no POLICIES  in the system</h5> 
-      </ng-template>
-    </div>
+          <div class="table-responsive col-md-3" style="margin-top:30px;">
+            <ul *ngIf='policies?.length > 0 ; else noPolicies'  class="list-group">
+              <li class="list-group-item" style="text-align:center;font-weight:bold;">POLICIES</li>
+              <li *ngFor="let policy of policies"  class="list-group-item" (click)="showSubclasses(policy)">
+                {{ policy.polName }} 
+                <span (click)="deletePolicy(policy)" class="glyphicon glyphicon-remove" aria-hidden="true" style="float: right"></span> 
+              </li>
+            </ul>
+            <ng-template #noPolicies>
+              <h5>There are no POLICIES in the system</h5> 
+            </ng-template>        
+          </div>
+
+          <div class="col-md-9" style="margin-top:30px;">
+            <ul *ngIf='subclasses?.length > 0 ; else noSubclasses'  class="list-group">
+              <li class="list-group-item list-group-item-success text-center"><b>{{ policy.polName }}</b></li>
+              <li *ngFor="let subclass of subclasses" routerLink="/subclass-edit/{{ subclass.sclCode  }}" class="list-group-item"> 
+                {{ subclass.sclName }} 
+                <!-- <span (click)="deleteSubclass(subclass)" [routerLink]=""   class="glyphicon glyphicon-remove" aria-hidden="true" style="float: right"></span>  -->
+              </li>
+              <li (click)="newSubclass()" class="list-group-item text-center" data-toggle="modal" data-target="#newSubclassModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </li>
+            </ul>
+            <ng-template #noSubclasses>
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-success" id="selectPolicy">No Subclasses for Selected Policy</li>
+                <li (click)="newSubclass()" class="list-group-item text-center" data-toggle="modal" data-target="#newSubclassModal">
+                  <span class="glyphicon glyphicon-plus" ></span> 
+                </li>
+              </ul>
+            </ng-template>
+          </div>
+      </div>
+     
     </form>
+
+    <!-- NEW POLICY MODAL -->
+    <div class="modal fade" id="newPolicyModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">New Policy</h4>
+          </div>
+          <div class="modal-body">
+            
+            <form #policyForm="ngForm" class="form-inline" id="policyForm">
+              <div class="form-group">
+                <input 
+                type="text" 
+                class="form-control" 
+                name="polName" 
+                id ="polName"
+                placeholder="Policy Name"
+                [attr.disabled]="disabled ? '' : policy.polName"
+                >
+              </div>
+              <span id="policyMessage"></span>
+              <!-- <button type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button> -->
+              </form>
+          </div>
+          <div class="modal-footer">
+            <button  (click)="addPolicy()" type="submit" class="btn btn-success new-policy">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW SUBCLASS MODAL -->
+    <div class="modal fade" id="newSubclassModal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">ADD SUBCLASS</h4>
+            </div>
+            <div class="modal-body">
+              
+              <form #policyForm="ngForm" class="form-inline" id="policyForm">
+                <div class="form-group">
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    name="sclName" 
+                    id="sclName"
+                    placeholder="Subclass Name"
+                  >
+                </div>
+                <span id="subclassMessage"></span>
+                <!-- <button type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button> -->
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button  (click)="addSubclass()" type="submit" class="btn btn-success new-policy">Save</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     
     
     

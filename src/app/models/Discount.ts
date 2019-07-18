@@ -3,6 +3,7 @@ export class Discount {
   dsctName?: string;
   dsctType?: String;
   dsctCalcOn?: String;
-  dsctPolCode?: number;
   dsctDefaultValue?: number;
+  dsctPolCode?: number;
+  dsctSclCode?:number;
 }

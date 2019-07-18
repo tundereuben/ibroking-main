@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SetupService} from '../../../services/setup.service'; 
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { setupClass } from '../../../models/Class';
+import { Subclass } from '../../../models/Subclass';
 import { Clause } from '../../../models/Clause';
 import { Policy } from '../../../models/Policy';
 import { Id } from '../../../models/Id';
@@ -18,8 +20,14 @@ import { Benefit } from '../../../models/Benefit';
   styleUrls: ['./policy-add.component.css']
 })
 export class PolicyAddComponent implements OnInit {
-  classes: setupClass[]; 
-  class: setupClass;
+  polCode: number; 
+
+  // classes: setupClass[]; 
+  // class: setupClass;
+
+  subclasses: Subclass[] = []; 
+  subclass: Subclass = {};
+
   clauses: Clause[] = [];
   clause: Clause = {};
   clsName: string = null;
@@ -27,8 +35,7 @@ export class PolicyAddComponent implements OnInit {
   // IDs
   ids: Id[] = [];
   id: Id = {};
-  idTypes: any[];
-
+  
   // Discounts
   discounts: Discount[] = [];
   discount: Discount = {};
@@ -54,18 +61,28 @@ export class PolicyAddComponent implements OnInit {
   type: string = null;
   calcOns: string[];
   calcOn: string = null;
+  idTypes: any[];
 
   // Policies
-  policies: Policy[];
+  policies: Policy[] = [];
   policy: Policy = {};
   
 
   constructor(
     private setupService: SetupService,
-    private flashMessage: FlashMessagesService
+    private flashMessage: FlashMessagesService,
+    private router: Router,
+    private route: ActivatedRoute
     ) { }
 
   ngOnInit() {
+    // Get Policy ID from router link
+    this.polCode = this.route.snapshot.params['id'];
+    this.setupService.getPolicy(this.polCode).subscribe(policy => {
+      this.policy = policy;
+      console.log(this.policy.polCode);
+    });
+
     // IDs
     this.idTypes = ['Text', 'Number', 'Date', 'Boolean'];
 
@@ -76,12 +93,12 @@ export class PolicyAddComponent implements OnInit {
 
 
 // ========== CLICK FUNCTIONS ==========//
-  // When a class is added
+  // When a Policy is added
   addPolicy(){
     // Collect form inputs
     this.policy.polName = (<HTMLInputElement>document.getElementById('polName')).value;
-    this.policy.polClaName = (<HTMLInputElement>document.getElementById('polClaName')).value;
-    this.policy.polSclName = (<HTMLInputElement>document.getElementById('polSclName')).value;
+    // this.policy.polClaName = (<HTMLInputElement>document.getElementById('polClaName')).value;
+    // this.policy.polSclName = (<HTMLInputElement>document.getElementById('polSclName')).value;
 
     // Check if Policy name is not empty
     if(!this.policy.polName) {
@@ -129,11 +146,32 @@ export class PolicyAddComponent implements OnInit {
     }
   }
 
-  // Delete a Clause => make this a function that other modules can call
-  deleteClause(clause: Clause)  : void {
-    this.setupService.deleteClause(clause)
+  // When A Policy Subclass is added
+  addSubclass(event: any){
+    this.subclass.sclName = (<HTMLInputElement>document.getElementById('sclName')).value;
+    if(!this.subclass.sclName) {
+      // Show Error Message 
+      this.showAlert('subclassMessage'); 
+    } else {
+      this.subclass.sclPolCode = this.policy.polCode;
+      const sub =  this.setupService.addSubclass(this.subclass)
+      .subscribe(subclass => {
+        this.subclasses.push(subclass); 
+        // Fetch Subclasses
+        this.setupService.getSubclassesByPolCode(subclass.sclPolCode).subscribe(subclasses => {
+          this.subclasses = subclasses;
+          console.log(this.subclasses);
+        });
+        (<HTMLInputElement>document.getElementById('sclName')).value='';
+      });
+    }
+  }
+
+  // Delete a subclass => make this a function that other modules can call
+  deleteSubclass(subclass: Subclass)  : void {
+    this.setupService.deleteSubclass(subclass)
     .subscribe(data => {
-      this.clauses = this.clauses.filter(c => c !== clause);
+      this.subclasses = this.subclasses.filter(c => c !== subclass);
     })
   }
 
@@ -199,7 +237,6 @@ export class PolicyAddComponent implements OnInit {
 
   // When a Discount is added
   addDiscount(event: any){
-
     this.discount.dsctName = (<HTMLInputElement>document.getElementById('dsctName')).value;
     this.discount.dsctType = (<HTMLInputElement>document.getElementById('dsctType')).value;
     this.discount.dsctCalcOn = (<HTMLInputElement>document.getElementById('dsctCalcOn')).value;
@@ -231,7 +268,7 @@ export class PolicyAddComponent implements OnInit {
     })
   }
 
-  // When a Discount is added
+  // When a Loading is added
   addLoading(event: any){
     this.loading.loadName = (<HTMLInputElement>document.getElementById('loadName')).value;
     this.loading.loadType = (<HTMLInputElement>document.getElementById('loadType')).value;

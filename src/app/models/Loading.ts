@@ -5,4 +5,5 @@ export class Loading {
  loadDefaultValue?: number;
  loadCalcOn?: string;
  loadPolCode?: number;
+ loadSclCode?: number;
 }

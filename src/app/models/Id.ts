@@ -2,5 +2,6 @@ export interface Id {
   idCode?: number,
   idName?: String,
   idType?: String,
-  idPolCode?: number
+  idPolCode?: number,
+  idSclCode?: number
 }
