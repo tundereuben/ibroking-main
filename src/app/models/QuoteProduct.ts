@@ -1,7 +1,8 @@
 export interface QuoteProduct {
     qpCode?: number,
+    qpPolCode?: number,
     qpProCode?: number,
-    qpProShtDesc?: String,
+    qpName?: String,
     qpWefDate?: Date,
     qpWetDate?: Date,
     qpQuotCode?: number,

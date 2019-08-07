@@ -2,11 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { QuotationService } from '../../../services/quotation.service';
 import { SetupService } from '../../../services/setup.service';
-import { Router, RouterStateSnapshot } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import { Policy } from '../../../models/Policy';
+import { Subclass } from '../../../models/Subclass';
 import { Product } from '../../../models/Product';
 import { Quotation } from '../../../models/Quotation';
 import { QuoteProduct } from '../../../models/QuoteProduct';
+import { Clause } from '../../../models/Clause';
 
 @Component({
   selector: 'app-quote-products-add',
@@ -15,19 +18,34 @@ import { QuoteProduct } from '../../../models/QuoteProduct';
 })
 export class QuoteProductsAddComponent implements OnInit {
 
-  products: Product[] = []; product = null;
-  quotations: Quotation[] = []; quotation = null
-  quoteProducts: QuoteProduct[] = [];
+  policies: Policy[]; 
+  policy: Policy = null;
+
+  subclasses: Subclass[];
+  clauses: Clause[];
+
+  products: Product[] = []; 
+  product = null;
+
+  quotations: Quotation[] = []; 
+  quotation: Quotation;
+
+  
   productCode = null;
-  quoteCode: number; // Get quoteCode from session
+  policyCode = null;
+
+  quotCode: number; // Get quoteCode from session
   qpCode: number; // get qoute product from by increment latest quote code
+
   coverFrom: string;
   coverTo: string; 
 
+  quoteProducts: QuoteProduct[] = [];
   quoteProduct: QuoteProduct = {
     qpCode: 0,
+    qpPolCode: 0,
     qpProCode: 0,
-    qpProShtDesc: '',
+    qpName: '',
     qpWefDate: null,
     qpWetDate: null,
     qpQuotCode: 0,
@@ -43,22 +61,20 @@ export class QuoteProductsAddComponent implements OnInit {
     private flashMessage: FlashMessagesService,
     private quotationService: QuotationService, 
     private setupService: SetupService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    // get quoteCode from session variable
-    this.quotation = JSON.parse(sessionStorage.getItem("quotation"));
-    // this.quoteCode = this.quotation.quotCode;
-    this.quoteProduct.qpWefDate = this.quotation.quotCoverFrom;
-    this.quoteProduct.qpWetDate = this.quotation.quotCoverTo;
-    console.log(this.quotation);
-
-    
-    this.setupService.getProducts().subscribe(products => {
-      this.products = products;
-      // console.log(this.products);
+    // Get quotation code from path:id and fetch quotation info
+    this.quotCode = this.route.snapshot.params['id'];
+    this.quotationService.getQuotation(this.quotCode).subscribe(quotation => {
+      this.quotation = quotation;
     });
+
+    this.setupService.getPolicies().subscribe(policies => {
+      this.policies = policies;
+    })
 
     // Fetch existing products, get last product number, then generate new product number
     this.quotationService.getQuoteProducts().subscribe(quoteProducts => {
@@ -68,11 +84,25 @@ export class QuoteProductsAddComponent implements OnInit {
     });
   }
 
-  // When the back button is clicked.
-  onBack(){
-    let back = true;
-    sessionStorage.setItem("back", JSON.stringify(back));
+  // When a policy is selected populate product get subclasses
+  showProducts() {
+    this.setupService.getSubclassesByPolCode(this.policyCode).subscribe(products => {
+      this.subclasses = products;
+    });    
   }
+
+  showClauses() {
+    this.setupService.getClausesBySubclassCode(this.productCode).subscribe(clauses => {
+      this.clauses = clauses;
+    })
+  }
+
+
+  // When the back button is clicked.
+  // onBack(){
+  //   let back = true;
+  //   sessionStorage.setItem("back", JSON.stringify(back));
+  // }
 
   onSubmit({value, valid}: {value: QuoteProduct, valid: boolean}) {
     // console.log(value, valid);
@@ -86,14 +116,23 @@ export class QuoteProductsAddComponent implements OnInit {
       value.qpCode = this.qpCode;
       value.qpQuotNo = this.quotation.quotNo;
       value.qpQuotCode = this.quotation.quotCode;
-      value.qpAgntCode = this.quotation.quotAgntCode;
-      this.quotationService.addQuoteProduct(value)
-      .subscribe(response => 
-                  // console.log(response), 
-                  err => console.log(err));
-      // save quoteProductValue in session variable
-      sessionStorage.setItem("quoteProduct", JSON.stringify(value));
-      this.router.navigate(['/quote-risks-add']); 
+
+      // update quotation coverFrom and coverTo dates
+      this.quotation.quotCoverFrom = value.qpWefDate;
+      this.quotation.quotCoverTo = value.qpWetDate;
+      this.quotationService.updateQuotation(this.quotation).subscribe(response => {
+      });
+
+      // Get Product Name, add to value then update;
+      this.setupService.getSubclass(value.qpProCode).subscribe(product => {
+        value.qpName = product.sclName;
+        this.quotationService.addQuoteProduct(value).subscribe(response =>
+          // console.log(response),
+          err => console.log(err));
+        // console.log(value);
+      });
+
+      this.router.navigate([`/quote-risks-add/${value.qpCode}`]); 
     }
   }
 }

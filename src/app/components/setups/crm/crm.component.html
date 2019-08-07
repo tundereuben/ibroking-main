@@ -1,0 +1,105 @@
+<div id="content-area">
+  <div id="container">
+    <h1 class="page-title"> CRM SETUP</h1>
+
+    <div id="main-content">
+      <!-- <form class="form-inline"> -->
+
+      <div class="row">
+        <div class="col-md-3 " style="margin-top:30px;">
+          <ul class="list-group ">
+            <li class="list-group-item menu" style="text-align:center;font-weight:bold;">CRM</li>
+            <li (click)='viewClient()' class="list-group-item menu" data-toggle="collapse" data-target="#demo">CLIENTS
+            </li>
+            <li (click)='viewVendors()' class="list-group-item menu" data-toggle="collapse" data-target="#vendors">
+              VENDORS</li>
+            <li (click)='viewUsers()' class="list-group-item menu">USERS</li>
+          </ul>
+        </div>
+
+        <div *ngIf="showClient" class="col-md-9" style="margin-top:30px;">
+          <!-- VIEW EXISTING CLIENTS -->
+          <div>
+            <h3  class="text-left" style="float: left">CLIENTS</h3>
+            <a routerLink="/client-new" class="btn btn-success" style="float: right" >
+              New Client <span class="glyphicon glyphicon-plus"></span>
+            </a>
+            <table class=" table table-hover table-responsive">
+              <tr>
+                <th>Client Name</th>
+                <th>Client Type</th>
+                <th>Email</th>
+                <th>Lead Date</th>
+                <!-- <th>Actions</th> -->
+              </tr>
+              <tr *ngFor="let client of clients" class="clients" (click)="clientDetails(client)">
+                <td>{{ client.clntCompanyName }} {{ client.clntLastname }} {{ client.clntOthernames }}</td>
+                <td>{{ client.clntType }}</td>
+                <td>{{ client.clntEmail }} </td>
+                <td>{{ client.clntLeadDate }} </td>
+                <!-- <td style="text-align: center">
+                    <span data-toggle="modal"data-target="#newClient"  class="glyphicon glyphicon-edit"></span>
+                    <span (click)="deleteClient(client)" style="margin-left: 20px" class="glyphicon glyphicon-remove"></span>
+                  </td> -->
+              </tr>
+            </table>
+          </div>
+
+        </div>
+
+        <!-- VENDORS -->
+        <div *ngIf="showVendors" class="col-md-9" style="margin-top:30px;">
+          <h3 class="text-center">VENDORS</h3>
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#underwriters">Underwriters</a></li>
+            <li><a data-toggle="tab" href="#agents">Agents</a></li>
+            <li><a data-toggle="tab" href="#others">Others</a></li>
+          </ul>
+
+
+
+          <div class="tab-content">
+            <div id="underwriters" class="tab-pane fade in active">
+              <table class=" table table-hover table-responsive">
+                <tr>
+                  <th>Client Name</th>
+                  <th>Client Type</th>
+                  <th>Email</th>
+                  <th>Sector</th>
+                  <th>Actions</th>
+                </tr>
+                <tr *ngFor="let client of clients">
+                  <td>{{ client.clntFirstname }} {{ client.clntLastname }}| {{ client.clntCompanyName }} </td>
+                  <td>{{ client.clntType }}</td>
+                  <td>{{ client.clntEmail }} </td>
+                  <td>{{ client.clntSector }} </td>
+                  <td style="text-align: center">
+                    <span data-toggle="modal" data-target="#newClient" class="glyphicon glyphicon-edit"></span>
+                    <span (click)="deleteClient(client)" style="margin-left: 20px"
+                      class="glyphicon glyphicon-remove"></span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div id="agents" class="tab-pane fade in">
+              agents
+            </div>
+            <div id="others" class="tab-pane fade in">
+              others
+            </div>
+          </div>
+        </div>
+
+        <!-- USERS -->
+        <div *ngIf="showUsers" class="col-md-9" style="margin-top:30px;">
+          Users
+        </div>
+
+      </div>
+
+    </div>
+    <!---- end of <div id="main-content">---->
+  </div>
+  <!----end of <div id="container">---->
+</div>
+<!----end of <div id="content-area">---->

@@ -1,0 +1,58 @@
+<div id="content-area">
+
+  <div class="container">
+    <a routerLink="/crm">Back to Clients</a>
+    <div id="main-content">
+      <div class="table-responsive">
+        <!-- Tbl Respons -->
+        <table class="table table-bordered">
+          <tr>
+            <th> <small>Name: </small> {{client?.clntLastname }} {{ client?.clntOthernames }} 
+              {{ client?.clntCompanyName }}</th>
+            <th> <small>Email: </small> {{ client?.clntEmail }}</th>
+            <th> <small>Phone: </small> {{ client?.clntMobile }}</th>
+          </tr>
+          <tr>
+            <th><small>Occupation: </small> {{ client?.clntOccupation}} </th>
+            <th><small>Description: </small> {{ client?.clntDescription }}</th>
+            <th><small>Sector: </small>{{ client?.clntSector }}</th>
+          </tr>
+          <tr>
+            <th><small>Source: </small>{{ client?.clntSource }}</th>
+            <th><small>Type: </small>{{ client?.clntType }}</th>
+            <th><small>Lead Date: </small>{{ client?.clntLeadDate }}</th>
+          </tr>
+          <tr>
+            <th><small>Physical Address: </small> {{ client?.clntPhysicalAddress }}</th>
+            <th><small>Postal Address: </small> {{ client?.clntPostalAddress }}</th>
+            <th><small>Country: </small> {{ client?.clntCountry }}</th>
+          </tr>
+        </table>
+
+        <span *ngIf="corporate">
+            <h3 class="text-secondary" style="margin: 30px 0 10px 0 ;">Contact Person</h3>
+            <table class="table table-bordered">
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Birthday</th>
+              </tr>
+              <tr>
+                <td>{{ client?.clntContactFirstname }} {{ client?.clntContactLastname }}</td>
+                <td>{{ client?.clntContactEmail }}</td>
+                <td>{{ client?.clntContactMobile }}</td>
+                <td>{{ client?.clntContactBirthday }}</td>
+              </tr>
+            </table>
+        </span>
+
+      </div><!-- Tbl Respons -->
+      <div class="buttons" style="float:right">
+        <a routerLink="/client-edit/{{ client.clntCode }}" class="btn btn-success" style="margin: 0 5px">Edit
+          Client</a>
+        <button (click)="deleteClient(client)" class="btn btn-danger">Delete Client</button>
+      </div>
+    </div>
+  </div>
+</div>

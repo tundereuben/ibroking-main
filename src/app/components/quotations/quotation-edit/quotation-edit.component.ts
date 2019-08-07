@@ -15,35 +15,18 @@ export class QuotationEditComponent implements OnInit {
   quotations: Quotation[] = [];
   quoteCode: number;
   quotation: Quotation = { 
-    quotAuthorisedBy: '',
-    quotAgntAgentCode: 0,
-    quotAuthorisedDt: null,
-    quotBrnCode: 0,
-    quotBranch: '',
-    quotCancelReason: '',
-    quotClntCode: 0,
-    quotClntType: '',
     quotCode: 0,
-    quotCommAmt: 0,
-    quotConfirmed: '',
-    quotConfirmedBy: '',
-    quotConfirmedDt: null,
+    quotNo: '',
+    quotClntCode: 0,
+    quotAgntCode: 0,
+    quotSource: '',
+    quotBranch: '',
+    quotCurSymbol: '',
     quotCoverFrom: null,
     quotCoverTo: null,
-    quotCurCode: 0,
-    quotCurSymbol: '',
-    quotDate: null,
-    quotExpiryDate: null,
     quotPaymentFrequency: '',
-    quotNo: '',
-    quotPremium: 0,
-    quotPreparedBy: '',
-    quotPreparedDt: null,
-    quotReadyBy: '',
-    quotReadyDate: null,
-    quotRevised: '',
-    quotStatus: '',
-    quotTotPropertyVal: 0
+    quotDate: null,
+    quotUpdated: null
   };
 
   quotClntCodes: any[]  = []; quotClntCode; 
@@ -103,15 +86,15 @@ export class QuotationEditComponent implements OnInit {
     // fetch currencies from API
     var currencies = this.quotationService.currencies;
     // console.log(currencies)
-    var size = 0, key; var code = 0;
-    for (key in currencies) {
-      this.currencies.push({
-        "code": code++,
-        "shtDesc": currencies[key].code,
-        "name": currencies[key].name,
-        "symbol": currencies[key].symbol
-      });
-    }
+    // var size = 0, key; var code = 0;
+    // for (key in currencies) {
+    //   this.currencies.push({
+    //     "code": code++,
+    //     "shtDesc": currencies[key].code,
+    //     "name": currencies[key].name,
+    //     "symbol": currencies[key].symbol
+    //   });
+    // }
   } 
 
   onSubmit({value, valid}: {value: Quotation, valid: boolean}) {

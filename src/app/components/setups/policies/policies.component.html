@@ -14,38 +14,41 @@
       <a class="btn btn-success" id="new-policy" href="/#">Package Policy</a>
       
       <div class="row">
-
-          <div class="table-responsive col-md-3" style="margin-top:30px;">
-            <ul *ngIf='policies?.length > 0 ; else noPolicies'  class="list-group">
-              <li class="list-group-item" style="text-align:center;font-weight:bold;">POLICIES</li>
-              <li *ngFor="let policy of policies"  class="list-group-item" (click)="showSubclasses(policy)">
-                {{ policy.polName }} 
-                <span (click)="deletePolicy(policy)" class="glyphicon glyphicon-remove" aria-hidden="true" style="float: right"></span> 
+        <div class="table-responsive col-md-3" style="margin-top:30px;">
+          <ul *ngIf='policies?.length > 0 ; else noPolicies' class="list-group">
+            <li class="list-group-item" style="text-align:center;font-weight:bold;">POLICIES</li>
+            <li *ngFor="let policy of policies" class="list-group-item" (click)="showSubclasses(policy)">
+              {{ policy.polName }}
+              <span (click)="deletePolicy(policy)" class="glyphicon glyphicon-remove" aria-hidden="true"
+                style="float: right"></span>
+            </li>
+          </ul>
+          <ng-template #noPolicies>
+            <h5>There are no POLICIES in the system</h5>
+          </ng-template>
+        </div>
+      
+        <div class="col-md-9" style="margin-top:30px;">
+          <ul *ngIf='subclasses?.length > 0 ; else noSubclasses' class="list-group">
+            <li class="list-group-item list-group-item-success text-center"><b>{{ policy.polName }}</b></li>
+            <li *ngFor="let subclass of subclasses" routerLink="/subclass-edit/{{ subclass.sclCode  }}"
+              class="list-group-item">
+              {{ subclass.sclName }}
+              <!-- <span (click)="deleteSubclass(subclass)" [routerLink]=""   class="glyphicon glyphicon-remove" aria-hidden="true" style="float: right"></span>  -->
+            </li>
+            <li (click)="newSubclass()" class="list-group-item text-center" data-toggle="modal"
+              data-target="#newSubclassModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </li>
+          </ul>
+          <ng-template #noSubclasses>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-success" id="selectPolicy">No Subclasses for Selected Policy</li>
+              <li (click)="newSubclass()" class="list-group-item text-center" data-toggle="modal"
+                data-target="#newSubclassModal">
+                <span class="glyphicon glyphicon-plus"></span>
               </li>
             </ul>
-            <ng-template #noPolicies>
-              <h5>There are no POLICIES in the system</h5> 
-            </ng-template>        
-          </div>
-
-          <div class="col-md-9" style="margin-top:30px;">
-            <ul *ngIf='subclasses?.length > 0 ; else noSubclasses'  class="list-group">
-              <li class="list-group-item list-group-item-success text-center"><b>{{ policy.polName }}</b></li>
-              <li *ngFor="let subclass of subclasses" routerLink="/subclass-edit/{{ subclass.sclCode  }}" class="list-group-item"> 
-                {{ subclass.sclName }} 
-                <!-- <span (click)="deleteSubclass(subclass)" [routerLink]=""   class="glyphicon glyphicon-remove" aria-hidden="true" style="float: right"></span>  -->
-              </li>
-              <li (click)="newSubclass()" class="list-group-item text-center" data-toggle="modal" data-target="#newSubclassModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </li>
-            </ul>
-            <ng-template #noSubclasses>
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-success" id="selectPolicy">No Subclasses for Selected Policy</li>
-                <li (click)="newSubclass()" class="list-group-item text-center" data-toggle="modal" data-target="#newSubclassModal">
-                  <span class="glyphicon glyphicon-plus" ></span> 
-                </li>
-              </ul>
-            </ng-template>
-          </div>
+          </ng-template>
+        </div>
       </div>
      
     </form>
@@ -77,7 +80,7 @@
               </form>
           </div>
           <div class="modal-footer">
-            <button  (click)="addPolicy()" type="submit" class="btn btn-success new-policy">Save</button>
+            <button  (click)="addPolicy()" type="submit" class="btn btn-success new-policy">Save</button> 
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>

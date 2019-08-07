@@ -10,7 +10,7 @@ sitename: string;
   constructor() { }
 
   ngOnInit() {
-    this.sitename === 'PRODUCTION'
+    this.sitename === 'PRODUCTION';
   }
 
 }

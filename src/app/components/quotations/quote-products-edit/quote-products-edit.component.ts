@@ -26,7 +26,7 @@ export class QuoteProductsEditComponent implements OnInit {
   quoteProduct: QuoteProduct = {
     qpCode: 0,
     qpProCode: 0,
-    qpProShtDesc: '',
+    qpName: '',
     qpWefDate: null,
     qpWetDate: null,
     qpQuotCode: 0,

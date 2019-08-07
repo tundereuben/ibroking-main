@@ -1,0 +1,300 @@
+<div id="client-new" style="margin: 20px;">
+    <div id="container" >
+      <h3 class="page-title">EDIT CLIENT</h3>
+      <a routerLink="/client-details/{{ client.clntCode }}">Back to Clients Details</a>
+      <div id="main-content">
+        <div class="row">
+          <form #clientForm="ngForm" (ngSubmit)="onSubmit(clientForm)">
+            <!-- <h3 class="text-center">NEW CLIENT</h3> -->
+            <span class="form">
+              <div class="form-group text-center">
+                <label class="radio-inline">
+                  <input type="radio" name="clntType" value="Individual" ngModel (click)="SelectClientType($event)">
+                  Individual
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="clntType" value="Corporate" ngModel (click)="SelectClientType($event)">
+                  Corporate
+                </label>
+              </div>
+  
+              <div class="row">
+                <h3 style="margin: 10px">General Info</h3>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="clntMobile">Mobile No</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      name="clntMobile" 
+                      [ngModel] = "client.clntMobile"
+                      placeholder="Mobile No:"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="clntEmail">Email Address</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      name="clntEmail" 
+                      [ngModel] = "client.clntEmail"
+                      placeholder="Email Address"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="clntLeadDate">Lead Date</label>
+                    <input 
+                      type="date" 
+                      class="form-control" 
+                      name="clntLeadDate" 
+                      [ngModel] = "client.clntLeadDate"
+                      placeholder="Lead Date">
+                  </div>
+                  <div class="form-group">
+                    <label for="clntSource">Source</label>
+                    <select 
+                      class="form-control" 
+                      name="clntSource" 
+                      [ngModel]="client.clntSource"
+                    >
+                      <option>Source 1</option>
+                      <option>Source 2</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="clntPostalAddress">Postal Address</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      name="clntPostalAddress" 
+                      [ngModel] = "client.clntPostalAddress"
+                      placeholder="Postal Address"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="clntPostalCode">Postal Code</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      name="clntPostalCode" 
+                      [ngModel] = "client.clntPostalCode"
+                      placeholder="Postal Code"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="clntPhysicalAddress">Physical Address</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      name="clntPhysicalAddress" 
+                      [ngModel]="client.clntPhysicalAddress"
+                      placeholder="Physical Address"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="clntCountry">Country</label>
+                    <select 
+                      class="form-control" 
+                      name="clntCountry"
+                      [ngModel]="client.clntCountry"
+                    >
+                      <option>Nigeria</option>
+                      <option>Kenya</option>
+                      <option>Ghana</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+  
+              <hr>
+  
+              <div *ngIf="individual" class="row" id="individual">
+                <h3 style="margin: 10px;">Personal Info</h3>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="clntTitle">Title</label>
+                    <select 
+                      class="form-control" 
+                      name="clntTitle" 
+                      [ngModel]="client.clntTitle"
+                    >
+                      <option value="null">Select Title</option>
+                      <option>MR</option>
+                      <option>MRS</option>
+                      <option>MISS</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="clntLastname">Lastname</label>
+                    <input 
+                      type="email" 
+                      name="clntLastname" 
+                      class="form-control" 
+                      [ngModel]="client.clntLastname"
+                      placeholder="Lastname"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="clntOthernames">Other Names</label>
+                    <input 
+                      type="text" 
+                      name="clntOthernames" 
+                      class="form-control" 
+                      [ngModel]="client.clntOthernames"
+                      placeholder="Other Names"
+                    >
+                  </div>
+  
+                </div>
+                <div class="col-md-6">
+  
+                  <div class="form-group">
+                    <label for="clntGender">Gender</label>
+                    <select 
+                      class="form-control" 
+                      [ngModel]="client.clntGender"
+                      name="clntGender"
+                      >
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="clntDob">Date of Birth</label>
+                    <input 
+                      type="date" 
+                      class="form-control" 
+                      [ngModel] = "client.clntDob"
+                      name="clntDob"
+                      placeholder="D.O.B"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="clntOccupation">Occupation</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      [ngModel] ="client.clntOccupation"
+                      name="clntOccupation" 
+                      placeholder="Occupation"
+                    >
+                  </div>
+                </div>
+              </div>
+  
+              
+  
+              <div *ngIf="corporate" class="row " id="corporate">
+                <h3 style="margin: 10px;">Company Info</h3>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="clntCompanyName">Company Name:</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      name="clntCompanyName" 
+                      [ngModel]="client.clntCompanyName" 
+                      placeholder="Company Name"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="clntDescription">Description</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      name="clntDescription" 
+                      [ngModel] ="client.clntDescription"
+                      placeholder="Description"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="clntSector">Sector</label>
+                    <select 
+                      class="form-control" 
+                      name="clntSector" 
+                      [ngModel]="client.clntSector"
+                    >
+                      <option>MINING</option>
+                      <option>TELECOMMUNICATION</option>
+                      <option>CONSULTANT</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="clntDob">Date of Incorporation</label>
+                    <input 
+                      type="date" 
+                      class="form-control" 
+                      name="clntDob" 
+                      [ngModel] ="client.clntDob"
+                      placeholder="D.O.B"
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="clntContactLastname">Contact Lastname</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      [ngModel]="client.clntContactLastname"
+                      name="clntContactLastname"
+                      placeholder="Contact Lastname"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="clntContactFirstname">Contact Other Names</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      [ngModel]="client.clntContactFirstname" 
+                      name="clntContactFirstname"
+                      placeholder="Contact Other Names"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="clntContactEmail">Contact Email</label>
+                    <input 
+                      type="email" 
+                      class="form-control" 
+                      [ngModel] = "client.clntContactEmail"
+                      name="clntContactEmail" 
+                      placeholder="Contact Email"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="clntContactMobile">Contact Mobile</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      [ngModel] ="client.clntContactMobile"
+                      name="clntContactMobile" 
+                      placeholder="Contact Mobile"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="clntContactBirthday">Contact Birthday</label>
+                    <input 
+                      type="date" 
+                      class="form-control" 
+                      [ngModel] = "client.clntContactBirthday"
+                      name="clntContactBirthday" 
+                      placeholder="Contact Birthday"
+                    >
+                  </div>
+                </div>
+              </div>
+  
+              <hr>
+              <button class="btn btn-info pull-right">Save&nbsp;<span class="glyphicon glyphicon-save"
+                  aria-hidden="true"></span>
+              </button>
+  
+            </span>
+          </form>
+  
+        </div>
+      </div>
+    </div>
+  </div>

@@ -7,15 +7,29 @@
      <form #quoteProductForm="ngForm" (ngSubmit)="onSubmit(quoteProductForm)">
       <div class="col-md-6">
       <div class="form-group">
+        <label for="Policy">Policy</label>
+        <select 
+          class="form-control"
+          name="qpPolCode"
+          [(ngModel)]="policyCode" 
+          (change)="showProducts($event.target.value)"
+          required
+        >
+          <option [ngValue]="null">Select</option>
+          <option *ngFor="let p of policies" [ngValue]="p.polCode" >{{ p.polName }} </option>
+        </select>
+      </div>
+      <div class="form-group">
         <label for="product">Product</label>
         <select 
           class="form-control"
           name="qpProCode"
           [(ngModel)]="productCode" 
+          (change)="showClauses($event.target.value)"
           required
         >
           <option [ngValue]="null">Select</option>
-          <option *ngFor="let p of products" [ngValue]="p.proCode">{{ p.proDesc }} </option>
+          <option *ngFor="let s of subclasses" [ngValue]="s.sclCode">{{ s.sclName}} </option>
         </select>
       </div>
       </div>
@@ -46,6 +60,11 @@
       </div>
       
       <div id="rule"></div>      
+
+      <div *ngFor="let clause of clauses" class="clauses">
+        <label style="margin: 5px 20px;"><input type="checkbox" value=""> {{ clause.clsName }} </label>
+      </div>
+
      <a (click)="onBack()" routerLink="/quotation-add" class="btn btn-info pull-left"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back&nbsp;</a>
      <button  class="btn btn-info pull-right">Next&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></button>
       </form>

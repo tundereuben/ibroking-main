@@ -1,3 +1,18 @@
 .btn {
     margin-right: 10px;
 }
+
+tr, th, td{
+    margin: 10px 0;
+    padding: 10px 5px;
+    border: solid 1px #eee;
+}
+
+small {
+    color:dimgray;
+    margin-right: 10px;
+}
+
+.nav-tabs {
+    margin: 10px 0 20px 0;
+}

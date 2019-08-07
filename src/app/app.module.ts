@@ -67,6 +67,11 @@ import { TaxesComponent } from './components/setups/taxes/taxes.component';
 import { PoliciesComponent } from './components/setups/policies/policies.component';
 import { PolicyAddComponent } from './components/setups/policy-add/policy-add.component';
 import { PolicyEditComponent } from './components/setups/policy-edit/policy-edit.component';
+import { CrmComponent } from './components/setups/crm/crm.component';
+import { ClientDetailsComponent } from './components/setups/client-details/client-details.component';
+import { ClientNewComponent } from './components/setups/client-new/client-new.component';
+import { ClientEditComponent } from './components/setups/client-edit/client-edit.component';
+import { ClientContactComponent } from './components/setups/client-contact/client-contact.component';
 
 
 @NgModule({
@@ -125,6 +130,11 @@ import { PolicyEditComponent } from './components/setups/policy-edit/policy-edit
     PoliciesComponent,
     PolicyAddComponent,
     PolicyEditComponent,
+    CrmComponent,
+    ClientDetailsComponent,
+    ClientNewComponent,
+    ClientEditComponent,
+    ClientContactComponent,
   ],
   imports: [
     BrowserModule,

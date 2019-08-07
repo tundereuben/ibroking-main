@@ -61,6 +61,12 @@ import { CommissionsComponent } from './components/setups/commissions/commission
 import { PoliciesComponent } from './components/setups/policies/policies.component';
 import { PolicyAddComponent } from './components/setups/policy-add/policy-add.component';
 import { PolicyEditComponent } from './components/setups/policy-edit/policy-edit.component';
+import { ClientNewComponent } from './components/setups/client-new/client-new.component';
+import { ClientContactComponent } from './components/setups/client-contact/client-contact.component';
+import { ClientEditComponent } from './components/setups/client-edit/client-edit.component';
+import { ClientDetailsComponent } from './components/setups/client-details/client-details.component';
+
+import { CrmComponent } from './components/setups/crm/crm.component';
 
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
@@ -104,17 +110,17 @@ const routes: Routes = [
   {path: 'quotation-edit/:id', component: QuotationEditComponent},
 
   {path: 'quote-products', component: QuoteProductsComponent},
-  {path: 'quote-products-add', component: QuoteProductsAddComponent},
+  {path: 'quote-products-add/:id', component: QuoteProductsAddComponent},
   {path: 'quote-products-details/:id', component: QuoteProductsDetailsComponent},
   {path: 'quote-products-edit/:id', component: QuoteProductsEditComponent},
 
   {path: 'quote-risks', component: QuoteRisksComponent},
-  {path: 'quote-risks-add', component: QuoteRisksAddComponent},
+  {path: 'quote-risks-add/:id', component: QuoteRisksAddComponent},
   {path: 'quote-risks-details/:id', component: QuoteRisksDetailsComponent},
   {path: 'quote-risks-edit/:id', component: QuoteRisksEditComponent},
 
   {path: 'quote-risk-limits', component: QuoteRiskLimitsComponent},
-  {path: 'quote-risk-limits-add', component: QuoteRiskLimitsAddComponent},
+  {path: 'quote-risk-limits-add/:id', component: QuoteRiskLimitsAddComponent},
   {path: 'quote-risk-limits-details/:id', component: QuoteRiskLimitsDetailsComponent},
   {path: 'quote-risk-limits-edit/:id', component: QuoteRiskLimitsEditComponent},
 
@@ -126,6 +132,12 @@ const routes: Routes = [
   {path: 'policies', component: PoliciesComponent},
   {path: 'policy-add', component: PolicyAddComponent},
   {path: 'policy-edit/:id', component: PolicyEditComponent},
+  {path: 'client-new', component: ClientNewComponent},
+  {path: 'client-contact/:id', component: ClientContactComponent},
+  {path: 'client-edit/:id', component: ClientEditComponent},
+  {path: 'client-details/:id', component: ClientDetailsComponent},
+
+  {path: 'crm', component: CrmComponent},
 
   {path: '**', component: NotFoundComponent},
 ];

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { QuotationService } from '../../../services/quotation.service';
 import { SetupService } from '../../../services/setup.service';
-import { Router, RouterStateSnapshot } from '@angular/router';
+import { Router, ActivatedRoute, Params  } from '@angular/router';
 
 import { QuoteRisk } from '../../../models/QuoteRisk';
 import { Subclass } from '../../../models/Subclass';
@@ -44,18 +44,28 @@ quoteRisk: QuoteRisk = {
     private flashMessage: FlashMessagesService,
     private quotationService: QuotationService, 
     private setupService: SetupService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    // Get quoteProduct code from path:id and fetch quoteProduct info
+    this.quoteProductCode = this.route.snapshot.params['id'];
+    this.quotationService.getQuoteProduct(this.quoteProductCode).subscribe(quoteProduct => {
+      this.quoteProduct = quoteProduct;
+      console.log(this.quoteProduct);
+    })
+    
+
+
     // get quoteCode from session variable
-    this.isAdd = JSON.parse(sessionStorage.getItem("isAdd"));
-    this.quoteProduct = JSON.parse(sessionStorage.getItem("quoteProduct"));
-    this.quoteRisk.qrWefDate = this.quoteProduct.qpWefDate;
-    this.quoteRisk.qrWetDate = this.quoteProduct.qpWetDate;
+    // this.isAdd = JSON.parse(sessionStorage.getItem("isAdd"));
+    // this.quoteProduct = JSON.parse(sessionStorage.getItem("quoteProduct"));
+    // this.quoteRisk.qrWefDate = this.quoteProduct.qpWefDate;
+    // this.quoteRisk.qrWetDate = this.quoteProduct.qpWetDate;
     // this.quoteId = JSON.parse(sessionStorage.getItem("quoteId"));
     // this.quoteProductCode = this.quoteProduct.code;
-    console.log(this.quoteProduct);
+    // console.log(this.quoteProduct);
         
     this.setupService.getSubclasses().subscribe(subclasses => {
       this.subclasses = subclasses;
@@ -86,12 +96,11 @@ quoteRisk: QuoteRisk = {
       value.qrQpCode = this.quoteProduct.qpCode;
       this.quotationService.addQuoteRisk(value)
       .subscribe(response => 
-        // console.log(response), 
         err => console.log(err));
       
       // save quoteRisk in session variable
-      sessionStorage.setItem("quoteRisk", JSON.stringify(value));
-      this.router.navigate(['/quote-risk-limits-add']);
+      // sessionStorage.setItem("quoteRisk", JSON.stringify(value));
+      this.router.navigate([`/quote-risk-limits-add/${value.qrCode}`]);
     }
   }
 

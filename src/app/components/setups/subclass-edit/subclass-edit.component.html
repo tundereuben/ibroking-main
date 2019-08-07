@@ -3,7 +3,7 @@
     <h1 class="page-title">  {{subclass.sclName }} </h1>
     <div id="main-content">
 
-        <div class="panel panel-default">
+        <!-- <div class="panel panel-default">
             <div class="panel-heading panel-grey-head">
               <h3 class="panel-title panel-grey-title text-bold"><strong>ID SETUP</strong></h3>
             </div>
@@ -38,12 +38,12 @@
                       name="idName" 
                       id="idName"
                       placeholder="ID Name"
+                      (change)="uploadFile($event)"
                     >
                 </div>
                 <span id="idMessage"></span>  
                 <button (click)="addId()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
   
-                <!-- Show added IDs -->
                 <ul *ngIf="ids?.length > 0;" class=" list-group list-inline">
                   <li *ngFor="let id of ids" class="list-group-item-info">
                     {{ id.idName }} <small> ({{id.idType}}) </small>  
@@ -51,7 +51,7 @@
                   </li>
                 </ul>
 
-                <!-- <table *ngIf="ids?.length > 0;"  class="table table-striped table-bordered" >
+                <table *ngIf="ids?.length > 0;"  class="table table-striped table-bordered" >
                   <tr>
                     <th>ID Name</th>
                     <th>ID Type</th>
@@ -62,10 +62,10 @@
                     <td>{{id.idType}} </td>
                     <td ><span (click)="deleteId(id)" class="glyphicon glyphicon-remove delete" id="{{ id.idCode }}" style="color: red;"></span></td>
                   </tr>
-                </table> -->
+                </table>
               </form>
-            </div><!-- Pn3 Bdy -->
-          </div><!-- Pn3 Content  -->
+            </div>
+          </div> -->
 
       <!-- Rate Setup-->
       <div class="panel panel-default">
@@ -544,7 +544,7 @@
           <button class="btn btn-block btn-success">UPDATE SUBCLASS</button>
       </form> -->
     
-    
+      <a style="float: right" class="btn btn-primary" routerLink="/policies">DONE</a>
     </div> <!---- end of <div id="main-content">---->
     </div> <!----end of <div id="container">---->
     </div>  <!----end of <div id="content-area">---->

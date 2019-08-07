@@ -3,7 +3,7 @@
   <h1 class="page-title"> QUOTATIONS </h1>
   <div id="main-content">
    <form class="form-inline">
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label class="sr-only" for="classCode">Risk ID</label>
       <input type="text" class="form-control" id="classCode" placeholder="Risk ID">
     </div>
@@ -16,32 +16,36 @@
       <input type="text" class="form-control" id="classDescription" placeholder="Risk Description">
     </div>   
     
-    <button type="submit" class="btn btn-primary">Search</button>
-    <a class="btn btn-success" id="new-quotation" href="/quotation-add">New Quotation</a>
+    <button type="submit" class="btn btn-primary">Search</button> -->
+    <div style="text-align: right">
+      <a class="btn btn-success" id="new-quotation"  href="/quotation-add">New Quotation</a>
+    </div>
+    
+    <div class="clear"></div>
     
     <div class="table-responsive" style="margin-top:30px;">
     <table *ngIf='quotations?.length > 0 ; else noQuotations' class="table table-hover">
       <tr>
-      <th> Quot Code </th>
+      <!-- <th> Quot Code </th> -->
       <th> Quote No. </th>
-      <th>Client Code</th>
+      <th>Client Name</th>
       <th>Payment Freq.</th>
       <th>Cover From</th>
       <th>Cover To </th>
-      <th>Currency</th>
+      <!-- <th>Currency</th> -->
       <!-- <th>Ok</th> -->
-      <th>View</th> 
+      <th>Actions</th> 
       </tr>
       <tr *ngFor="let quotation of quotations">
-        <td>{{ quotation.quotCode }}</td>
+        <!-- <td>{{ quotation.quotCode }}</td> -->
         <td>{{ quotation.quotNo }}</td>
         <td>{{ quotation.quotClntCode }} </td>
         <td>{{ quotation.quotPaymentFrequency }} </td>
         <td>{{ quotation.quotCoverFrom | date }}</td>
         <td>{{ quotation.quotCoverTo | date }}</td>
-        <td>{{ quotation.quotCurSymbol }}</td>
+        <!-- <td>{{ quotation.quotCurSymbol }}</td> -->
         <!-- <<td>{{quotation.ok }} </td> -->
-        <td><a routerLink="/quotation-details/{{ quotation.quotCode }}" class="btn btn-link"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> </a></td>
+        <td><a routerLink="/quotation-details/{{ quotation.quotCode }}" class="btn btn-link"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> View </a></td>
       </tr>
     </table>
 

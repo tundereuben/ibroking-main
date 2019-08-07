@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { QuotationService } from '../../../services/quotation.service';
 import { SetupService } from '../../../services/setup.service';
-import { Router, RouterStateSnapshot } from '@angular/router';
+import { Router, ActivatedRoute} from '@angular/router';
 
 import { QuoteRiskLimit } from '../../../models/QuoteRiskLimit';
 import { Section } from '../../../models/Section';
@@ -15,6 +15,7 @@ import { Section } from '../../../models/Section';
 export class QuoteRiskLimitsAddComponent implements OnInit {
 
   isAdd: boolean;
+  qrCode: number;
   qrlCode: number;
   quoteRisk: any;
   quoteId: string;
@@ -38,13 +39,20 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
     private flashMessage: FlashMessagesService,
     private quotationService: QuotationService, 
     private setupService: SetupService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.quoteRisk = JSON.parse(sessionStorage.getItem("quoteRisk"));
+    // Get quotation code from path:id and fetch quotation info
+    this.qrCode = this.route.snapshot.params['id'];
+    this.quotationService.getQuoteRisk(this.qrCode).subscribe(quoteRisk => {
+      this.quoteRisk = quoteRisk;
+    });
+    
+    // this.quoteRisk = JSON.parse(sessionStorage.getItem("quoteRisk"));
     // console.log(this.quoteRisk);
-    this.isAdd = JSON.parse(sessionStorage.getItem("isAdd"));
+    // this.isAdd = JSON.parse(sessionStorage.getItem("isAdd"));
 
     this.setupService.getSections().subscribe(sections => {
       this.sections = sections;
@@ -94,20 +102,20 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
     } else {
       
       // fetch session variables
-      var quoteProduct = JSON.parse(sessionStorage.getItem("quoteProduct"));
-      var quoteRisk = JSON.parse(sessionStorage.getItem("quoteRisk"));
-      var quotation = JSON.parse(sessionStorage.getItem("quotation"));
+      // var quoteProduct = JSON.parse(sessionStorage.getItem("quoteProduct"));
+      // var quoteRisk = JSON.parse(sessionStorage.getItem("quoteRisk"));
+      // var quotation = JSON.parse(sessionStorage.getItem("quotation"));
       // console.log(quotation);
 
 
       // Add New Quote Risk Limit
       value.qrlCode = this.qrlCode;
-      value.qrlQrCode = quoteRisk.qrCode;
-      value.qrlQrQuotCode = quoteRisk.qrQuotCode;
-      value.qrlQpCode = quoteRisk.qrQpCode; 
-      value.qrlQpProCode = quoteProduct.qpProCode;     
+      value.qrlQrCode = this.qrCode;
+      value.qrlQrQuotCode = this.quoteRisk.qrQuotCode;
+      value.qrlQpCode = this.quoteRisk.qrQpCode; 
+      value.qrlQpProCode = this.quoteRisk.qpQpCode;     
       value.qrlPremAmt = this.premiumAmount;
-      value.qrlClntCode = quotation.quotClntCode;
+      value.qrlClntCode = this.quoteRisk.qrClntCode;
       // value.commissionAmount = this.commissionAmount;
       value.qrlPremRate = this.premiumRate;
       

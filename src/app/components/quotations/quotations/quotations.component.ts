@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuotationService} from '../../../services/quotation.service'; 
+import { SetupService} from '../../../services/setup.service'; 
 
 import { Quotation } from '../../../models/Quotation';
 
@@ -11,7 +12,10 @@ import { Quotation } from '../../../models/Quotation';
 export class QuotationsComponent implements OnInit {
   quotations: Quotation[];
 
-  constructor(private quotationService: QuotationService) { }
+  constructor(
+    private quotationService: QuotationService,
+    private setupService: SetupService
+    ) { }
 
   ngOnInit() {
     this.quotationService.getQuotations().subscribe(quotations => {
@@ -20,5 +24,8 @@ export class QuotationsComponent implements OnInit {
         // console.log(doc);
       }) 
     });
+
+
+    
   }
 }

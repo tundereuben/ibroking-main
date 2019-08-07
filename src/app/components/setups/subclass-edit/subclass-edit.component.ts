@@ -13,6 +13,7 @@ import { Commission } from '../../../models/Commission';
 import { Extension } from '../../../models/Extension';
 import { Benefit } from '../../../models/Benefit';
 import { Rate } from '../../../models/Rate';
+// import { read, readFile } from 'fs';
 
 @Component({
   selector: 'app-subclass-edit',
@@ -26,6 +27,7 @@ export class SubclassEditComponent implements OnInit {
 
   ids: Id[] = [];
   id: Id = {};
+  idFile: any;
 
   rates: Rate[] = [];
   rate: Rate = {};
@@ -407,4 +409,21 @@ export class SubclassEditComponent implements OnInit {
         alertMessage.innerHTML = ''
       }, 3000);
   }
+
+
+
+
+  // uploadFile(e){
+  //   this.idFile = e.target.files[0];
+  //   this.readFile(this.idFile);
+  //   console.log(this.idFile);
+  // }
+
+  // readFile(file) {
+  //   let fileReader = new FileReader();
+  //   fileReader.onload = (e) => {
+  //     console.log(fileReader.result);
+  //   }
+  //   fileReader.readAsText(file);
+  // }
 }

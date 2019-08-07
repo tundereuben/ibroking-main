@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuotationService } from '../../../services/quotation.service';
+import { SetupService } from '../../../services/setup.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
@@ -7,6 +8,7 @@ import { Quotation } from '../../../models/Quotation';
 import { Product } from '../../../models/Product';
 import { QuoteRisk } from '../../../models/QuoteRisk';
 import { QuoteRiskLimit } from '../../../models/QuoteRiskLimit';
+import { Client } from '../../../models/Client';
 
 @Component({
   selector: 'app-quotation-details',
@@ -17,7 +19,10 @@ export class QuotationDetailsComponent implements OnInit {
   id: number;
   quotation: Quotation;
   quoteProducts: Product[] = [];
-  quotNo: String;
+
+  client: Client;
+  clientName: String;
+
   quoteProductCode: number;
   quoteRiskCode: number;
   quoteRisks: QuoteRisk[];
@@ -25,64 +30,86 @@ export class QuotationDetailsComponent implements OnInit {
 
   constructor(
     private quotationService: QuotationService,
+    private setupService: SetupService,
     private router: Router, 
     private route: ActivatedRoute,
     private flashMessage: FlashMessagesService
   ) { }
 
   ngOnInit() {
-    var quotNo, qpQuotCode, qpQuotNo, quoteRiskCode, products = [], risks = [], riskLimits = [];
-    
+    var quotNo, 
+        qpQuotCode, 
+        qpQuotNo, 
+        quoteRiskCode, 
+        products = [], 
+        risks = [], 
+        riskLimits = [];
+
+    // Get router_id and fetch quotation information
     this.id = this.route.snapshot.params['id'];
     this.quotationService.getQuotation(this.id).subscribe(quotation => {
       this.quotation = quotation; 
-      quotNo = quotation.quotNo;
-      this.quotNo = quotNo;
-      // console.log(quotNo);
+
+      this.setupService.getClient(this.quotation.quotClntCode).subscribe(client => {
+        this.client = client; 
+        // check for for individual or corporate to get clientName
+        if(this.client.clntType == "Individual") {
+          this.clientName = `${this.client.clntOthernames} ${this.client.clntLastname}`;
+        } else {
+          this.clientName = `${this.client.clntCompanyName}`;
+        }
+
+        this.quotationService.getQuoteProducts().subscribe(quotProducts => {
+          quotProducts.forEach(function(doc) {
+            if(doc.qpQuotCode == quotation.quotCode) {
+              products.push(doc);
+            }
+          });
+          this.quoteProducts = products;
+        });
+
+      });
     });
   
 
-    this.quotationService.getQuoteProducts().subscribe(quoteProducts => {
-      quoteProducts.forEach(function(doc){ 
-        // console.log(doc.qpQuotNo);
-        if(doc.qpQuotNo == quotNo ) {
-          products.push(doc); 
-          qpQuotNo = doc.qpQuotNo;
-        };
-      });
-      this.quoteProducts = products;
-      // console.log(this.quoteProducts);
-    });
+    // this.quotationService.getQuoteProducts().subscribe(quoteProducts => {
+    //   quoteProducts.forEach(function(doc){ 
+    //     console.log(doc.qpQuotNo);
+    //     if(doc.qpQuotNo == this.quotation.quotNo ) {
+    //       products.push(doc); 
+    //       qpQuotNo = doc.qpQuotNo;
+    //     };
+    //   });
+    //   this.quoteProducts = products;
+    // });
+
   }
 
   showRisks(event){
     this.quoteRisks = null; 
-    this.quoteRiskLimits = null;
-    var quoteProductCode, quoteRiskCode, riskArray = [];
-    quoteProductCode = parseInt(event.target.id); 
-    // console.log(quoteProductCode);
+    // this.quoteRiskLimits = null;
+    var quoteProductCode, 
+    quoteRiskCode, 
+    riskArray = [];
+
+    quoteProductCode = parseInt(event.qpCode); 
     this.quotationService.getQuoteRisks().subscribe(risks => {
-      // console.log(risks);
       risks.forEach(function(doc){
         if(doc.qrQpCode === quoteProductCode) {
          riskArray.push(doc);
-         quoteRiskCode = doc.qrQpCode;
         } 
       });
       this.quoteRisks = riskArray;
-      // console.log(riskArray)
     });
     this.quoteProductCode = quoteProductCode;  
   };
 
   showRiskLimits(event){
     var quoteRiskCode, riskLimitArray = [];
-    quoteRiskCode = parseInt(event.target.id); 
-    // console.log(quoteRiskCode);
+    quoteRiskCode = parseInt(event.qrCode); 
     this.quotationService.getQuoteRiskLimits().subscribe(quoteRiskLimits => {
       quoteRiskLimits.forEach((doc)=> {
         if(doc.qrlQrCode == quoteRiskCode){
-          // console.log(doc);
           riskLimitArray.push(doc);
         }
       });
@@ -152,8 +179,8 @@ export class QuotationDetailsComponent implements OnInit {
   }
 
   addingNew(){
-    sessionStorage.setItem("quotation", JSON.stringify(this.quotation));
-    sessionStorage.setItem("quoteProductCode", JSON.stringify(this.quoteProductCode)); 
+    // sessionStorage.setItem("quotation", JSON.stringify(this.quotation));
+    // sessionStorage.setItem("quoteProductCode", JSON.stringify(this.quoteProductCode)); 
     // sessionStorage.setItem("quoteId", JSON.stringify(this.id));
     // sessionStorage.setItem("quoteCode", JSON.stringify(this.quoteCode));
     console.log(this.quotation);
