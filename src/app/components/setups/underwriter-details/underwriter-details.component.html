@@ -1,0 +1,59 @@
+<div id="content-area">
+
+    <div class="container">
+      <a routerLink="/crm">Back to CRM</a>
+      <div id="main-content">
+        <div class="table-responsive">
+          <!-- Tbl Respons -->
+          <table class="table table-bordered">
+            <tr>
+              <th> <small>Name: </small> {{underwriter?.undLastname }} {{ underwriter?.undOthernames }} 
+                {{ underwriter?.undCompanyName }}</th>
+              <th> <small>Email: </small> {{ underwriter?.undEmail }}</th>
+              <th> <small>Phone: </small> {{ underwriter?.undMobile }}</th>
+            </tr>
+            <tr>
+              <th><small>Occupation: </small> {{ underwriter?.undOccupation}} </th>
+              <th><small>Description: </small> {{ underwriter?.undDescription }}</th>
+              <th><small>Sector: </small>{{ underwriter?.undSector }}</th>
+            </tr>
+            <tr>
+              <th><small>Source: </small>{{ underwriter?.undSource }}</th>
+              <th><small>Type: </small>{{ underwriter?.undType }}</th>
+              <th><small>Lead Date: </small>{{ underwriter?.undLeadDate }}</th>
+            </tr>
+            <tr>
+              <th><small>Physical Address: </small> {{ underwriter?.undPhysicalAddress }}</th>
+              <th><small>Postal Address: </small> {{ underwriter?.undPostalAddress }}</th>
+              <th><small>Country: </small> {{ underwriter?.undCountry }}</th>
+            </tr>
+          </table>
+  
+          <!-- <span *ngIf="corporate">
+              <h3 class="text-secondary" style="margin: 30px 0 10px 0 ;">Contact Person</h3>
+              <table class="table table-bordered">
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>Birthday</th>
+                </tr>
+                <tr>
+                  <td>{{ client?.clntContactFirstname }} {{ client?.clntContactLastname }}</td>
+                  <td>{{ client?.clntContactEmail }}</td>
+                  <td>{{ client?.clntContactMobile }}</td>
+                  <td>{{ client?.clntContactBirthday }}</td>
+                </tr>
+              </table>
+          </span> -->
+  
+        </div><!-- Tbl Respons -->
+        <div class="buttons" style="float:right">
+          <a routerLink="/underwriter-edit/{{ underwriter?.undCode }}" class="btn btn-success" style="margin: 0 5px">Edit
+            Underwriter</a>
+          <button (click)="deleteUnderwriter(underwriter)" class="btn btn-danger">Delete Underwriter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

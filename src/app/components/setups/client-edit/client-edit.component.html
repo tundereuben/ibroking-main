@@ -27,7 +27,7 @@
                       type="text" 
                       class="form-control" 
                       name="clntMobile" 
-                      [ngModel] = "client.clntMobile"
+                      [ngModel] = "client?.clntMobile"
                       placeholder="Mobile No:"
                     >
                   </div>
@@ -37,7 +37,7 @@
                       type="text" 
                       class="form-control" 
                       name="clntEmail" 
-                      [ngModel] = "client.clntEmail"
+                      [ngModel] = "client?.clntEmail"
                       placeholder="Email Address"
                     >
                   </div>
@@ -47,7 +47,7 @@
                       type="date" 
                       class="form-control" 
                       name="clntLeadDate" 
-                      [ngModel] = "client.clntLeadDate"
+                      [ngModel] = "client?.clntLeadDate"
                       placeholder="Lead Date">
                   </div>
                   <div class="form-group">
@@ -55,7 +55,7 @@
                     <select 
                       class="form-control" 
                       name="clntSource" 
-                      [ngModel]="client.clntSource"
+                      [ngModel]="client?.clntSource"
                     >
                       <option>Source 1</option>
                       <option>Source 2</option>
@@ -64,42 +64,27 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="clntPostalAddress">Postal Address</label>
-                    <input 
-                      type="text" 
-                      class="form-control" 
-                      name="clntPostalAddress" 
-                      [ngModel] = "client.clntPostalAddress"
-                      placeholder="Postal Address"
-                    >
+                    <label for="clntPostalAddress"> Address</label>
+                    <input type="text" class="form-control" name="clntPostalAddress" [ngModel]="client?.clntPostalAddress"
+                      placeholder="Postal Address">
                   </div>
                   <div class="form-group">
-                    <label for="clntPostalCode">Postal Code</label>
-                    <input 
-                      type="text" 
-                      class="form-control" 
-                      name="clntPostalCode" 
-                      [ngModel] = "client.clntPostalCode"
-                      placeholder="Postal Code"
-                    >
+                    <label for="clntPostalCode">P.O. Box</label>
+                    <input type="text" class="form-control" name="clntPostalCode" [ngModel]="client?.clntPostalCode" placeholder="Postal Code">
                   </div>
                   <div class="form-group">
-                    <label for="clntPhysicalAddress">Physical Address</label>
-                    <input 
-                      type="text" 
-                      class="form-control" 
-                      name="clntPhysicalAddress" 
-                      [ngModel]="client.clntPhysicalAddress"
-                      placeholder="Physical Address"
-                    >
+                    <label for="clntCity">City</label>
+                    <input type="text" class="form-control" name="clntCity" [ngModel]="client?.clntCity"
+                      placeholder="City">
+                  </div>
+                  <div class="form-group">
+                    <label for="clntState">State</label>
+                    <input type="text" class="form-control" name="clntState" [ngModel]="client?.clntState"
+                      placeholder="State">
                   </div>
                   <div class="form-group">
                     <label for="clntCountry">Country</label>
-                    <select 
-                      class="form-control" 
-                      name="clntCountry"
-                      [ngModel]="client.clntCountry"
-                    >
+                    <select class="form-control" name="clntCountry" [ngModel]="client?.clntCountry">
                       <option>Nigeria</option>
                       <option>Kenya</option>
                       <option>Ghana</option>

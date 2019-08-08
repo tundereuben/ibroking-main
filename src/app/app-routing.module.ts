@@ -61,10 +61,14 @@ import { CommissionsComponent } from './components/setups/commissions/commission
 import { PoliciesComponent } from './components/setups/policies/policies.component';
 import { PolicyAddComponent } from './components/setups/policy-add/policy-add.component';
 import { PolicyEditComponent } from './components/setups/policy-edit/policy-edit.component';
+
 import { ClientNewComponent } from './components/setups/client-new/client-new.component';
 import { ClientContactComponent } from './components/setups/client-contact/client-contact.component';
 import { ClientEditComponent } from './components/setups/client-edit/client-edit.component';
 import { ClientDetailsComponent } from './components/setups/client-details/client-details.component';
+import { UnderwriterAddComponent } from './components/setups/underwriter-add/underwriter-add.component';
+import { UnderwriterDetailsComponent } from './components/setups/underwriter-details/underwriter-details.component';
+import { UnderwriterEditComponent } from './components/setups/underwriter-edit/underwriter-edit.component';
 
 import { CrmComponent } from './components/setups/crm/crm.component';
 
@@ -132,10 +136,14 @@ const routes: Routes = [
   {path: 'policies', component: PoliciesComponent},
   {path: 'policy-add', component: PolicyAddComponent},
   {path: 'policy-edit/:id', component: PolicyEditComponent},
+
   {path: 'client-new', component: ClientNewComponent},
   {path: 'client-contact/:id', component: ClientContactComponent},
   {path: 'client-edit/:id', component: ClientEditComponent},
   {path: 'client-details/:id', component: ClientDetailsComponent},
+  {path: 'underwriter-add', component: UnderwriterAddComponent},
+  {path: 'underwriter-details/:id', component: UnderwriterDetailsComponent},
+  {path: 'underwriter-edit/:id', component: UnderwriterEditComponent},
 
   {path: 'crm', component: CrmComponent},
 

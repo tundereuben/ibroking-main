@@ -21,6 +21,7 @@ import { Discount } from '../models/Discount';
 import { Rate } from '../models/Rate';
 
 import { Client } from '../models/Client';
+import { Underwriter } from '../models/Underwriter';
 
 import { DEFAULT_HEADERS } from '../models/authorization';
 
@@ -95,6 +96,7 @@ export class SetupService {
   extensionsUrl = 'http://localhost:8080/api/extensions';
   benefitsUrl = 'http://localhost:8080/api/benefits';
   ratesUrl = 'http://localhost:8080/api/rates';
+  underwritersUrl = 'http://localhost:8080/api/underwriters';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -387,6 +389,36 @@ export class SetupService {
     return this.http.delete(this.clientsUrl + "/" + client.clntCode);
   }
   // +++++++ CLIENT FUNCTIONS ENDS ++++++++ //
+
+  // =========================== //
+  // ==== UNDERWRITER FUNCTIONS ====== //
+  // =========================== //
+
+  getUnderwriters(): Observable<Underwriter[]> {
+    return this.http.get<Underwriter[]>(this.underwritersUrl);
+  }
+  
+  getUnderwriter(id: number): Observable<Underwriter> {
+    const url = `${this.underwritersUrl}/${id}`;
+    return this.http.get<Underwriter>(url);
+  }
+
+  addUnderwriter(newUnderwriter: Underwriter): Observable<Underwriter> {
+    return this.http.post<Underwriter>(this.underwritersUrl, JSON.stringify(newUnderwriter), {headers: DEFAULT_HEADERS});
+  }
+
+  updateUnderwriter(updatedUnderwriter: Underwriter): Observable<Underwriter> {
+    const url = `${this.underwritersUrl}/${updatedUnderwriter.undCode}`;
+    return this.http.put(url, updatedUnderwriter, this.httpOptions).pipe(
+      tap(_ => console.log(`updated underwriter code = ${updatedUnderwriter.undCode}`)),
+      catchError(this.handleError<any>('updatedUnderwriter'))
+    );
+  }
+
+  deleteUnderwriter(underwriter: Underwriter) {
+    return this.http.delete(this.underwritersUrl + "/" + underwriter.undCode);
+  }
+  // +++++++ UNDERWRITER FUNCTIONS ENDS ++++++++ //
 
 
   // =========================== //

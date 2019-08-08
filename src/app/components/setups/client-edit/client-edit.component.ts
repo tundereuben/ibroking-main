@@ -4,6 +4,8 @@ import { SetupService } from '../../../services/setup.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Client } from '../../../models/Client';
 
+import {NgForm} from '@angular/forms';
+
 @Component({
   selector: 'app-client-edit',
   templateUrl: './client-edit.component.html',
@@ -32,8 +34,28 @@ export class ClientEditComponent implements OnInit {
       } else {
         this.individual = true;
       }
-      console.log(this.client);
     });
+  }
+
+  // When the form is submitted
+  onSubmit(clientForm: NgForm) {
+    if (!clientForm) {
+      this.flashMessage.show('Please fill out the form correctly', { cssClass: 'alert-danger', timeout: 4000 });
+    } else {
+      this.client = clientForm.value;
+      this.client.clntCode = this.id;
+      console.log(this.client);
+      this.setupService.updateClient(this.client)
+        .subscribe(response => {
+          // this.flashMessage.show('New client added', { cssClass: 'alert-success', timeout: 4000 });
+          this.setupService.getClients().subscribe(clients => this.clients = clients);
+          // console.log(response),
+          this.client = response,
+          err => console.log(err)
+          this.router.navigate([`/client-details/${this.id}`]);
+        });
+        
+    }
   }
 
 }

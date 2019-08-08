@@ -72,6 +72,9 @@ import { ClientDetailsComponent } from './components/setups/client-details/clien
 import { ClientNewComponent } from './components/setups/client-new/client-new.component';
 import { ClientEditComponent } from './components/setups/client-edit/client-edit.component';
 import { ClientContactComponent } from './components/setups/client-contact/client-contact.component';
+import { UnderwriterDetailsComponent } from './components/setups/underwriter-details/underwriter-details.component';
+import { UnderwriterAddComponent } from './components/setups/underwriter-add/underwriter-add.component';
+import { UnderwriterEditComponent } from './components/setups/underwriter-edit/underwriter-edit.component';
 
 
 @NgModule({
@@ -135,6 +138,9 @@ import { ClientContactComponent } from './components/setups/client-contact/clien
     ClientNewComponent,
     ClientEditComponent,
     ClientContactComponent,
+    UnderwriterDetailsComponent,
+    UnderwriterAddComponent,
+    UnderwriterEditComponent,
   ],
   imports: [
     BrowserModule,

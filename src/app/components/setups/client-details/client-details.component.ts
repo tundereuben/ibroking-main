@@ -28,7 +28,7 @@ export class ClientDetailsComponent implements OnInit {
       this.client = client;
       // console.log(this.client);
       if(client.clntType == "Corporate") {
-        this.corporate = true;
+        this.corporate = true; 
       }
     });
   }

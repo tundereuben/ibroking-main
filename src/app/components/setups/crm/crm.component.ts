@@ -4,6 +4,7 @@ import { SetupService } from '../../../services/setup.service';
 import { Router, RouterStateSnapshot } from '@angular/router';
 
 import { Client } from '../../../models/Client';
+import { Underwriter } from '../../../models/Underwriter';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -20,6 +21,7 @@ export class CrmComponent implements OnInit {
   showUsers = false;
   individual = false;
   corporate = false;
+  underwriters: Underwriter[];
 
   @ViewChild('clientForm', {static: false }) form: any;
 
@@ -32,6 +34,10 @@ export class CrmComponent implements OnInit {
   ngOnInit() {
     this.setupService.getClients().subscribe(clients => {
       this.clients = clients;
+    });
+
+    this.setupService.getUnderwriters().subscribe(underwriters => {
+      this.underwriters = underwriters;
     });
   }
 
@@ -69,6 +75,11 @@ export class CrmComponent implements OnInit {
   // Client Details Navigation
   clientDetails(value){
     this.router.navigate([`/client-details/${value.clntCode}`]);
+  }
+
+  // Underwriter Details Navigation
+  underwriterDetails(value){
+    this.router.navigate([`/underwriter-details/${value.undCode}`]);
   }
 
   // When the form is submitted
