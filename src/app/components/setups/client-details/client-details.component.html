@@ -29,20 +29,31 @@
           </tr>
         </table>
 
-        <span *ngIf="corporate">
-            <h3 class="text-secondary" style="margin: 30px 0 10px 0 ;">Contact Person</h3>
+        <span *ngIf="contacts">
+            <h3 class="text-secondary" style="margin: 30px 0 10px 0 ;">
+              Contact Person(s)
+              <a routerLink="/client-contact/{{ client.clntCode }}" class="btn btn-primary" style="margin: 0 5px">
+                 <span class="glyphicon glyphicon-plus"></span>
+              </a>
+            </h3>
             <table class="table table-bordered">
               <tr>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Mobile</th>
-                <th>Birthday</th>
+                <th>Address</th>
+                <th>Occupation</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
               </tr>
-              <tr>
-                <td>{{ client?.clntContactFirstname }} {{ client?.clntContactLastname }}</td>
-                <td>{{ client?.clntContactEmail }}</td>
-                <td>{{ client?.clntContactMobile }}</td>
-                <td>{{ client?.clntContactBirthday }}</td>
+              <tr *ngFor="let contact of contacts" class="contact" (click)="showEditContactForm(contact)" data-toggle="modal" data-target="#editContat">
+                <td>{{ contact?.contOthernames }} {{ contact?.contLastname }}</td>
+                <td>{{ contact?.contEmail }}</td>
+                <td>{{ contact?.contMobile }}</td>
+                <td>{{ contact?.contPostalAddress }}, {{ contact?.contCity}} {{ contact?.contState }}, {{ contact?.contCountry }}</td>
+                <td>{{ contact?.contOccupation }}</td>
+                <td>{{ contact?.contDob }}</td>
+                <td>{{ contact?.contGender }}</td>
               </tr>
             </table>
         </span>
@@ -54,5 +65,109 @@
         <button (click)="deleteClient(client)" class="btn btn-danger">Delete Client</button>
       </div>
     </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div id="editContat" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Contact</h4>
+      </div>
+      <div class="modal-body">
+        
+        <form #contactForm="ngForm" (ngSubmit)="updateContact(contactForm)">
+          <span class="form">
+            <h3 style="margin: 10px;"> {{ formTitle }} </h3>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="contTitle">Title</label>
+                <select class="form-control" name="contTitle" [ngModel]="contact.contTitle">
+                  <option value="null">Select Title</option>
+                  <option>MR</option>
+                  <option>MRS</option>
+                  <option>MISS</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="contLastname">Lastname</label>
+                <input type="email" name="contLastname" class="form-control" [ngModel]="contact.contLastname" placeholder="Lastname">
+              </div>
+              <div class="form-group">
+                <label for="contOthernames">Other Names</label>
+                <input type="text" name="contOthernames" class="form-control" [ngModel]="contact.contOthernames" placeholder="Other Names">
+              </div>
+              <div class="form-group">
+                <label for="contGender">Gender</label>
+                <select class="form-control" [ngModel]="contact.contGender" name="contGender">
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="contDob">Date of Birth</label>
+                <input type="date" class="form-control" [ngModel]="contact.contDob" name="contDob" placeholder="D.O.B">
+              </div>
+              <div class="form-group">
+                <label for="contOccupation">Occupation</label>
+                <input type="text" class="form-control" [ngModel]="contact.contOccupation" name="contOccupation" placeholder="Occupation">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="contMobile">Mobile No</label>
+                <input type="text" class="form-control" name="contMobile" [ngModel]="contact.contMobile" placeholder="Mobile No:">
+              </div>
+              <div class="form-group">
+                <label for="contEmail">Email Address</label>
+                <input type="text" class="form-control" name="contEmail" [ngModel]="contact.contEmail" placeholder="Email Address">
+              </div>
+              <div class="form-group">
+                <label for="contPostalAddress">Address</label>
+                <input type="text" class="form-control" name="contPostalAddress" [ngModel]="contact.contPostalAddress" placeholder="Postal Address">
+              </div>
+              <div class="form-group">
+                <label for="contPostalCode">P.O. Box</label>
+                <input type="text" class="form-control" name="contPostalCode" [ngModel]="contact.contPostalCode" placeholder="Postal Code">
+              </div>
+              <div class="form-group">
+                <label for="contCity">City</label>
+                <input type="text" class="form-control" name="contCity" [ngModel]="contact.contCity" placeholder="City">
+              </div>
+              <div class="form-group">
+                <label for="contState">State</label>
+                <input type="text" class="form-control" name="contState" [ngModel]="contact.contState" placeholder="State">
+              </div>
+              <div class="form-group">
+                <label for="contCountry">Country</label>
+                <select class="form-control" name="contCountry" [ngModel]="contact.contCountry">
+                  <option>Nigeria</option>
+                  <option>Kenya</option>
+                  <option>Ghana</option>
+                </select>
+              </div>
+            </div>
+            <hr>
+            <button class="btn btn-info pull-right" >Add&nbsp;<span class="glyphicon glyphicon-plus"
+                aria-hidden="true"></span>
+            </button>
+
+          </span>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-right: 10px">Close</button>
+      </div>
+    </div>
+
   </div>
 </div>

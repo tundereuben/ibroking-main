@@ -97,6 +97,7 @@ export class SetupService {
   benefitsUrl = 'http://localhost:8080/api/benefits';
   ratesUrl = 'http://localhost:8080/api/rates';
   underwritersUrl = 'http://localhost:8080/api/underwriters';
+  contactsUrl = 'http://localhost:8080/api/contacts';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -419,6 +420,41 @@ export class SetupService {
     return this.http.delete(this.underwritersUrl + "/" + underwriter.undCode);
   }
   // +++++++ UNDERWRITER FUNCTIONS ENDS ++++++++ //
+
+  // =========================== //
+  // ==== CONTACT FUNCTIONS ====== //
+  // =========================== //
+
+  getContacts(): Observable<Client[]> {
+    return this.http.get<Client[]>(this.contactsUrl);
+  }
+  
+  getContact(id: number): Observable<Client> {
+    const url = `${this.contactsUrl}/${id}`;
+    return this.http.get<Client>(url);
+  }
+
+  getContactsByClientCode(id: number):Observable<Client[]>{
+    const url = `${this.contactsUrl}/clntCode?contClntCode=${id}`;
+    return this.http.get<Client[]>(url);
+  }
+
+  addContact(newContact: Client): Observable<Client> {
+    return this.http.post<Client>(this.contactsUrl, JSON.stringify(newContact), {headers: DEFAULT_HEADERS});
+  }
+
+  updateContact(updatedContact: Client): Observable<Client> {
+    const url = `${this.contactsUrl}/${updatedContact.contCode}`;
+    return this.http.put(url, updatedContact, this.httpOptions).pipe(
+      tap(_ => console.log(`updated contact code = ${updatedContact.contCode}`)),
+      catchError(this.handleError<any>('updatedContact'))
+    );
+  }
+
+  deleteContact(contact: Client) {
+    return this.http.delete(this.contactsUrl + "/" + contact.contCode);
+  }
+  // +++++++ CONTACT FUNCTIONS ENDS ++++++++ //
 
 
   // =========================== //

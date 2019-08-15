@@ -28,7 +28,6 @@ export class UnderwriterEditComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.setupService.getUnderwriter(this.id).subscribe(underwriter => {
       this.underwriter = underwriter;
-      console.log(this.underwriter);
     });
   }
 
@@ -44,7 +43,7 @@ export class UnderwriterEditComponent implements OnInit {
         .subscribe(response => {
           // this.flashMessage.show('New underwriter added', { cssClass: 'alert-success', timeout: 4000 });
           this.setupService.getUnderwriters().subscribe(underwriters => this.underwriters = underwriters);
-          // console.log(response),
+          console.log(response),
           this.underwriter = response,
           err => console.log(err)
           this.router.navigate([`/underwriter-details/${this.id}`]);

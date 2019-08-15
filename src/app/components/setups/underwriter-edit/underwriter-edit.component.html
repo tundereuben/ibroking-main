@@ -1,11 +1,11 @@
 <div id="client-new" style="margin: 20px;">
   <div id="container">
-    <h3 class="page-title">EDIT CLIENT</h3>
-    <a routerLink="/underwriter-details/{{ underwriter?.clntCode }}">Back to Underwriter Details</a>
+    <h3 class="page-title">EDIT UNDERWRITER</h3>
+    <a routerLink="/underwriter-details/{{ underwriter?.undCode }}">Back to Underwriter Details</a>
     <div id="main-content">
       <div class="row">
         <form #underwriterForm="ngForm" (ngSubmit)="onSubmit(underwriterForm)">
-          <!-- <h3 class="text-center">NEW CLIENT</h3> -->
+          <!-- <h3 class="text-center">NEW UNDERWRITER</h3> -->
           <span class="form">
 
             <div class="row">

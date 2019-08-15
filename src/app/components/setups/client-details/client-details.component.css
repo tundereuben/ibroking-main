@@ -8,3 +8,9 @@ small {
   color:dimgray;
   margin-right: 10px;
 }
+
+
+.contact:hover {
+  background: #eee;
+  cursor: pointer;
+}

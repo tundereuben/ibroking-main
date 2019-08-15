@@ -4,14 +4,14 @@
     <a routerLink="/crm">Back to Clients</a>
     <div id="main-content">
       <div class="row">
-        <form #clientForm="ngForm" (ngSubmit)="onSubmit(clientForm)">
+        <form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)">
           <span class="form">
             <h3 style="margin: 10px;"> {{ formTitle }} </h3>
 
             <div class="col-md-6">
               <div class="form-group">
-                <label for="clntTitle">Title</label>
-                <select class="form-control" name="clntTitle" ngModel>
+                <label for="contTitle">Title</label>
+                <select class="form-control" name="contTitle" ngModel>
                   <option value="null">Select Title</option>
                   <option>MR</option>
                   <option>MRS</option>
@@ -19,58 +19,58 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="clntLastname">Lastname</label>
-                <input type="email" name="clntLastname" class="form-control" ngModel placeholder="Lastname">
+                <label for="contLastname">Lastname</label>
+                <input type="email" name="contLastname" class="form-control" ngModel placeholder="Lastname">
               </div>
               <div class="form-group">
-                <label for="clntOthernames">Other Names</label>
-                <input type="text" name="clntOthernames" class="form-control" ngModel placeholder="Other Names">
+                <label for="contOthernames">Other Names</label>
+                <input type="text" name="contOthernames" class="form-control" ngModel placeholder="Other Names">
               </div>
               <div class="form-group">
-                <label for="clntGender">Gender</label>
-                <select class="form-control" ngModel name="clntGender">
+                <label for="contGender">Gender</label>
+                <select class="form-control" ngModel name="contGender">
                   <option>Male</option>
                   <option>Female</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="clntDob">Date of Birth</label>
-                <input type="date" class="form-control" ngModel name="clntDob" placeholder="D.O.B">
+                <label for="contDob">Date of Birth</label>
+                <input type="date" class="form-control" ngModel name="contDob" placeholder="D.O.B">
               </div>
               <div class="form-group">
-                <label for="clntOccupation">Occupation</label>
-                <input type="text" class="form-control" ngModel name="clntOccupation" placeholder="Occupation">
+                <label for="contOccupation">Occupation</label>
+                <input type="text" class="form-control" ngModel name="contOccupation" placeholder="Occupation">
               </div>
             </div>
 
             <div class="col-md-6">
               <div class="form-group">
-                <label for="clntMobile">Mobile No</label>
-                <input type="text" class="form-control" name="clntMobile" ngModel placeholder="Mobile No:">
+                <label for="contMobile">Mobile No</label>
+                <input type="text" class="form-control" name="contMobile" ngModel placeholder="Mobile No:">
               </div>
               <div class="form-group">
-                <label for="clntEmail">Email Address</label>
-                <input type="text" class="form-control" name="clntEmail" ngModel placeholder="Email Address">
+                <label for="contEmail">Email Address</label>
+                <input type="text" class="form-control" name="contEmail" ngModel placeholder="Email Address">
               </div>
               <div class="form-group">
-                <label for="clntPostalAddress">Address</label>
-                <input type="text" class="form-control" name="clntPostalAddress" ngModel placeholder="Postal Address">
+                <label for="contPostalAddress">Address</label>
+                <input type="text" class="form-control" name="contPostalAddress" ngModel placeholder="Postal Address">
               </div>
               <div class="form-group">
-                <label for="clntPostalCode">P.O. Box</label>
-                <input type="text" class="form-control" name="clntPostalCode" ngModel placeholder="Postal Code">
+                <label for="contPostalCode">P.O. Box</label>
+                <input type="text" class="form-control" name="contPostalCode" ngModel placeholder="Postal Code">
               </div>
               <div class="form-group">
-                <label for="clntCity">City</label>
-                <input type="text" class="form-control" name="clntCity" ngModel placeholder="City">
+                <label for="contCity">City</label>
+                <input type="text" class="form-control" name="contCity" ngModel placeholder="City">
               </div>
               <div class="form-group">
-                <label for="clntState">State</label>
-                <input type="text" class="form-control" name="clntState" ngModel placeholder="State">
+                <label for="contState">State</label>
+                <input type="text" class="form-control" name="contState" ngModel placeholder="State">
               </div>
               <div class="form-group">
-                <label for="clntCountry">Country</label>
-                <select class="form-control" name="clntCountry" ngModel>
+                <label for="contCountry">Country</label>
+                <select class="form-control" name="contCountry" ngModel>
                   <option>Nigeria</option>
                   <option>Kenya</option>
                   <option>Ghana</option>
@@ -87,7 +87,7 @@
 
       </div>
     </div>
-    <a class="btn btn-success pull-right">Done&nbsp;
+    <a routerLink="/client-details/{{ client.clntCode }}" class="btn btn-success pull-right">Done&nbsp;
       <span class="glyphicon glyphicon" aria-hidden="true"></span>
     </a>
   </div>

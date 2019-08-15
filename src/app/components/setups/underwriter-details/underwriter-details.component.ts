@@ -30,10 +30,12 @@ export class UnderwriterDetailsComponent implements OnInit {
   }
 
   deleteUnderwriter(underwriter){
-    this.setupService.deleteUnderwriter(underwriter).subscribe(data => {
-      this.setupService.getUnderwriters().subscribe(underwriters => this.underwriters = underwriters);
-      this.router.navigate(['/crm']);
-    });
+    if(confirm('Confirm Delete underwriter')) {
+      this.setupService.deleteUnderwriter(underwriter).subscribe(data => {
+        this.setupService.getUnderwriters().subscribe(underwriters => this.underwriters = underwriters);
+        this.router.navigate(['/crm']);
+      });
+    }
   }
 
 

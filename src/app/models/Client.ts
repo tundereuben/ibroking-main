@@ -1,5 +1,6 @@
 export class Client {
   clntCode?: number;
+  
   clntOthernames?: string;
   clntLastname?: string;
   clntFirstname?: string;
@@ -25,4 +26,8 @@ export class Client {
   clntContactEmail?: string;
   clntContactMobile?: string;
   clntContactBirthday?: string;
+
+  // When the model is used for Contact or NOK
+  contCode?: number;
+  contClntCode?: number;
 }

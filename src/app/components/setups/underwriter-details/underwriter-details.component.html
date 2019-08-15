@@ -13,18 +13,18 @@
               <th> <small>Phone: </small> {{ underwriter?.undMobile }}</th>
             </tr>
             <tr>
-              <th><small>Occupation: </small> {{ underwriter?.undOccupation}} </th>
+              <th> <small>Sector: </small> {{ underwriter?.undSector }} </th>
               <th><small>Description: </small> {{ underwriter?.undDescription }}</th>
-              <th><small>Sector: </small>{{ underwriter?.undSector }}</th>
+              <th><small> </small> </th>
             </tr>
             <tr>
               <th><small>Source: </small>{{ underwriter?.undSource }}</th>
-              <th><small>Type: </small>{{ underwriter?.undType }}</th>
               <th><small>Lead Date: </small>{{ underwriter?.undLeadDate }}</th>
+              <th><small>Date of Inc.: </small>{{ underwriter?.undDob }}</th>
             </tr>
             <tr>
-              <th><small>Physical Address: </small> {{ underwriter?.undPhysicalAddress }}</th>
-              <th><small>Postal Address: </small> {{ underwriter?.undPostalAddress }}</th>
+              <th><small>Address: </small> {{ underwriter?.undPostalAddress }}, {{ underwriter?.undCity }}, {{ underwriter?.undState }}</th>
+              <th><small>P.O.Box: </small> {{ underwriter?.undPostalCode }} </th>
               <th><small>Country: </small> {{ underwriter?.undCountry }}</th>
             </tr>
           </table>
