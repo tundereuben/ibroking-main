@@ -5,6 +5,7 @@ import { Router, RouterStateSnapshot } from '@angular/router';
 
 import { Client } from '../../../models/Client';
 import { Underwriter } from '../../../models/Underwriter';
+import { User } from '../../../models/User';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -22,6 +23,7 @@ export class CrmComponent implements OnInit {
   individual = false;
   corporate = false;
   underwriters: Underwriter[];
+  users: User[];
 
   @ViewChild('clientForm', {static: false }) form: any;
 
@@ -39,6 +41,10 @@ export class CrmComponent implements OnInit {
     this.setupService.getUnderwriters().subscribe(underwriters => {
       this.underwriters = underwriters;
     });
+
+    this.setupService.getUsers().subscribe(users => {
+      this.users = users;
+    })
   }
 
   // Show client type
@@ -82,28 +88,8 @@ export class CrmComponent implements OnInit {
     this.router.navigate([`/underwriter-details/${value.undCode}`]);
   }
 
-  // When the form is submitted
-  // onSubmit({ value, valid }: { value: any, valid: boolean }) {
-  //   console.log(value);
-  //   if (!valid) {
-  //     this.flashMessage.show('Please fill out the form correctly', { cssClass: 'alert-danger', timeout: 4000 });
-  //   } else {
-  //     this.setupService.addClient(value)
-  //       .subscribe(response => {
-  //         // this.flashMessage.show('New client added', { cssClass: 'alert-success', timeout: 4000 });
-  //         // this.setupService.getClients().subscribe(clients => this.clients = clients);
-  //         console.log(response),
-  //         err => console.log(err)
-  //       });
-        
-  //   }
-  // }
-
-  // Delete a client
-  // deleteClient(client) {
-  //   this.setupService.deleteClient(client).subscribe(client =>
-  //     this.setupService.getClients().subscribe(clients => this.clients = clients)
-  //   )
-  // };
+  userDetails(value){
+    this.router.navigate([`/user-details/${value.userId}`]);
+  }
   
 }

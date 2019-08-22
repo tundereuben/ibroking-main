@@ -76,6 +76,13 @@ import { UnderwriterDetailsComponent } from './components/setups/underwriter-det
 import { UnderwriterAddComponent } from './components/setups/underwriter-add/underwriter-add.component';
 import { UnderwriterEditComponent } from './components/setups/underwriter-edit/underwriter-edit.component';
 
+import { LoginComponent } from './components/login/login.component';
+import { AuthService } from './services/auth.service';
+import { UserAddComponent } from './components/setups/user-add/user-add.component';
+import { UserDetailsComponent } from './components/setups/user-details/user-details.component';
+import { UserEditComponent } from './components/setups/user-edit/user-edit.component';
+// import { AuthGuard } from './guard/auth.guard';
+
 
 @NgModule({
   declarations: [
@@ -141,6 +148,10 @@ import { UnderwriterEditComponent } from './components/setups/underwriter-edit/u
     UnderwriterDetailsComponent,
     UnderwriterAddComponent,
     UnderwriterEditComponent,
+    LoginComponent,
+    UserAddComponent,
+    UserDetailsComponent,
+    UserEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -153,7 +164,7 @@ import { UnderwriterEditComponent } from './components/setups/underwriter-edit/u
     MomentModule,
     HttpClientModule
   ],
-  providers: [SetupService],
+  providers: [SetupService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

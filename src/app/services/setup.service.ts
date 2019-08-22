@@ -20,6 +20,7 @@ import { Benefit } from '../models/Benefit';
 import { Discount } from '../models/Discount';
 import { Rate } from '../models/Rate';
 
+import { User } from '../models/User';
 import { Client } from '../models/Client';
 import { Underwriter } from '../models/Underwriter';
 
@@ -98,6 +99,7 @@ export class SetupService {
   ratesUrl = 'http://localhost:8080/api/rates';
   underwritersUrl = 'http://localhost:8080/api/underwriters';
   contactsUrl = 'http://localhost:8080/api/contacts';
+  usersUrl = 'http://localhost:8080/api/users';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -109,7 +111,7 @@ export class SetupService {
   // Error handler
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> =>  {
-      console.error(error);
+      // console.error(error);
       console.log(`${operation} failed: ${error.message}`);
       return of(result as T);
     }
@@ -390,6 +392,43 @@ export class SetupService {
     return this.http.delete(this.clientsUrl + "/" + client.clntCode);
   }
   // +++++++ CLIENT FUNCTIONS ENDS ++++++++ //
+
+
+  // =========================== //
+  // ==== USER FUNCTIONS ====== //
+  // =========================== //
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.usersUrl);
+  }
+  
+  getUser(id: string): Observable<User> {
+    const url = `${this.usersUrl}/${id}`;
+    return this.http.get<User>(url);
+  }
+
+  addUser(newUser: User): Observable<User> {
+    return this.http.post<User>(this.usersUrl, JSON.stringify(newUser), {headers: DEFAULT_HEADERS});
+  }
+
+  updateUser(updatedUser: User): Observable<User> {
+    const url = `${this.usersUrl}/${updatedUser.userId}`;
+    console.log(url, updatedUser);
+    return this.http.put<User>(url, updatedUser, this.httpOptions).pipe(
+      tap(_ => console.log(`updated user code = ${updatedUser.userId}`)),
+      catchError(this.handleError<any>('updatedUser'))
+    );
+  }
+
+  deleteUser(user: User) {
+    return this.http.delete(this.usersUrl + "/" + user.userId);
+  }
+
+  loginUser(currentUser: User): Observable<User> {
+    const url = `http://localhost:8080/api/users/auth/v1/login`;
+    return this.http.post<User>(url, JSON.stringify(currentUser), {headers: DEFAULT_HEADERS});
+  }
+  // +++++++ USER FUNCTIONS ENDS ++++++++ //
 
   // =========================== //
   // ==== UNDERWRITER FUNCTIONS ====== //

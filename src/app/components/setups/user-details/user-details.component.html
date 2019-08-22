@@ -1,0 +1,39 @@
+<div id="content-area">
+
+  <div class="container">
+    <a routerLink="/crm">Back to CRM</a>
+    <div id="main-content">
+      <div class="table-responsive">
+        <!-- Tbl Respons -->
+        <table class="table table-bordered">
+          <tr>
+            <th> <small>Name: </small> {{user?.firstName }} {{ user?.lastName }} ({{user?.title}})</th>
+            <th> <small>Email: </small> {{ user?.email }}</th>
+            <th> <small>Phone: </small> {{ user?.mobile }}</th>
+          </tr>
+          <tr>
+            <th> <small>Gender: </small> {{ user?.gender }} </th>
+            <th><small>Title: </small> {{ user?.title }}</th>
+            <th><small>Date of Birth.: </small>{{ user?.dob }}</th>
+          </tr>
+          <!-- <tr>
+            <th><small>Source: </small>{{ user?.Source }}</th>
+            <th><small>Lead Date: </small>{{ user?.LeadDate }}</th>
+            <th><small>Date of Birth.: </small>{{ user?.dob }}</th>
+          </tr> -->
+          <tr>
+            <th><small>Address: </small> {{ user?.postalAddress }}, {{ user?.city }}, {{ user?.state }}</th>
+            <th><small>P.O.Box: </small> {{ user?.postalCode }} </th>
+            <th><small>Country: </small> {{ user?.country }}</th>
+          </tr>
+        </table>
+
+      </div><!-- Tbl Respons -->
+      <div class="buttons" style="float:right">
+        <a routerLink="/user-edit/{{ user?.userId }}" class="btn btn-success" style="margin: 0 5px">Edit
+          User</a>
+        <button (click)="deleteUser(user)" class="btn btn-danger">Delete User</button>
+      </div>
+    </div>
+  </div>
+</div>

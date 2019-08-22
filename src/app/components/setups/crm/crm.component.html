@@ -92,7 +92,25 @@
 
         <!-- USERS -->
         <div *ngIf="showUsers" class="col-md-9" style="margin-top:30px;">
-          Users
+          <h3 class="text-left" style="float: left">USERS</h3>
+          <a routerLink="/user-add" class="btn btn-success" style="float: right">
+            New User <span class="glyphicon glyphicon-plus"></span>
+          </a>
+          <table class=" table table-hover table-responsive">
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>User ID</th>
+              <!-- <th>Actions</th> -->
+            </tr>
+            <tr *ngFor="let user of users" class="users" (click)="userDetails(user)">
+              <td> {{ user.firstName }}</td>
+              <td>{{ user.lastName }}</td>
+              <td>{{ user.email }} </td>
+              <td>{{ user.userId }} </td>
+            </tr>
+          </table>
         </div>
 
       </div>

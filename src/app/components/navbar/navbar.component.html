@@ -3,24 +3,16 @@
       <!-- <img class="mt-4" src="../../../assets/images/kbc-logo.png" /> -->
       <h2> eBroking</h2>
     </div>
-      <div id="top-right">
+      <div *ngIf="isLoggedIn()" id="top-right">
         <ul class="nav nav-pills">
-         <!-- <li id="space1">
-             <a href="http://10.176.18.36:8376/custodian/agent/pendingpay.php"><span style="font-size:20px;" class="glyphicon glyphicon-shopping-cart"
-         aria-hidden="true"></span>&nbsp;<span class="badge float-badge">2</span></a>
-         </li>
-         <li id="space2">
-             <a href="http://10.176.18.36:8376/custodian/agent/notifications.php"><span style="font-size:20px;" class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-        &nbsp;<span class="badge float-badge">5</span></a> 
-         </li> -->
           <li class="dropdown pull-right" id="space3">
           <a href="index.html#" class="dropdown-toggle" data-toggle="dropdown"><span style="font-size:20px;" 
           class="glyphicon glyphicon-user"></span><span class="caret"></span></a>
             <ul class="dropdown-menu"  id="user-prof">
-              <li><strong>3</strong></li>
+              <li style="color: dimgray"> <strong>{{ loggedInUser.firstName }} {{ loggedInUser.lastName }}</strong></li>
               <li class="divider"></li>
               <li class="logout-li">
-                <a href="http://10.176.18.36:8376/custodian/agent/logout.php" class="logout-link">
+                <a  class="logout-link" (click)="logout()">
                   <span class="glyphicon glyphicon-log-out" aria-hidden="true">
                   </span>
                     &nbsp;&nbsp;LogOut
@@ -33,7 +25,7 @@
   </div> <!-----end of <div id="top-right">---->
   </div> <!----end of <div id="top-wrap">---->
   
-  <div id="main-menu">
+  <div *ngIf="isLoggedIn()" id="main-menu">
   <div id="container">
   <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -74,7 +66,7 @@
             </ul>
           </li>
           <li><a routerLink="/quotations">QUOTATIONS</a></li>
-          <li><a routerLink="/#">UNDERWRITING</a></li>
+          <li><a routerLink="/underwriting">UNDERWRITING</a></li>
           <!-- <li class="dropdown">
             <a href="index.html#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">UNDERWRITING<span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -110,14 +102,14 @@
        
         <ul class="nav navbar-nav navbar-right">
           
-          <li class="dropdown">
+          <!-- <li class="dropdown">
             <a href="index.html#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">MY ACCOUNT <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="index.html#">My Calendar</a></li>
               <li><a href="index.html#">Notifications</a></li>
               <li><a href="index.html#">My Clients</a></li>
             </ul>
-          </li>
+          </li> -->
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

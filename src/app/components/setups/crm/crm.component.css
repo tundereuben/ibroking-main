@@ -51,7 +51,7 @@ li:hover {
   border: solid 2px #fff;
 }
 
-.clients:hover, .underwriters:hover {
+.clients:hover, .underwriters:hover, .users:hover {
   background: #fff;
   cursor: pointer;
 }

@@ -1,0 +1,58 @@
+#login-container{
+	width:960px;
+	height:400px;
+	position: relative;
+	z-index:99;
+	top:40px;
+	float: none;
+	margin: 0 auto;
+	padding:5px 15px 15px 15px;
+	}
+#login-wrap{
+	width:280px;
+	height:400px;
+	background:#e8e8e8;
+	border-radius:7px;
+	-webkit-border-radius:7px;
+	float:right;
+	padding:5px 15px 15px 15px;
+  }
+  
+  #login-wrap2{
+    width:100%;
+    height: auto;
+    float:left;
+    background:#e8e8e8;
+    border-radius:7px;
+    -webkit-border-radius:7px;
+    padding:10px 20px 30px;
+    margin-top:40px;
+  }
+  #register-wrap{
+    width:600px;
+    margin:auto;
+    height: auto;
+    
+    }
+
+    #register-wrap2{
+      width:900px; 
+      background:#FFFFFF; 
+      border: solid #CCCCCC 1px; 
+      margin:50px auto 20px; 
+      padding:40px;
+      border-radius:7px;
+      
+      }
+    #register-form{
+      width:100%;
+      float:left;
+      padding:40px 0;
+    }
+
+    #register-bg{
+      width:100%;
+      float:left;
+      height:600px;
+      /* background:url(../images/reg-bg.png) no-repeat top; */
+    }

@@ -25,7 +25,7 @@ export class UnderwriterDetailsComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.setupService.getUnderwriter(this.id).subscribe(underwriter => {
       this.underwriter = underwriter;
-      console.log(this.underwriter);
+      // console.log(this.underwriter);
     });
   }
 

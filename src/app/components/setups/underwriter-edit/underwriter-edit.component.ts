@@ -4,7 +4,7 @@ import { SetupService } from '../../../services/setup.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Underwriter } from '../../../models/Underwriter';
 
-import {NgForm} from '@angular/forms';
+import {NgForm} from '@angular/forms'; 
 
 
 @Component({
@@ -38,7 +38,6 @@ export class UnderwriterEditComponent implements OnInit {
     } else {
       this.underwriter = underwriterForm.value;
       this.underwriter.undCode = this.id;
-      console.log(this.underwriter);
       this.setupService.updateUnderwriter(this.underwriter)
         .subscribe(response => {
           // this.flashMessage.show('New underwriter added', { cssClass: 'alert-success', timeout: 4000 });

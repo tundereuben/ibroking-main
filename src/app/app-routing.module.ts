@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { LoginComponent } from './components/login/login.component';
 
 import { ClassComponent } from './components/setups/class/class.component';
 import { ClassAddComponent } from './components/setups/class-add/class-add.component';
@@ -66,86 +67,98 @@ import { ClientNewComponent } from './components/setups/client-new/client-new.co
 import { ClientContactComponent } from './components/setups/client-contact/client-contact.component';
 import { ClientEditComponent } from './components/setups/client-edit/client-edit.component';
 import { ClientDetailsComponent } from './components/setups/client-details/client-details.component';
+
 import { UnderwriterAddComponent } from './components/setups/underwriter-add/underwriter-add.component';
 import { UnderwriterDetailsComponent } from './components/setups/underwriter-details/underwriter-details.component';
 import { UnderwriterEditComponent } from './components/setups/underwriter-edit/underwriter-edit.component';
 
+import { UserAddComponent } from './components/setups/user-add/user-add.component';
+import { UserDetailsComponent } from './components/setups/user-details/user-details.component';
+import { UserEditComponent } from './components/setups/user-edit/user-edit.component';
+
 import { CrmComponent } from './components/setups/crm/crm.component';
 
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
-  {path: '', component: HomePageComponent},
+  {path: '', component: HomePageComponent, canActivate: [AuthGuard]},
+  {path: 'login', component: LoginComponent},
 
-  {path: 'class', component: ClassComponent},
-  {path: 'class-add', component: ClassAddComponent},
-  {path: 'class-details/:id', component: ClassDetailsComponent},
-  {path: 'class-edit/:id', component: ClassEditComponent},
+  {path: 'class', component: ClassComponent, canActivate: [AuthGuard]},
+  {path: 'class-add', component: ClassAddComponent, canActivate: [AuthGuard]},
+  {path: 'class-details/:id', component: ClassDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'class-edit/:id', component: ClassEditComponent, canActivate: [AuthGuard]},
   
-  {path: 'subclass', component: SubclassComponent},
-  {path: 'subclass-add', component: SubclassAddComponent},
-  {path: 'subclass-details/:id', component: SubclassDetailsComponent},
-  {path: 'subclass-edit/:id', component: SubclassEditComponent},
+  {path: 'subclass', component: SubclassComponent, canActivate: [AuthGuard]},
+  {path: 'subclass-add', component: SubclassAddComponent, canActivate: [AuthGuard]},
+  {path: 'subclass-details/:id', component: SubclassDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'subclass-edit/:id', component: SubclassEditComponent, canActivate: [AuthGuard]},
 
 
-  {path: 'products', component: ProductsComponent},
+  {path: 'products', component: ProductsComponent, canActivate: [AuthGuard]},
   {path: 'product-add', component: ProductAddComponent},
-  {path: 'product-details/:id', component: ProductDetailsComponent},
-  {path: 'product-edit/:id', component: ProductEditComponent},
+  {path: 'product-details/:id', component: ProductDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'product-edit/:id', component: ProductEditComponent, canActivate: [AuthGuard]},
 
-  {path: 'clauses', component: ClausesComponent},
-  {path: 'clause-add', component: ClauseAddComponent},
-  {path: 'clause-details/:id', component: ClauseDetailsComponent},
-  {path: 'clause-edit/:id', component: ClauseEditComponent},
+  {path: 'clauses', component: ClausesComponent, canActivate: [AuthGuard]},
+  {path: 'clause-add', component: ClauseAddComponent, canActivate: [AuthGuard]},
+  {path: 'clause-details/:id', component: ClauseDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'clause-edit/:id', component: ClauseEditComponent, canActivate: [AuthGuard]},
 
-  {path: 'sections', component: SectionsComponent},
-  {path: 'section-add', component: SectionAddComponent},
-  {path: 'section-details/:id', component: SectionDetailsComponent},
-  {path: 'section-edit/:id', component: SectionEditComponent},
+  {path: 'sections', component: SectionsComponent, canActivate: [AuthGuard]},
+  {path: 'section-add', component: SectionAddComponent, canActivate: [AuthGuard]},
+  {path: 'section-details/:id', component: SectionDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'section-edit/:id', component: SectionEditComponent, canActivate: [AuthGuard]},
 
-  {path: 'covertypes', component: CovertypesComponent},
-  {path: 'covertype-add', component: CovertypeAddComponent},
-  {path: 'covertype-details/:id', component: CovertypeDetailsComponent},
-  {path: 'covertype-edit/:id', component: CovertypeEditComponent},
+  {path: 'covertypes', component: CovertypesComponent, canActivate: [AuthGuard]},
+  {path: 'covertype-add', component: CovertypeAddComponent, canActivate: [AuthGuard]},
+  {path: 'covertype-details/:id', component: CovertypeDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'covertype-edit/:id', component: CovertypeEditComponent, canActivate: [AuthGuard]},
 
-  {path: 'quotations', component: QuotationsComponent},
-  {path: 'quotation-add', component: QuotationAddComponent},
-  {path: 'quotation-details/:id', component: QuotationDetailsComponent},
-  {path: 'quotation-edit/:id', component: QuotationEditComponent},
+  {path: 'quotations', component: QuotationsComponent, canActivate: [AuthGuard]},
+  {path: 'quotation-add', component: QuotationAddComponent, canActivate: [AuthGuard]},
+  {path: 'quotation-details/:id', component: QuotationDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'quotation-edit/:id', component: QuotationEditComponent, canActivate: [AuthGuard]},
 
-  {path: 'quote-products', component: QuoteProductsComponent},
-  {path: 'quote-products-add/:id', component: QuoteProductsAddComponent},
-  {path: 'quote-products-details/:id', component: QuoteProductsDetailsComponent},
-  {path: 'quote-products-edit/:id', component: QuoteProductsEditComponent},
+  {path: 'quote-products', component: QuoteProductsComponent, canActivate: [AuthGuard]},
+  {path: 'quote-products-add/:id', component: QuoteProductsAddComponent, canActivate: [AuthGuard]},
+  {path: 'quote-products-details/:id', component: QuoteProductsDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'quote-products-edit/:id', component: QuoteProductsEditComponent, canActivate: [AuthGuard]},
 
-  {path: 'quote-risks', component: QuoteRisksComponent},
-  {path: 'quote-risks-add/:id', component: QuoteRisksAddComponent},
-  {path: 'quote-risks-details/:id', component: QuoteRisksDetailsComponent},
-  {path: 'quote-risks-edit/:id', component: QuoteRisksEditComponent},
+  {path: 'quote-risks', component: QuoteRisksComponent, canActivate: [AuthGuard]},
+  {path: 'quote-risks-add/:id', component: QuoteRisksAddComponent, canActivate: [AuthGuard]},
+  {path: 'quote-risks-details/:id', component: QuoteRisksDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'quote-risks-edit/:id', component: QuoteRisksEditComponent, canActivate: [AuthGuard]},
 
-  {path: 'quote-risk-limits', component: QuoteRiskLimitsComponent},
-  {path: 'quote-risk-limits-add/:id', component: QuoteRiskLimitsAddComponent},
-  {path: 'quote-risk-limits-details/:id', component: QuoteRiskLimitsDetailsComponent},
-  {path: 'quote-risk-limits-edit/:id', component: QuoteRiskLimitsEditComponent},
+  {path: 'quote-risk-limits', component: QuoteRiskLimitsComponent, canActivate: [AuthGuard]},
+  {path: 'quote-risk-limits-add/:id', component: QuoteRiskLimitsAddComponent, canActivate: [AuthGuard]},
+  {path: 'quote-risk-limits-details/:id', component: QuoteRiskLimitsDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'quote-risk-limits-edit/:id', component: QuoteRiskLimitsEditComponent, canActivate: [AuthGuard]},
 
   {path: 'ids', component: IdsComponent},
-  {path: 'benefits', component: BenefitsComponent},
-  {path: 'discount', component: DiscountComponent},
-  {path: 'loadings', component: LoadingsComponent},
+  {path: 'benefits', component: BenefitsComponent, canActivate: [AuthGuard]},
+  {path: 'discount', component: DiscountComponent, canActivate: [AuthGuard]},
+  {path: 'loadings', component: LoadingsComponent, canActivate: [AuthGuard]},
   {path: 'commissions', component: CommissionsComponent},
-  {path: 'policies', component: PoliciesComponent},
-  {path: 'policy-add', component: PolicyAddComponent},
-  {path: 'policy-edit/:id', component: PolicyEditComponent},
+  {path: 'policies', component: PoliciesComponent, canActivate: [AuthGuard]},
+  {path: 'policy-add', component: PolicyAddComponent, canActivate: [AuthGuard]},
+  {path: 'policy-edit/:id', component: PolicyEditComponent, canActivate: [AuthGuard]},
 
-  {path: 'client-new', component: ClientNewComponent},
-  {path: 'client-contact/:id', component: ClientContactComponent},
-  {path: 'client-edit/:id', component: ClientEditComponent},
-  {path: 'client-details/:id', component: ClientDetailsComponent},
-  {path: 'underwriter-add', component: UnderwriterAddComponent},
-  {path: 'underwriter-details/:id', component: UnderwriterDetailsComponent},
-  {path: 'underwriter-edit/:id', component: UnderwriterEditComponent},
+  {path: 'client-new', component: ClientNewComponent, canActivate: [AuthGuard]},
+  {path: 'client-contact/:id', component: ClientContactComponent, canActivate: [AuthGuard]},
+  {path: 'client-edit/:id', component: ClientEditComponent, canActivate: [AuthGuard]},
+  {path: 'client-details/:id', component: ClientDetailsComponent, canActivate: [AuthGuard]},
 
-  {path: 'crm', component: CrmComponent},
+  {path: 'underwriter-add', component: UnderwriterAddComponent, canActivate: [AuthGuard]},
+  {path: 'underwriter-details/:id', component: UnderwriterDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'underwriter-edit/:id', component: UnderwriterEditComponent, canActivate: [AuthGuard]},
+
+  {path: 'user-add', component: UserAddComponent, canActivate: [AuthGuard]},
+  {path: 'user-details/:id', component: UserDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'user-edit/:id', component: UserEditComponent, canActivate: [AuthGuard]},
+
+  {path: 'crm', component: CrmComponent, canActivate: [AuthGuard]},
 
   {path: '**', component: NotFoundComponent},
 ];
@@ -155,7 +168,8 @@ const routes: Routes = [
   declarations: [],
   imports: [
     RouterModule.forRoot(routes)
-  ]
+  ],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }
  
