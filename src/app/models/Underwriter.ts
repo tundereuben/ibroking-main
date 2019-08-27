@@ -19,6 +19,7 @@ export class Underwriter {
   undTitle?: string;
   undType?: string;
   undSource?: string;
+  undLeadDate?: string;
 
   undContacFirstname?: string;
   undContactLastname?: string;

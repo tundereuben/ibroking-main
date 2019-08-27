@@ -31,7 +31,7 @@ export class UserEditComponent implements OnInit {
   }
 
   // When the form is submitted
-  onSubmit(userForm: NgForm) {
+  onSubmit(userForm: NgForm) { 
     if (!userForm) {
       this.flashMessage.show('Please fill out the form correctly', { cssClass: 'alert-danger', timeout: 4000 });
     } else {

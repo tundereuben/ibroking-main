@@ -9,11 +9,11 @@ import { Subscription } from 'rxjs';
 import {NgForm} from '@angular/forms';
 
 @Component({
-  selector: 'app-client-new',
-  templateUrl: './client-new.component.html',
-  styleUrls: ['./client-new.component.css']
+  selector: 'app-client-add',
+  templateUrl: './client-add.component.html',
+  styleUrls: ['./client-add.component.css']
 })
-export class ClientNewComponent implements OnInit {
+export class ClientAddComponent implements OnInit {
   client: Client = {};
   clients: Client[];
   individual = false;

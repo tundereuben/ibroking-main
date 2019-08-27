@@ -37,6 +37,20 @@ export class ClientEditComponent implements OnInit {
     });
   }
 
+  
+   // Show client type
+   SelectClientType(e) {
+    let clientType = e.target.value; 
+    if(clientType == "Individual") {
+      this.individual = true;
+      this.corporate = false;
+    } else {
+      this.corporate = true;
+      this.individual = false;
+    }
+  }
+
+
   // When the form is submitted
   onSubmit(clientForm: NgForm) {
     if (!clientForm) {

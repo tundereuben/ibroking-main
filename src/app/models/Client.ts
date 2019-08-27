@@ -20,6 +20,7 @@ export class Client {
   clntTitle?: string;
   clntType?: string;
   clntSource?: string;
+  SelectClientType?: string;
 
   clntContacFirstname?: string;
   clntContactLastname?: string;

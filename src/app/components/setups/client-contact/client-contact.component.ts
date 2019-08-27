@@ -58,7 +58,7 @@ export class ClientContactComponent implements OnInit {
         .subscribe(response => {
           // this.flashMessage.show('New client added', { cssClass: 'alert-success', timeout: 4000 });
           // this.setupService.getClients().subscribe(clients => this.clients = clients);
-          console.log(response),
+          // console.log(response),
           this.client = response,
           err => console.log(err)
           // this.router.navigate([`/client-contact/${this.client.clntCode}`]);

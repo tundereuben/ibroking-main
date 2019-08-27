@@ -413,7 +413,6 @@ export class SetupService {
 
   updateUser(updatedUser: User): Observable<User> {
     const url = `${this.usersUrl}/${updatedUser.userId}`;
-    console.log(url, updatedUser);
     return this.http.put<User>(url, updatedUser, this.httpOptions).pipe(
       tap(_ => console.log(`updated user code = ${updatedUser.userId}`)),
       catchError(this.handleError<any>('updatedUser'))

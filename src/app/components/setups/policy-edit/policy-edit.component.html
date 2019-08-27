@@ -3,50 +3,6 @@
     <div class="col-md-12">
       <h3 class="text-center">{{ policy.polName }} </h3>
 
-      <!-- Class Setup -->
-      <!-- <div class="panel panel-default">
-        <div class="panel-heading panel-grey-head">
-          <h3 class="panel-title panel-grey-title text-bold"><strong>POLICY INFO  </strong></h3>
-        </div>
-        <div class="panel-body">
-            <form #policyForm="ngForm" (submit)="addPolicy()" class="form-inline" id="policyForm">
-              <div class="form-group">
-                <input 
-                type="text" 
-                class="form-control" 
-                name="polName" 
-                id ="polName"
-                placeholder="Policy Name"
-                [(ngModel)]="policy.polName"
-                >
-              </div>
-              <div class="form-group">
-                <input 
-                type="text" 
-                class="form-control" 
-                name="polClaName" 
-                id ="polClaName"
-                placeholder="Class Name"
-                [(ngModel)]="policy.polClaName"
-                >
-              </div>  
-              <div class="form-group">
-                <input 
-                type="text" 
-                class="form-control" 
-                name="polSclName" 
-                id ="polSclName"
-                placeholder="Subclass Name"
-                [(ngModel)]="policy.polSclName"
-                >
-              </div>
-              <span id="policyMessage"></span>
-              <button type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
-              </form>
-        </div>
-        <div></div>
-      </div> -->
-
       <!-- Subclass Setup -->
       <div class="panel panel-default">
         <div class="panel-heading panel-grey-head">
@@ -54,10 +10,6 @@
         </div>
         <div class="panel-body">
           <form class="form-inline">
-            <!-- <div class="form-group">
-              <label class="sr-only" for="class">Class </label>
-              <input type="text" class="form-control" id="class" placeholder="Class Name">
-            </div> -->
             <div class="form-group">
               <label class="sr-only" for="subclassName">Class </label>
               <input type="text" class="form-control" id="subclassName" placeholder="Subclass Name">
@@ -84,12 +36,12 @@
                 >
               </div>
               <span id="clauseMessage"></span>
-              <button (click)="addClause($event)" type="submit"  class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <!-- <button (click)="addClause($event)" type="submit"  class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button> -->
               <div class="list">
                     <span *ngIf="clauses?.length > 0;" >
                         <span *ngFor="let clause of clauses" class="label label-primary"> 
                           {{ clause.clsName }} 
-                          <span (click)="deleteClause(clause)" class="glyphicon glyphicon-remove delete" id="{{ clause.clsCode }}"></span>
+                          <!-- <span (click)="deleteClause(clause)" class="glyphicon glyphicon-remove delete" id="{{ clause.clsCode }}"></span> -->
                         </span> 
                       
                     </span>  
@@ -115,11 +67,11 @@
                 >
               </div>
               <span id="extensionMessage"></span>
-              <button (click)="addExtension()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <!-- <button (click)="addExtension()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button> -->
               <span *ngIf="extensions?.length > 0;" >
                 <span *ngFor="let extension of extensions" class="label label-primary"> 
                   {{ extension.extName }} 
-                  <span (click)="deleteExtension(extension)" class="glyphicon glyphicon-remove delete"></span>
+                  <!-- <span (click)="deleteExtension(extension)" class="glyphicon glyphicon-remove delete"></span> -->
                 </span> 
               </span> 
             </form>
@@ -155,7 +107,7 @@
                   </select>
               </div> 
               <span id="idMessage"></span>  
-              <button (click)="addId()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <!-- <button (click)="addId()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button> -->
 
               <!-- Show added IDs -->
               <table *ngIf="ids?.length > 0;"  class="table table-striped table-bordered" >
@@ -167,7 +119,7 @@
                 <tr *ngFor="let id of ids">
                   <td>{{ id.idName }}</td>
                   <td>{{id.idType}} </td>
-                  <td ><span (click)="deleteId(id)" class="glyphicon glyphicon-remove delete" id="{{ id.idCode }}" style="color: red;"></span></td>
+                  <!-- <td ><span (click)="deleteId(id)" class="glyphicon glyphicon-remove delete" id="{{ id.idCode }}" style="color: red;"></span></td> -->
                 </tr>
               </table>
             </form>
@@ -224,7 +176,7 @@
                   >
                 </div>      
                 <span id="discountMessage"></span>  
-              <button (click)="addDiscount()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <!-- <button (click)="addDiscount()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button> -->
 
               <!-- Show added Discounts -->
               <table *ngIf="discounts?.length > 0;"  class="table table-striped table-bordered" >
@@ -240,7 +192,7 @@
                   <td>{{ discount.dsctType }} </td>
                   <td>{{ discount.dsctCalcOn }} </td>
                   <td> {{ discount.dsctDefaultValue }}</td>
-                  <td ><span (click)="deleteDiscount(discount)" class="glyphicon glyphicon-remove delete" id="{{ id.idCode }}" style="color: red;"></span></td>
+                  <!-- <td ><span (click)="deleteDiscount(discount)" class="glyphicon glyphicon-remove delete" id="{{ id.idCode }}" style="color: red;"></span></td> -->
                 </tr>
               </table>
             </form>
@@ -299,7 +251,7 @@
                   >
                 </div>  
                 <span id="loadingMessage"></span>      
-              <button (click)="addLoading()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <!-- <button (click)="addLoading()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button> -->
 
               <!-- Show Added Loadings -->
               <table *ngIf="loadings?.length > 0;"  class="table table-striped table-bordered" >
@@ -315,7 +267,7 @@
                   <td>{{ loading.loadType }} </td>
                   <td>{{ loading.loadCalcOn }} </td>
                   <td> {{ loading.loadDefaultValue }}</td>
-                  <td ><span (click)="deleteLoading(loading)" class="glyphicon glyphicon-remove delete" style="color: red;"></span></td>
+                  <!-- <td ><span (click)="deleteLoading(loading)" class="glyphicon glyphicon-remove delete" style="color: red;"></span></td> -->
                 </tr>
               </table>
             </form>
@@ -372,7 +324,7 @@
                   >
                 </div>      
                 <span id="commissionMessage"></span>
-              <button (click)="addCommission()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <!-- <button (click)="addCommission()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button> -->
 
               <!-- Show added Commission -->
               <table *ngIf="commissions?.length > 0;"  class="table table-striped table-bordered" >
@@ -388,7 +340,7 @@
                     <td>{{ commission.commType }} </td>
                     <td>{{ commission.commCalcOn }} </td>
                     <td> {{ commission.commDefaultValue }}</td>
-                    <td ><span (click)="deleteCommission(commission)" class="glyphicon glyphicon-remove delete" style="color: red;"></span></td>
+                    <!-- <td ><span (click)="deleteCommission(commission)" class="glyphicon glyphicon-remove delete" style="color: red;"></span></td> -->
                   </tr>
                 </table>
             </form>
@@ -441,7 +393,7 @@
                 >
               </div>
               <span id="benefitMessage"></span>
-              <button (click)="addBenefit()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <!-- <button (click)="addBenefit()" type="submit" class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button> -->
 
               <!-- Show added Benefit -->
               <table *ngIf="benefits?.length > 0;"  class="table table-striped table-bordered" >

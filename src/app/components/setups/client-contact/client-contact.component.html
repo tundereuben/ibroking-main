@@ -1,7 +1,7 @@
 <div id="client-new" style="margin: 20px;">
   <div id="container">
-    <h3 class="page-title">NEW CLIENT</h3>
-    <a routerLink="/crm">Back to Clients</a>
+    <h3 class="page-title">NEW CONTACT</h3>
+    <a routerLink="/client-details/{{ client?.clntCode }}">Back to Client Details</a>
     <div id="main-content">
       <div class="row">
         <form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)">
