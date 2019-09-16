@@ -70,6 +70,7 @@ export class QuoteProductsAddComponent implements OnInit {
     this.quotCode = this.route.snapshot.params['id'];
     this.quotationService.getQuotation(this.quotCode).subscribe(quotation => {
       this.quotation = quotation;
+      console.log(quotation);
     });
 
     this.setupService.getPolicies().subscribe(policies => {
@@ -99,10 +100,10 @@ export class QuoteProductsAddComponent implements OnInit {
 
 
   // When the back button is clicked.
-  // onBack(){
-  //   let back = true;
-  //   sessionStorage.setItem("back", JSON.stringify(back));
-  // }
+  onBack(){
+    let back = true;
+    sessionStorage.setItem("back", JSON.stringify(back));
+  }
 
   onSubmit({value, valid}: {value: QuoteProduct, valid: boolean}) {
     // console.log(value, valid);

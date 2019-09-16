@@ -6,7 +6,7 @@ import { Router, RouterStateSnapshot } from '@angular/router';
 import { Client } from '../../../models/Client';
 import { Underwriter } from '../../../models/Underwriter';
 import { User } from '../../../models/User';
-import { Subscription } from 'rxjs';
+// import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-crm',
@@ -17,15 +17,21 @@ export class CrmComponent implements OnInit {
   clients: Client[];
   client: Client;
   // createNew = true;
+
   showClient = true;
-  showVendors= false;
+  showVendors = false;
   showUsers = false;
+
   individual = false;
   corporate = false;
-  underwriters: Underwriter[];
-  users: User[];
 
-  @ViewChild('clientForm', {static: false }) form: any;
+  underwriters: Underwriter[];
+  underwriter: Underwriter;
+
+  users: User[];
+  somethingFound = false;
+
+  @ViewChild('clientForm', { static: false }) form: any;
 
   constructor(
     private flashMessage: FlashMessagesService,
@@ -50,7 +56,7 @@ export class CrmComponent implements OnInit {
   // Show client type
   SelectClientType(e) {
     let clientType = e.target.value;
-    if(clientType == "Individual") {
+    if (clientType == "Individual") {
       this.individual = true;
       this.corporate = false;
     } else {
@@ -59,37 +65,54 @@ export class CrmComponent implements OnInit {
     }
   }
 
-  viewClient() {
-    this.showClient = true;
-    this.showVendors = false;
-    this.showUsers = false;
-  }
-
-  viewVendors(){
-    this.showVendors = true;
-    this.showClient = false;
-    this.showUsers = false;
-  }
-
-  viewUsers(){
-    this.showVendors = false;
-    this.showClient = false;
-    this.showUsers = true;
-    
-  }
-
-  // Client Details Navigation
-  clientDetails(value){
+ // Client Details Navigation
+  clientDetails(value) {
     this.router.navigate([`/client-details/${value.clntCode}`]);
   }
 
   // Underwriter Details Navigation
-  underwriterDetails(value){
+  underwriterDetails(value) {
     this.router.navigate([`/underwriter-details/${value.undCode}`]);
   }
 
-  userDetails(value){
-    this.router.navigate([`/user-details/${value.userId}`]);
+  // userDetails(value) {
+  //   this.router.navigate([`/user-details/${value.userId}`]);
+  // }
+
+
+  // Search by email
+  searchClientByEmail(e) {
+    let searchString = this.prepareForSeach(e);
+     this.setupService.getClientsByEmail(searchString).subscribe(result => {   
+      this.clients = result;
+    });
   }
-  
+
+  // Search by Lastname
+  searchClientByLastname(e) {
+    let searchString = this.prepareForSeach(e);
+     this.setupService.getClientsByLastname(searchString).subscribe(result => {   
+      this.clients = result;
+    });
+  }
+
+  // Search by ClientCode
+  searchClientByCode(e) {
+    let searchString = (this.prepareForSeach(e));
+     this.setupService.getClient(searchString).subscribe(result => {   
+      this.client = result;
+      this.clients.push(this.client);
+    });
+  }
+
+
+  prepareForSeach(e) {  
+    if (e.keyCode === 13) {
+      this.clients = [];
+      let searchString = e.target.value;
+      searchString = searchString.trim()  // Remove white spaces if any
+      return searchString;  
+    }
+  }
+
 }

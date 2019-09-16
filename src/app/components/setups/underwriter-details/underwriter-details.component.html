@@ -1,26 +1,25 @@
 <div id="content-area">
 
     <div class="container">
-      <a routerLink="/crm">Back to CRM</a>
+      <a routerLink="/vendors">Back to Vendors</a>
       <div id="main-content">
         <div class="table-responsive">
           <!-- Tbl Respons -->
           <table class="table table-bordered">
             <tr>
-              <th> <small>Name: </small> {{underwriter?.undLastname }} {{ underwriter?.undOthernames }} 
-                {{ underwriter?.undCompanyName }}</th>
+              <th> <small>Company Name: </small> {{ underwriter?.undCompanyName }}</th>
               <th> <small>Email: </small> {{ underwriter?.undEmail }}</th>
               <th> <small>Phone: </small> {{ underwriter?.undMobile }}</th>
             </tr>
             <tr>
-              <th> <small>Sector: </small> {{ underwriter?.undSector }} </th>
-              <th><small>Description: </small> {{ underwriter?.undDescription }}</th>
-              <th><small> </small> </th>
+              <th> <small>Account No: </small> {{ underwriter?.undAccountNo }}</th>
+              <th> <small>Bank Name: </small> {{ underwriter?.undBankName}} ({{ underwriter?.undBankBranch }}) </th>
+              <th> <small>Payment Method: </small> {{ underwriter?.undPaymentMethod }}</th>
             </tr>
             <tr>
-              <th><small>Source: </small>{{ underwriter?.undSource }}</th>
-              <th><small>Lead Date: </small>{{ underwriter?.undLeadDate }}</th>
-              <th><small>Date of Inc.: </small>{{ underwriter?.undDob }}</th>
+              <th> <small>PENCOM No: </small> {{ underwriter?.undPencomNo }}</th>
+              <th> <small>Registration No: </small> {{ underwriter?.undRegNo }}</th>
+              <th></th>
             </tr>
             <tr>
               <th><small>Address: </small> {{ underwriter?.undPostalAddress }}, {{ underwriter?.undCity }}, {{ underwriter?.undState }}</th>

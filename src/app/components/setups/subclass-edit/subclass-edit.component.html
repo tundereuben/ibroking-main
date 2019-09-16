@@ -429,7 +429,7 @@
                 >
               </div>
               <span id="clauseMessage"></span>
-              <button (click)="addClause($event)" type="submit"  class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
+              <button (click)="addClause()" type="submit"  class="btn btn-success new-policy"><span class="glyphicon glyphicon-plus"></span></button>
 
               <ul *ngIf="clauses?.length > 0;" class=" list-group list-inline">
                 <li *ngFor="let clause of clauses" class="list-group-item-info">

@@ -9,109 +9,61 @@
         <div class="col-md-3 " style="margin-top:30px;">
           <ul class="list-group ">
             <li class="list-group-item menu" style="text-align:center;font-weight:bold;">CRM</li>
-            <li (click)='viewClient()' class="list-group-item menu" data-toggle="collapse" data-target="#demo">CLIENTS
-            </li>
-            <li (click)='viewVendors()' class="list-group-item menu" data-toggle="collapse" data-target="#vendors">
-              VENDORS</li>
-            <li (click)='viewUsers()' class="list-group-item menu">USERS</li>
+            <li routerLink="/crm" class="list-group-item menu">CLIENTS</li>
+            <li routerLink="/vendors" class="list-group-item menu">VENDORS</li>
+            <li routerLink="/users" class="list-group-item menu">USERS</li>
           </ul>
         </div>
 
-        <div *ngIf="showClient" class="col-md-9" style="margin-top:30px;">
+        <div class="col-md-9" style="margin-top:30px;">
           <!-- VIEW EXISTING CLIENTS -->
           <div>
             <h3  class="text-left" style="float: left">CLIENTS</h3>
-            <a routerLink="/client-add" class="btn btn-success" style="float: right" >
-              Add Client <span class="glyphicon glyphicon-plus"></span>
-            </a>
+            <div style="float: right">
+              <a routerLink="/client-add" class="btn btn-success"  >
+                Add Client <span class="glyphicon glyphicon-plus"></span>
+              </a>
+            </div>
+            <div class="row" style="clear: both;">
+              <div class="col-sm-4">
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  placeholder="Search By Email"
+                  (keyup)="searchClientByEmail($event)">
+              </div>
+              <div class="col-sm-4">
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  placeholder="Search By Lastname/Company Name"
+                  (keyup)="searchClientByLastname($event)">
+              </div>
+              <div class="col-sm-4">
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  placeholder="Search By Client Code"
+                  (keyup)="searchClientByCode($event)">
+              </div>
+            </div>
+            <br>
             <table class=" table table-hover table-responsive">
               <tr>
                 <th>Client Name</th>
                 <th>Client Type</th>
                 <th>Email</th>
                 <th>Lead Date</th>
-                <!-- <th>Actions</th> -->
               </tr>
               <tr *ngFor="let client of clients" class="clients" (click)="clientDetails(client)">
                 <td>{{ client.clntCompanyName }} {{ client.clntLastname }} {{ client.clntOthernames }}</td>
                 <td>{{ client.clntType }}</td>
                 <td>{{ client.clntEmail }} </td>
                 <td>{{ client.clntLeadDate }} </td>
-                <!-- <td style="text-align: center">
-                    <span data-toggle="modal"data-target="#newClient"  class="glyphicon glyphicon-edit"></span>
-                    <span (click)="deleteClient(client)" style="margin-left: 20px" class="glyphicon glyphicon-remove"></span>
-                  </td> -->
               </tr>
             </table>
           </div>
 
-        </div>
-
-        <!-- VENDORS -->
-        <div *ngIf="showVendors" class="col-md-9" style="margin-top:30px;">
-          <h3 class="text-center">VENDORS</h3>
-          <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#underwriters">Underwriters</a></li>
-            <li><a data-toggle="tab" href="#agents">Agents</a></li>
-            <li><a data-toggle="tab" href="#others">Others</a></li>
-          </ul>
-
-
-
-          <div class="tab-content">
-            <div id="underwriters" class="tab-pane fade in active">
-              <a routerLink="/underwriter-add" class="btn btn-success" style="float: right; margin-bottom: 10px;">
-                New Underwriter <span class="glyphicon glyphicon-plus"></span>
-              </a>
-              <table class=" table table-hover table-responsive">
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Sector</th>
-                  <!-- <th>Actions</th> -->
-                </tr>
-                <tr *ngFor="let underwriter of underwriters" class="underwriters" (click)="underwriterDetails(underwriter)">
-                  <td> {{ underwriter.undCompanyName }} </td>
-                  <td>{{ underwriter.undEmail }} </td>
-                  <td>{{ underwriter.undSector }} </td>
-                  <!-- <td style="text-align: center">
-                    <span data-toggle="modal" data-target="#newClient" class="glyphicon glyphicon-edit"></span>
-                    <span (click)="deleteClient(underwriter)" style="margin-left: 20px" class="glyphicon glyphicon-remove"></span>
-                  </td> -->
-                </tr>
-              </table>
-            </div>
-            <div id="agents" class="tab-pane fade in">
-              agents
-            </div>
-            <div id="others" class="tab-pane fade in">
-              others
-            </div>
-          </div>
-        </div>
-
-        <!-- USERS -->
-        <div *ngIf="showUsers" class="col-md-9" style="margin-top:30px;">
-          <h3 class="text-left" style="float: left">USERS</h3>
-          <a routerLink="/user-add" class="btn btn-success" style="float: right">
-            New User <span class="glyphicon glyphicon-plus"></span>
-          </a>
-          <table class=" table table-hover table-responsive">
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>User ID</th>
-              <th>User Type</th>
-            </tr>
-            <tr *ngFor="let user of users" class="users" (click)="userDetails(user)">
-              <td> {{ user.firstName }}</td>
-              <td>{{ user.lastName }}</td>
-              <td>{{ user.email }} </td>
-              <td>{{ user.userId }} </td>
-              <td>{{ user.type}}</td>
-            </tr>
-          </table>
         </div>
 
       </div>

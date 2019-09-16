@@ -19,7 +19,8 @@
                 <label for="client">Client </label> <!-- => blackClicked -->
                 <select class="form-control" name="quotClntCode" [(ngModel)]="quotClntCode" required>
                   <option [ngValue]="quotClntCode"> {{ quotClntCode }} </option>
-                  <option *ngFor="let c of clients" [ngValue]="c.clntCode">{{ c }} </option>
+                  <option *ngFor="let c of clients" [ngValue]="c.clntCode">{{ c.clntLastname }} {{ c.clntOthernames }}
+                  </option>
                 </select>
               </div>
               <div class="form-group">
@@ -72,6 +73,8 @@
               </div>
             </div>
           </div>
+
+
           <ng-template #quotation>
             <div class="col-md-6">
               <div class="form-group">
@@ -79,7 +82,9 @@
                 <select class="form-control" name="quotClntCode" [(ngModel)]="client" required>
                   <option [ngValue]="null"> Select </option>
                   <!-- <option *ngFor="let c of clients" [ngValue]="c.clntCode">{{ c.clntCompanyName }} </option> -->
-                  <option *ngFor="let c of clients" [ngValue]="c.clntCode">{{ c.clntFirstname }} {{  c.clntLastname }} </option>
+                  <option *ngFor="let c of clients" [ngValue]="c.clntCode"> 
+                    {{  c.clntLastname }} {{ c.clntOthernames }} {{ c.clntCompanyName}}
+                  </option>
                 </select>
               </div>
 
@@ -100,13 +105,13 @@
             </div>
 
             <div class="col-md-6">
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="agent">Agent</label>
                 <select class="form-control" name="quotAgntCode" [(ngModel)]="agent" required>
                   <option [ngValue]="null">Select</option>
                   <option *ngFor="let c of clients" [ngValue]="c.clntCode">{{ c.clntLastname }} </option>
                 </select>
-              </div>
+              </div> -->
               <div class="form-group">
                 <label for="currency">Currency</label>
                 <select class="form-control" name="quotCurSymbol" [(ngModel)]="currency" required>
@@ -154,7 +159,7 @@
         </form>
       </div>
 
-      
+
 
 
     </div>
@@ -163,4 +168,3 @@
   <!----end of <div id="container">---->
 </div>
 <!----end of <div id="content-area">---->
-    

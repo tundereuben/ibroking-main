@@ -59,6 +59,7 @@ export class QuotationAddComponent implements OnInit {
     // Fetch existing clients
     this.setupService.getClients().subscribe(clients => {
       this.clients = clients;   
+      // console.log(clients);
     }); 
 
     this.quotationService.getQuotations().subscribe(quotations => {

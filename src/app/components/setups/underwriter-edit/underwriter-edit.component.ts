@@ -17,6 +17,9 @@ export class UnderwriterEditComponent implements OnInit {
   underwriter: Underwriter = {};
   underwriters: Underwriter[] = [];
 
+  country: string = null;
+  countries: any[] = [];
+
   constructor(
     private setupService: SetupService,
     private router: Router, 
@@ -29,6 +32,10 @@ export class UnderwriterEditComponent implements OnInit {
     this.setupService.getUnderwriter(this.id).subscribe(underwriter => {
       this.underwriter = underwriter;
     });
+
+    this.setupService.getCountries().subscribe(countries => {
+      this.countries = countries;
+    })
   }
 
   // When the form is submitted
@@ -42,7 +49,7 @@ export class UnderwriterEditComponent implements OnInit {
         .subscribe(response => {
           // this.flashMessage.show('New underwriter added', { cssClass: 'alert-success', timeout: 4000 });
           this.setupService.getUnderwriters().subscribe(underwriters => this.underwriters = underwriters);
-          console.log(response),
+          // console.log(response),
           this.underwriter = response,
           err => console.log(err)
           this.router.navigate([`/underwriter-details/${this.id}`]);

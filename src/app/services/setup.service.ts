@@ -23,6 +23,9 @@ import { Rate } from '../models/Rate';
 import { User } from '../models/User';
 import { Client } from '../models/Client';
 import { Underwriter } from '../models/Underwriter';
+import { Occupation } from '../models/Occupation';
+import { Country } from '../models/Country';
+import { Sector } from '../models/Sector';
 
 import { DEFAULT_HEADERS } from '../models/authorization';
 
@@ -100,6 +103,9 @@ export class SetupService {
   underwritersUrl = 'http://localhost:8080/api/underwriters';
   contactsUrl = 'http://localhost:8080/api/contacts';
   usersUrl = 'http://localhost:8080/api/users';
+  occupationsUrl = 'http://localhost:8080/api/occupations';
+  countriesUrl = 'http://localhost:8080/api/countries';
+  sectorsUrl =  'http://localhost:8080/api/sectors';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -175,7 +181,6 @@ export class SetupService {
   }
 
   addSubclass(newSubclass: Subclass): Observable<Subclass> {
-    console.log(newSubclass);
     return this.http.post<Subclass>(this.subclassesUrl, JSON.stringify(newSubclass), {headers: DEFAULT_HEADERS});
   }
 
@@ -376,6 +381,16 @@ export class SetupService {
     return this.http.get<Client>(url);
   }
 
+  getClientsByEmail(email: String): Observable<Client[]> {
+    const url = `${this.clientsUrl}/clntEmail?clntEmail=${email}`;
+    return this.http.get<Client[]>(url);
+  }
+
+  getClientsByLastname(lastname: String): Observable<Client[]> {
+    const url = `${this.clientsUrl}/clntLastname?clntLastname=${lastname}`;
+    return this.http.get<Client[]>(url);
+  }
+
   addClient(newClient: Client): Observable<Client> {
     return this.http.post<Client>(this.clientsUrl, JSON.stringify(newClient), {headers: DEFAULT_HEADERS});
   }
@@ -430,7 +445,7 @@ export class SetupService {
   // +++++++ USER FUNCTIONS ENDS ++++++++ //
 
   // =========================== //
-  // ==== UNDERWRITER FUNCTIONS ====== //
+  // ==== UNDERWRITER FUNCTIONS ==== //
   // =========================== //
 
   getUnderwriters(): Observable<Underwriter[]> {
@@ -440,6 +455,16 @@ export class SetupService {
   getUnderwriter(id: number): Observable<Underwriter> {
     const url = `${this.underwritersUrl}/${id}`;
     return this.http.get<Underwriter>(url);
+  }
+
+  getUnderwritersByEmail(email: String): Observable<Underwriter[]> {
+    const url = `${this.underwritersUrl}/undEmail?undEmail=${email}`;
+    return this.http.get<Underwriter[]>(url);
+  }
+
+  getUnderwritersByName(name: String): Observable<Underwriter[]> {
+    const url = `${this.underwritersUrl}/undCompanyName?undCompanyName=${name}`;
+    return this.http.get<Underwriter[]>(url);
   }
 
   addUnderwriter(newUnderwriter: Underwriter): Observable<Underwriter> {
@@ -768,6 +793,20 @@ export class SetupService {
     return this.http.delete(this.benefitsUrl + "/" + benefit.bftCode);
   }
   // +++++++ BENEFIT FUNCTIONS ENDS ++++++++ //
+
+
+  // +++++++ LIST OF OCCUPATIONS, COUNTRIES, SECTORS ++++++++ //
+  getOccupations(): Observable<Occupation[]> {
+    return this.http.get<Occupation[]>(this.occupationsUrl);
+  }
+
+  getCountries(): Observable<Country[]> {
+    return this.http.get<Country[]>(this.countriesUrl);
+  }
+
+  getSectors(): Observable<Sector[]> {
+    return this.http.get<Sector[]>(this.sectorsUrl);
+  }
 
 }
 

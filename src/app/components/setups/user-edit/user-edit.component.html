@@ -12,10 +12,8 @@
                 <div class="form-group">
                   <label for="title">Title</label>
                   <select class="form-control" name="title" [ngModel]="user?.title">
-                    <option value="user?.title">{{ user?.title }}</option>
-                    <option>MR</option>
-                    <option>MRS</option>
-                    <option>MISS</option>
+                    <option [ngValue]="user?.title">{{ user?.title }}</option>
+                    <option *ngFor="let t of titles" [ngValue]="t">{{ t }} </option>
                   </select>
                 </div>
                 <div class="form-group">
@@ -82,9 +80,8 @@
                 <div class="form-group">
                   <label for="country">Country</label>
                   <select class="form-control" name="country" [ngModel]="user?.country">
-                    <option>Nigeria</option>
-                    <option>Kenya</option>
-                    <option>Ghana</option>
+                    <option [ngValue]="user?.country">{{ user?.country }}</option>
+                    <option *ngFor="let c of countries" [ngValue]="c.couName">{{ c.couName }} </option>
                   </select>
                 </div>
               </div>

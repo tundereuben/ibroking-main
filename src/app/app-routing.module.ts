@@ -10,8 +10,8 @@ import { LoginComponent } from './components/login/login.component';
 // import { ClassEditComponent } from './components/setups/class-edit/class-edit.component';
 
 // import { SubclassComponent } from './components/setups/subclass/subclass.component';
-import { SubclassAddComponent } from './components/setups/subclass-add/subclass-add.component';
-import { SubclassDetailsComponent } from './components/setups/subclass-details/subclass-details.component';
+// import { SubclassAddComponent } from './components/setups/subclass-add/subclass-add.component';
+// import { SubclassDetailsComponent } from './components/setups/subclass-details/subclass-details.component';
 import { SubclassEditComponent } from './components/setups/subclass-edit/subclass-edit.component';
 
 // import { ProductsComponent } from './components/setups/products/products.component';
@@ -77,6 +77,8 @@ import { UserDetailsComponent } from './components/setups/user-details/user-deta
 import { UserEditComponent } from './components/setups/user-edit/user-edit.component';
 
 import { CrmComponent } from './components/setups/crm/crm.component';
+import { VendorsComponent } from './components/setups/vendors/vendors.component';
+import { UsersComponent } from './components/setups/users/users.component';
 
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthGuard } from './guard/auth.guard';
@@ -91,8 +93,8 @@ const routes: Routes = [
   // {path: 'class-edit/:id', component: ClassEditComponent, canActivate: [AuthGuard]},
   
   // {path: 'subclass', component: SubclassComponent, canActivate: [AuthGuard]},
-  {path: 'subclass-add', component: SubclassAddComponent, canActivate: [AuthGuard]},
-  {path: 'subclass-details/:id', component: SubclassDetailsComponent, canActivate: [AuthGuard]},
+  // {path: 'subclass-add', component: SubclassAddComponent, canActivate: [AuthGuard]},
+  // {path: 'subclass-details/:id', component: SubclassDetailsComponent, canActivate: [AuthGuard]},
   {path: 'subclass-edit/:id', component: SubclassEditComponent, canActivate: [AuthGuard]},
 
 
@@ -159,6 +161,8 @@ const routes: Routes = [
   {path: 'user-edit/:id', component: UserEditComponent, canActivate: [AuthGuard]},
 
   {path: 'crm', component: CrmComponent, canActivate: [AuthGuard]},
+  {path: 'vendors', component: VendorsComponent, canActivate: [AuthGuard]},
+  {path: 'users', component: UsersComponent, canActivate: [AuthGuard]},
 
   {path: '**', component: NotFoundComponent},
 ];

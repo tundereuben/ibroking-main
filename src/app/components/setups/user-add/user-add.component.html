@@ -11,12 +11,10 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="title">Title</label>
-                  <select class="form-control" name="title" [ngModel]="user?.title">
+                  <select class="form-control" name="title" [(ngModel)]="title">
                     <option value="null">Select Title</option>
-                    <option>MR</option>
-                    <option>MRS</option>
-                    <option>MISS</option>
-                  </select>
+                    <option *ngFor="let t of titles" [ngValue]="t">{{ t }} </option>
+                  </select >
                 </div>
                 <div class="form-group">
                   <label for="lastname">Lastname</label>
@@ -41,7 +39,7 @@
                 <div class="form-group">
                   <label for="gender">Gender</label>
                   <select class="form-control" [ngModel]="user?.gender" name="gender">
-                    <option value="null">Select Title</option>
+                    <option value="null">Select Gender</option>
                     <option>Male</option>
                     <option>Female</option>
                   </select>
@@ -84,10 +82,9 @@
                 </div>
                 <div class="form-group">
                   <label for="country">Country</label>
-                  <select class="form-control" name="country" [ngModel]="user?.country">
-                    <option>Nigeria</option>
-                    <option>Kenya</option>
-                    <option>Ghana</option>
+                  <select class="form-control" name="country" [(ngModel)]="country">
+                    <option value="null">Select Title</option>
+                    <option *ngFor="let c of countries" [ngValue]="c.couName">{{ c.couName }} </option>
                   </select>
                 </div>
               </div>

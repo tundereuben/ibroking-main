@@ -14,7 +14,7 @@
           </tr>
           <tr>
             <th><small>Occupation: </small> {{ client?.clntOccupation}} </th>
-            <th><small>Description: </small> {{ client?.clntDescription }}</th>
+            <th><small>Nationality: </small> {{ client?.clntNationality }}</th>
             <th><small>Sector: </small>{{ client?.clntSector }}</th>
           </tr>
           <tr>
@@ -23,9 +23,14 @@
             <th><small>Lead Date: </small>{{ client?.clntLeadDate }}</th>
           </tr>
           <tr>
-            <th><small>Physical Address: </small> {{ client?.clntPhysicalAddress }}</th>
-            <th><small>Postal Address: </small> {{ client?.clntPostalAddress }}</th>
+            <th><small>Marital Status: </small> {{ client?.clntMaritalStatus }}</th>
+            <th><small>Postal Address: </small> {{ client?.clntPostalAddress }}, {{ client?.clntCity}}, {{ client?.clntState}} </th>
             <th><small>Country: </small> {{ client?.clntCountry }}</th>
+          </tr>
+          <tr>
+            <th><small>ID Type: </small> {{ client?.clntIdType }}</th>
+            <th><small>ID Number: </small> {{ client?.clntIdNo }}</th>
+            <th><small>Reg. Number: </small> {{ client?.clntRegNo }}</th>
           </tr>
         </table>
 
@@ -116,6 +121,14 @@
                 <label for="contOccupation">Occupation</label>
                 <input type="text" class="form-control" [ngModel]="contact.contOccupation" name="contOccupation" placeholder="Occupation">
               </div>
+              <div class="form-group">
+                <label for="contNationality">Nationality</label>
+                <select class="form-control" name="contNationality" [ngModel]="contact.contNationality">
+                  <option>Nigeria</option>
+                  <option>Kenya</option>
+                  <option>Ghana</option>
+                </select>
+              </div>
             </div>
 
             <div class="col-md-6">
@@ -153,9 +166,7 @@
               </div>
             </div>
             <hr>
-            <button class="btn btn-info pull-right" >Add&nbsp;<span class="glyphicon glyphicon-plus"
-                aria-hidden="true"></span>
-            </button>
+            <button class="btn btn-info pull-right" >Update</button>
 
           </span>
         </form>

@@ -178,6 +178,10 @@ export class QuotationDetailsComponent implements OnInit {
     }
   }
 
+  onAuthorize() {
+    // authorize quotation
+  }
+
   addingNew(){
     // sessionStorage.setItem("quotation", JSON.stringify(this.quotation));
     // sessionStorage.setItem("quoteProductCode", JSON.stringify(this.quoteProductCode)); 

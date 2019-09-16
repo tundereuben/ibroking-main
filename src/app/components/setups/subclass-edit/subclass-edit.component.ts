@@ -123,7 +123,7 @@ export class SubclassEditComponent implements OnInit {
   }
 
   // When An ID is added
-  addId(event: any){
+  addId(){
     this.id.idName = (<HTMLInputElement>document.getElementById('idName')).value;
     this.id.idType = (<HTMLInputElement>document.getElementById('idType')).value;
     this.id.idPolCode = this.subclass.sclPolCode; 
@@ -150,7 +150,7 @@ export class SubclassEditComponent implements OnInit {
   }
 
    // When a RATE is added
-   addRate(event: any){
+   addRate(){
     this.rate.rateName = (<HTMLInputElement>document.getElementById('rateName')).value;
     this.rate.rateDefaultValue = parseFloat((<HTMLInputElement>document.getElementById('rateDefaultValue')).value);
     this.rate.ratePolCode = this.subclass.sclPolCode; 
@@ -180,7 +180,7 @@ export class SubclassEditComponent implements OnInit {
 
 
   // When a Benefit is added
-  addBenefit(event: any){
+  addBenefit(){
     this.benefit.bftName = (<HTMLInputElement>document.getElementById('bftName')).value;
     this.benefit.bftRate = parseFloat((<HTMLInputElement>document.getElementById('bftRate')).value);
     this.benefit.bftNo = parseFloat((<HTMLInputElement>document.getElementById('bftNo')).value);
@@ -217,7 +217,7 @@ export class SubclassEditComponent implements OnInit {
 
 
    // When a Commission is added
-   addCommission(event: any){
+   addCommission(){
     this.commission.commName = (<HTMLInputElement>document.getElementById('commName')).value;
     this.commission.commType = (<HTMLInputElement>document.getElementById('commType')).value;
     this.commission.commCalcOn = (<HTMLInputElement>document.getElementById('commCalcOn')).value;
@@ -253,7 +253,7 @@ export class SubclassEditComponent implements OnInit {
   }
 
   // When a Discount is added
-  addDiscount(event: any){
+  addDiscount(){
     this.discount.dsctName = (<HTMLInputElement>document.getElementById('dsctName')).value;
     this.discount.dsctType = (<HTMLInputElement>document.getElementById('dsctType')).value;
     this.discount.dsctCalcOn = (<HTMLInputElement>document.getElementById('dsctCalcOn')).value;
@@ -287,7 +287,7 @@ export class SubclassEditComponent implements OnInit {
   }
 
    // When a Loading is added
-   addLoading(event: any){
+   addLoading(){
     this.loading.loadName = (<HTMLInputElement>document.getElementById('loadName')).value;
     this.loading.loadType = (<HTMLInputElement>document.getElementById('loadType')).value;
     this.loading.loadCalcOn = (<HTMLInputElement>document.getElementById('loadCalcOn')).value;
@@ -320,7 +320,7 @@ export class SubclassEditComponent implements OnInit {
   }
 
   // When A Clause is added
-  addClause(event: any){
+  addClause(){
     this.clause.clsName = (<HTMLInputElement>document.getElementById('clsName')).value;
     this.clause.clsPolCode = this.subclass.sclPolCode;
     this.clause.clsSclCode = this.subclass.sclCode;
@@ -349,7 +349,7 @@ export class SubclassEditComponent implements OnInit {
   }
 
    // When an Extension is added
-   addExtension(event: any){
+   addExtension(){
     this.extension.extName = (<HTMLInputElement>document.getElementById('extName')).value;
     this.extension.extPolCode = this.subclass.sclPolCode;
     this.extension.extSclCode = this.subclass.sclCode;

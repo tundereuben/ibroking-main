@@ -28,6 +28,10 @@ export class QuoteRiskLimitsAddComponent implements OnInit {
   premiumAmount: number;
   commissionAmount: number;
 
+  qrlLimitAmt: number;
+  qrlRateDivFactor: number;
+  isAddToRisk: boolean;
+
   quoteRiskLimits: QuoteRiskLimit[] = [];
   quoteRiskLimit: QuoteRiskLimit = {
     

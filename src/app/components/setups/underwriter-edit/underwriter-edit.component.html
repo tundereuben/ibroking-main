@@ -9,8 +9,18 @@
           <span class="form">
 
             <div class="row">
-              <h3 style="margin: 10px">General Info</h3>
+              <!-- <h3 style="margin: 10px">General Info</h3> -->
               <div class="col-md-6">
+                <div class="form-group">
+                  <label for="undCompanyName">Company Name:</label>
+                  <input type="text" class="form-control" name="undCompanyName" [ngModel]="underwriter?.undCompanyName"
+                    placeholder="Company Name">
+                </div>
+                <div class="form-group">
+                  <label for="undDob">Date of Incorporation</label>
+                  <input type="date" class="form-control" name="undDob" [ngModel]="underwriter?.undDob"
+                    placeholder="D.O.B">
+                </div>
                 <div class="form-group">
                   <label for="undMobile">Mobile No</label>
                   <input type="text" class="form-control" name="undMobile" [ngModel]="underwriter?.undMobile"
@@ -22,27 +32,20 @@
                     placeholder="Email Address">
                 </div>
                 <div class="form-group">
-                  <label for="undLeadDate">Lead Date</label>
-                  <input type="date" class="form-control" name="undLeadDate" [ngModel]="underwriter?.undLeadDate"
-                    placeholder="Lead Date">
-                </div>
-                <div class="form-group">
-                  <label for="undSource">Source</label>
-                  <select class="form-control" name="undSource" [ngModel]="underwriter?.undSource">
-                    <option>Source 1</option>
-                    <option>Source 2</option>
-                  </select>
+                  <label for="undRegNo">Reg No. </label>
+                  <input type="text" class="form-control" name="undRegNo" [ngModel]="underwriter?.undRegNo" placeholder="Registration No.">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="undPostalAddress"> Address</label>
-                  <input type="text" class="form-control" name="undPostalAddress" [ngModel]="underwriter?.undPostalAddress"
-                    placeholder="Postal Address">
+                  <input type="text" class="form-control" name="undPostalAddress"
+                    [ngModel]="underwriter?.undPostalAddress" placeholder="Postal Address">
                 </div>
                 <div class="form-group">
                   <label for="undPostalCode">P.O. Box</label>
-                  <input type="text" class="form-control" name="undPostalCode" [ngModel]="underwriter?.undPostalCode" placeholder="Postal Code">
+                  <input type="text" class="form-control" name="undPostalCode" [ngModel]="underwriter?.undPostalCode"
+                    placeholder="Postal Code">
                 </div>
                 <div class="form-group">
                   <label for="undCity">City</label>
@@ -57,90 +60,9 @@
                 <div class="form-group">
                   <label for="undCountry">Country</label>
                   <select class="form-control" name="undCountry" [ngModel]="underwriter?.undCountry">
-                    <option>Nigeria</option>
-                    <option>Kenya</option>
-                    <option>Ghana</option>
+                      <option value="null">Select </option>
+                      <option *ngFor="let country of countries" [ngValue]="country.couName">{{ country.couName }}</option>
                   </select>
-                </div>
-              </div>
-            </div>
-
-            <hr>
-
-            <!-- <div *ngIf="individual" class="row" id="individual">
-              <h3 style="margin: 10px;">Personal Info</h3>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="clntTitle">Title</label>
-                  <select class="form-control" name="clntTitle" [ngModel]="client.clntTitle">
-                    <option value="null">Select Title</option>
-                    <option>MR</option>
-                    <option>MRS</option>
-                    <option>MISS</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="clntLastname">Lastname</label>
-                  <input type="email" name="clntLastname" class="form-control" [ngModel]="client.clntLastname"
-                    placeholder="Lastname">
-                </div>
-                <div class="form-group">
-                  <label for="clntOthernames">Other Names</label>
-                  <input type="text" name="clntOthernames" class="form-control" [ngModel]="client.clntOthernames"
-                    placeholder="Other Names">
-                </div>
-
-              </div>
-              <div class="col-md-6">
-
-                <div class="form-group">
-                  <label for="clntGender">Gender</label>
-                  <select class="form-control" [ngModel]="client.clntGender" name="clntGender">
-                    <option>Male</option>
-                    <option>Female</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="clntDob">Date of Birth</label>
-                  <input type="date" class="form-control" [ngModel]="client.clntDob" name="clntDob" placeholder="D.O.B">
-                </div>
-                <div class="form-group">
-                  <label for="clntOccupation">Occupation</label>
-                  <input type="text" class="form-control" [ngModel]="client.clntOccupation" name="clntOccupation"
-                    placeholder="Occupation">
-                </div>
-              </div>
-            </div> -->
-
-
-
-            <div class="row " id="corporate">
-              <h3 style="margin: 10px;">Company Info</h3>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="undCompanyName">Company Name:</label>
-                  <input type="text" class="form-control" name="undCompanyName" [ngModel]="underwriter?.undCompanyName"
-                    placeholder="Company Name">
-                </div>
-                <div class="form-group">
-                  <label for="undDescription">Description</label>
-                  <input type="text" class="form-control" name="undDescription" [ngModel]="underwriter?.undDescription"
-                    placeholder="Description">
-                </div>
-                
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="undSector">Sector</label>
-                  <select class="form-control" name="undSector" [ngModel]="underwriter?.undSector">
-                    <option>MINING</option>
-                    <option>TELECOMMUNICATION</option>
-                    <option>CONSULTANT</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="undDob">Date of Incorporation</label>
-                  <input type="date" class="form-control" name="undDob" [ngModel]="underwriter?.undDob" placeholder="D.O.B">
                 </div>
               </div>
             </div>

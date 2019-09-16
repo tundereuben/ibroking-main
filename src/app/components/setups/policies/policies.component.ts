@@ -198,7 +198,7 @@ export class PoliciesComponent implements OnInit {
   }
 
   // When A Policy Subclass is added
-  addSubclass(event: any){
+  addSubclass(){
     this.subclass.sclName = (<HTMLInputElement>document.getElementById('sclName')).value;
     if(!this.subclass.sclName) {
       // Show Error Message 

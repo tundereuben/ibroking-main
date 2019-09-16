@@ -21,12 +21,12 @@ export class Client {
   clntType?: string;
   clntSource?: string;
   SelectClientType?: string;
-
-  clntContacFirstname?: string;
-  clntContactLastname?: string;
-  clntContactEmail?: string;
-  clntContactMobile?: string;
-  clntContactBirthday?: string;
+  
+  clntNationality?: string;
+  clntMaritalStatus?: string;
+  clntIdType?: string;
+  clntIdNo?: string;
+  clntRcNo?: string;
 
   // When the model is used for Contact or NOK
   contCode?: number;

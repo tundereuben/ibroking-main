@@ -33,9 +33,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 // import { SectionAddComponent } from './components/setups/section-add/section-add.component';
 // import { SectionDetailsComponent } from './components/setups/section-details/section-details.component';
 // import { SectionEditComponent } from './components/setups/section-edit/section-edit.component';
-import { SubclassAddComponent } from './components/setups/subclass-add/subclass-add.component';
+// import { SubclassAddComponent } from './components/setups/subclass-add/subclass-add.component';
 import { SubclassEditComponent } from './components/setups/subclass-edit/subclass-edit.component';
-import { SubclassDetailsComponent } from './components/setups/subclass-details/subclass-details.component';
+// import { SubclassDetailsComponent } from './components/setups/subclass-details/subclass-details.component';
 import { SetupService } from './services/setup.service';
 // import { CovertypesComponent } from './components/setups/covertypes/covertypes.component';
 // import { CovertypeAddComponent } from './components/setups/covertype-add/covertype-add.component';
@@ -81,6 +81,8 @@ import { AuthService } from './services/auth.service';
 import { UserAddComponent } from './components/setups/user-add/user-add.component';
 import { UserDetailsComponent } from './components/setups/user-details/user-details.component';
 import { UserEditComponent } from './components/setups/user-edit/user-edit.component';
+import { VendorsComponent } from './components/setups/vendors/vendors.component';
+import { UsersComponent } from './components/setups/users/users.component';
 // import { AuthGuard } from './guard/auth.guard';
 
 
@@ -108,9 +110,9 @@ import { UserEditComponent } from './components/setups/user-edit/user-edit.compo
     // SectionAddComponent,
     // SectionDetailsComponent,
     // SectionEditComponent,
-    SubclassAddComponent,
+    // SubclassAddComponent,
     SubclassEditComponent,
-    SubclassDetailsComponent,
+    // SubclassDetailsComponent,
     // CovertypesComponent,
     // CovertypeAddComponent,
     // CovertypeEditComponent,
@@ -152,6 +154,8 @@ import { UserEditComponent } from './components/setups/user-edit/user-edit.compo
     UserAddComponent,
     UserDetailsComponent,
     UserEditComponent,
+    VendorsComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,

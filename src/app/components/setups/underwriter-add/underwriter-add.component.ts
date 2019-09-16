@@ -4,8 +4,11 @@ import { SetupService } from '../../../services/setup.service';
 import { Router } from '@angular/router';
 
 import { Underwriter } from '../../../models/Underwriter';
+import { Country } from '../../../models/Country';
 
 import {NgForm} from '@angular/forms';
+
+
 
 @Component({
   selector: 'app-underwriter-add',
@@ -16,6 +19,11 @@ export class UnderwriterAddComponent implements OnInit {
   underwriter: Underwriter = {};
   underwriters: Underwriter[] ;
 
+  country: Country = null;
+  countries: Country[];
+
+  errorMessage: any;
+
   constructor(
     private flashMessage: FlashMessagesService,
     private setupService: SetupService,
@@ -23,6 +31,9 @@ export class UnderwriterAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.setupService.getCountries().subscribe(countries => {
+      this.countries = countries;
+    })
   }
 
    // When the form is submitted
@@ -30,7 +41,36 @@ export class UnderwriterAddComponent implements OnInit {
     if (!underwriterForm) {
       this.flashMessage.show('Please fill out the form correctly', { cssClass: 'alert-danger', timeout: 4000 });
     } else {
-      this.setupService.addUnderwriter(underwriterForm.value)
+        this.errorMessage = this.validateUnderwriter(underwriterForm.value);
+        if(this.errorMessage !== '') {
+          this.flashMessage.show(this.errorMessage, { cssClass: 'alert-danger', timeout: 10000 });
+        } else {
+          this.addNewUnderwriter(underwriterForm.value)
+        }
+    }
+  }
+
+  validateUnderwriter(underwriterForm){
+    let message = ''; 
+    
+    if(!underwriterForm.undCompanyName) {
+      message += '<p>Company Name missing</p>';
+    };
+
+    if(!underwriterForm.undMobile) {
+      message += '<p>Phone Number missing</p>';
+    };
+
+    if(!underwriterForm.undEmail) {
+      message += '<p>Email missing</p>';
+    };
+
+    return message;
+  }
+
+  // add New Underwriter
+  addNewUnderwriter(underwriter){
+    this.setupService.addUnderwriter(underwriter)
         .subscribe(response => {
           // this.flashMessage.show('New underwriter added', { cssClass: 'alert-success', timeout: 4000 });
           this.setupService.getUnderwriters().subscribe(underwriters => this.underwriters = underwriters);
@@ -39,8 +79,5 @@ export class UnderwriterAddComponent implements OnInit {
           err => console.log(err),
           this.router.navigate([`/crm`]);
         });
-        
-    }
   }
-
 } 

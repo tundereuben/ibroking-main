@@ -12,7 +12,7 @@
           class="form-control"
           name="qpPolCode"
           [(ngModel)]="policyCode" 
-          (change)="showProducts($event.target.value)"
+          (change)="showProducts()"
           required
         >
           <option [ngValue]="null">Select</option>
@@ -25,7 +25,7 @@
           class="form-control"
           name="qpProCode"
           [(ngModel)]="productCode" 
-          (change)="showClauses($event.target.value)"
+          (change)="showClauses()"
           required
         >
           <option [ngValue]="null">Select</option>
